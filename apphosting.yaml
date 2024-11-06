@@ -1,22 +1,14 @@
-# Settings for Cloud Run
-runConfig:
-  minInstances: 2
-  maxInstances: 100
-  concurrency: 100
-  cpu: 2
-  memoryMiB: 1024
-
-# Environment variables and secrets.
-# env:
-  # Configure environment variables.
-  # See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment
-  # - variable: MESSAGE
-  #   value: Hello world!
-  #   availability:
-  #     - BUILD
-  #     - RUNTIME
-
-  # Grant access to secrets in Cloud Secret Manager.
-  # See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
-  # - variable: MY_SECRET
-  #   secret: mySecretRef
+env:
+  # Get these values from the Firebase console
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: TODO
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: TODO
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: TODO
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: TODO
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: TODO
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: TODO
