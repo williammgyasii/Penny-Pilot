@@ -109,6 +109,9 @@ const config: Config = {
         inter: ["var(--font-inter)"],
         poppins: ["var(--font-poppins)"],
       },
+      screens: {
+        xs: "376px",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
