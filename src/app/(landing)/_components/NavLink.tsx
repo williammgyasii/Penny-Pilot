@@ -9,7 +9,7 @@ type Props = {
 
 const NavLink = ({ href, title, color }: Props & NavbarLinks) => {
   return (
-    <Link href={href} className="">
+    <Link href={href} className="text-sm">
       {title}
     </Link>
   );
