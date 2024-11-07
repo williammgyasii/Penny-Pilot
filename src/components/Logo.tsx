@@ -1,20 +1,57 @@
 import Image from "next/image";
-import React from "react";
-import logoMarkDark from "@public/Logo_Mark_Svg--Dark.svg";
+import Link from "next/link";
+import React, { useMemo } from "react";
+import fullLogoDark from "@public/Full_Logo--Dark.png";
 
-type Variants = "Default" | "Light";
+type LogoSize = "small" | "medium" | "large";
+type LogoOrientation = "vertical" | "horizontal";
 
-type Props = {
-  variants?: Variants;
-  orientation: string;
+interface LogoProps {
+  size?: LogoSize;
+  orientation?: LogoOrientation;
+  link?: boolean;
+}
+
+const sizeClasses: Record<LogoSize, string> = {
+  small: "w-[80px]",
+  medium: "w-38",
+  large: "w-42",
 };
 
-const Logo = ({ variants, orientation = "vertical" }: Props) => {
-  return (
-    <div className="w-50 h-50 bg-dark">
-      <Image src={logoMarkDark} alt="Logo" className="w-auto h-auto" />
-    </div>
+const orientationClasses: Record<LogoOrientation, string> = {
+  vertical: "flex-col",
+  horizontal: "flex-row",
+};
+
+const Logo: React.FC<LogoProps> = ({
+  size = "small",
+  orientation = "vertical",
+  link = true,
+}) => {
+  const classNames = useMemo(() => {
+    return `flex items-center justify-center ${sizeClasses[size]} ${orientationClasses[orientation]} h-auto`;
+  }, [size, orientation]);
+
+  const logoImage = (
+    <Image
+      src={fullLogoDark}
+      alt="Penny Pilot Logo"
+      className={classNames}
+      width={500}
+      height={500}
+      priority
+    />
   );
+
+  if (link) {
+    return (
+      <Link href="/" aria-label="Go to homepage">
+        {logoImage}
+      </Link>
+    );
+  }
+
+  return logoImage;
 };
 
-export default Logo;
+export default React.memo(Logo);
