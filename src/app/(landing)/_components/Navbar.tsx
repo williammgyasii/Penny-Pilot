@@ -20,7 +20,8 @@ const Navbar = () => {
   return (
     <header
       className={`fixed inset-0 z-10 bg-transparent bg-clip-padding 
-    backdrop-filter backdrop-blur-xl bg-opacity-50 text-white border-gray-100 px-[10rem] h-[60px] py-2`}
+    backdrop-filter backdrop-blur-xl bg-opacity-50 text-white border-gray-100 
+    px-[7rem] h-[60px] py-2`}
     >
       <nav className="flex flex-row items-center justify-between w-full">
         <Logo link size={"small"} />
@@ -40,8 +41,9 @@ const Navbar = () => {
         </div>
         <Button
           icon={ArrowRight}
+          // color="bg-ui-ui_blue_500"
           onClick={() => router.push("/login")}
-          className="bg-ui-ui_blue_500 text-white hover:bg-ui-ui_blue_400"
+          className="bg-ui-ui_blue_500"
         >
           Get Started
         </Button>

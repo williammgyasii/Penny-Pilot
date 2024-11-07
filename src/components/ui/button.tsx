@@ -6,11 +6,11 @@ import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  `inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md 
-  text-sm font-medium ring-offset-background transition-colors 
+  `inline-flex items-center justify-center relative gap-2 whitespace-nowrap rounded-md 
+  text-sm font-medium ring-offset-background transition-colors overflow-hidden
   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring 
-  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 
-  [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0`,
+  group bg-blue-600 focus:ring-4 focus:ring-blue-300
+  px-7 py-2.5`,
   {
     variants: {
       variant: {
@@ -67,6 +67,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
+        <div
+          className="absolute inset-0 h-[200%] w-[200%] 
+        rotate-45 translate-x-[-70%] transition-all 
+        group-hover:scale-100 bg-white/30 group-hover:translate-x-[50%] z-20 duration-1000"
+        />
         {children}
         {Icon && (
           <span
