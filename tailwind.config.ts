@@ -9,6 +9,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        border: "border 4s linear infinite",
+      },
+      keyframes: {
+        border: {
+          to: { "--border-angle": "360deg" },
+        },
+      },
       colors: {
         form_border: "#EEF2F7",
         pricing_border: "#B6CBE9",

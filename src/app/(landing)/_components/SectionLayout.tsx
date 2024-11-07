@@ -6,10 +6,14 @@ import React from "react";
 type Props = {
   children: React.ReactNode;
   className?: string;
+  withPadding?: boolean;
 };
 
-const SectionLayout = ({ children, className }: Props) => {
-  const sectionStyling = cn("relative ", className);
+const SectionLayout = ({ children, className, withPadding }: Props) => {
+  const sectionStyling = cn(
+    `relative py-[8rem] ${withPadding && "px-[7rem]"} `,
+    className
+  );
   return <section className={sectionStyling}>{children}</section>;
 };
 
