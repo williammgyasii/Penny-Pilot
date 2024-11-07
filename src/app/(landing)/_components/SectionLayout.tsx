@@ -10,10 +10,9 @@ type Props = {
 };
 
 const SectionLayout = ({ children, className, withPadding }: Props) => {
-  const sectionStyling = cn(
-    `relative py-[8rem] ${withPadding && "px-[7rem]"} `,
-    className
-  );
+  const sectionStyling = cn(`relative py-[8rem]`, className, {
+    "px-[7rem]": withPadding,
+  });
   return <section className={sectionStyling}>{children}</section>;
 };
 

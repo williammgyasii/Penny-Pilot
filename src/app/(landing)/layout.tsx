@@ -1,10 +1,17 @@
 import React from "react";
 import Navbar from "./_components/Navbar";
 import { Metadata } from "next";
+import { Poppins } from "next/font/google";
 
 type Props = {
   children: Readonly<React.ReactNode>;
 };
+
+const poppinsFont = Poppins({
+  subsets: ["latin"],
+  weight: ["400","100","200"],
+  variable: "--font-poppins",
+});
 
 export const metadata: Metadata = {
   title: "Penny-Pilot",
@@ -15,7 +22,7 @@ const LandingPageLayout = ({ children }: Props) => {
   return (
     <>
       <Navbar />
-      <main>{children}</main>
+      <main className={`${poppinsFont.variable}`}>{children}</main>
     </>
   );
 };

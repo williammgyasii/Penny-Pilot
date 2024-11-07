@@ -12,6 +12,15 @@ const config: Config = {
       animation: {
         border: "border 4s linear infinite",
       },
+      backgroundImage: {
+        "hero-background":
+          "linear-gradient(120deg, #070C14, #212A40,#191C24,#14161E)",
+        "conic-gradient":
+          "conic-gradient(from 45deg, #1B1F26, #3b82f6, #9333ea)",
+        // You can also use CSS variables or custom gradients
+        "gradient-with-variables":
+          "linear-gradient(var(--border-angle), #080b11, #172033)",
+      },
       keyframes: {
         border: {
           to: { "--border-angle": "360deg" },
@@ -95,6 +104,10 @@ const config: Config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        inter: ["var(--font-inter)"],
+        poppins: ["var(--font-poppins)"],
       },
     },
   },

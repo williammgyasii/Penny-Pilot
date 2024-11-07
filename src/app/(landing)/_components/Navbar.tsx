@@ -42,6 +42,7 @@ const Navbar = () => {
         <Button
           icon={ArrowRight}
           // color="bg-ui-ui_blue_500"
+
           onClick={() => router.push("/login")}
           className="bg-ui-ui_blue_500"
         >
