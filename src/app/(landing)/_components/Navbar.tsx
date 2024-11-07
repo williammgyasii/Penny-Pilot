@@ -6,6 +6,7 @@ type Props = {
   newUser?: null;
 };
 
+
 const Navbar = () => {
   return (
     <header
