@@ -6,6 +6,8 @@ import React from "react";
 import NavLink from "./NavLink";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { ArrowRight } from "lucide-react";
 
 type Props = {
   newUser?: null;
@@ -13,6 +15,7 @@ type Props = {
 
 const Navbar = () => {
   const currentPath = usePathname();
+  const router = useRouter();
 
   return (
     <header
@@ -35,7 +38,11 @@ const Navbar = () => {
             );
           })}
         </div>
-        <Button className="bg-ui-ui_blue_500 text-white hover:bg-ui-ui_blue_400">
+        <Button
+          icon={ArrowRight}
+          onClick={() => router.push("/login")}
+          className="bg-ui-ui_blue_500 text-white hover:bg-ui-ui_blue_400"
+        >
           Get Started
         </Button>
       </nav>

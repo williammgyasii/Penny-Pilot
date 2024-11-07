@@ -2,7 +2,7 @@ import React from "react";
 
 const HeroSection = () => {
   return (
-    <section className="h-[50rem] py-[50rem] text-white bg-ui-ui_dark_700">
+    <section className="min-h-screen text-white bg-ui-ui_dark_700 pt-[160px]">
       This is the hero section typescript is awesome
     </section>
   );
