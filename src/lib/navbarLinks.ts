@@ -6,10 +6,6 @@ export type NavbarLinks = {
 
 export const NavbarLinks: NavbarLinks[] = [
   {
-    title: "Home",
-    href: "/",
-  },
-  {
     title: "About",
     href: "/about",
   },
@@ -20,17 +16,5 @@ export const NavbarLinks: NavbarLinks[] = [
   {
     title: "Pricing",
     href: "/pricing",
-  },
-  {
-    title: "Blog",
-    href: "/blog",
-  },
-  {
-    title: "Contact",
-    href: "/contact",
-  },
-  {
-    title: "FAQ",
-    href: "/faq",
   },
 ];

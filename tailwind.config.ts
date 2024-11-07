@@ -12,7 +12,8 @@ const config: Config = {
       colors: {
         form_border: "#EEF2F7",
         pricing_border: "#B6CBE9",
-        ui_light: {
+        ui: {
+          // light
           ui_light_100: "#F2F9FE",
           ui_light_200: "#F4F6FA",
           ui_light_300: "#DEE8F6",
@@ -20,8 +21,7 @@ const config: Config = {
           ui_light_500: "#B2B9C0",
           ui_light_600: "#828E9D",
           ui_light_700: "#90A2AF",
-        },
-        ui_dark: {
+          //dark
           ui_dark_200: "#3D4045",
           ui_dark_300: "#181E26",
           ui_dark_400: "#191C24",
@@ -29,8 +29,7 @@ const config: Config = {
           ui_dark_600: "#1B1F26",
           ui_dark_700: "#070C14",
           ui_dark_800: "#14161E",
-        },
-        ui_blue: {
+          // blue
           ui_blue_200: "#485E79",
           ui_blue_300: "#1F78FF",
           ui_blue_400: "#2A7FFF",

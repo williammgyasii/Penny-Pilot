@@ -1,8 +1,11 @@
 import React from "react";
+import HeroSection from "./_sections/HeroSection";
 
 const LandingPage = () => {
   return (
-    <div className="h-[50rem] py-[50rem]">Welcome to the landing page</div>
+    <>
+      <HeroSection />
+    </>
   );
 };
 

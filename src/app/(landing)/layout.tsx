@@ -15,7 +15,7 @@ const LandingPageLayout = ({ children }: Props) => {
   return (
     <>
       <Navbar />
-      {children}
+      <main>{children}</main>
     </>
   );
 };
