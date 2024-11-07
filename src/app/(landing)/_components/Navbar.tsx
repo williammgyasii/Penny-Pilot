@@ -46,7 +46,7 @@ const Navbar = () => {
           onClick={() => router.push("/login")}
           className="bg-ui-ui_blue_500"
         >
-          Get Started
+          Login
         </Button>
       </nav>
     </header>
