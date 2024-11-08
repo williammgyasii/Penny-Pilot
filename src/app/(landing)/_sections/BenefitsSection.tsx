@@ -1,17 +1,13 @@
 import React from "react";
 import SectionLayout from "../_components/SectionLayout";
-import GradientBlobs from "@/animated/GradientBlob";
 import { ScrollFadeInEffect } from "@/animated/ScrollFadeInEffect";
 import TitleBubble from "../_components/TitleBubble";
 import SectionTitle from "../_components/SectionTitle";
-import FeaturesCard from "../_components/BenefitsCards";
 import BenefitsCards from "../_components/BenefitsCards";
 import fintapImage from "@public/Fintap.png";
 import BenefitsCardLarge from "../_components/BenefitCardLarge";
 
-type Props = {};
-
-const BenefitsSection = (props: Props) => {
+const BenefitsSection = () => {
   return (
     <SectionLayout
       withPadding
