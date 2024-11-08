@@ -4,6 +4,7 @@ import GradientBlobs from "@/animated/GradientBlob";
 import { ScrollFadeInEffect } from "@/animated/ScrollFadeInEffect";
 import TitleBubble from "../_components/TitleBubble";
 import SectionTitle from "../_components/SectionTitle";
+import FeaturesCard from "../_components/FeaturesCard";
 
 type Props = {};
 
@@ -32,6 +33,12 @@ const BenefitsSection = (props: Props) => {
               subtitle="Discover our wide-ranging financial tools. Experience seamless, user-friendly, and efficient financial management at your fingertips."
               title="Our diverse suite of finance solutions"
             />
+          </div>
+        </ScrollFadeInEffect>
+
+        <ScrollFadeInEffect className="mt-9 block" fullWidth="100%" animationNum={1}>
+          <div className="bg-red-900 grid grid-cols-6">
+            <FeaturesCard />
           </div>
         </ScrollFadeInEffect>
       </div>

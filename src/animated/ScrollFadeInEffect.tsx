@@ -46,6 +46,7 @@ export const ScrollFadeInEffect = ({
         custom={animationNum}
         variants={sequenceVariants}
         ref={timelineRef}
+        className={className}
         style={{ width: fullWidth }}
       >
         {children}

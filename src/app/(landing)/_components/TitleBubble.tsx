@@ -13,7 +13,7 @@ const TitleBubble = ({ title, variant = "dark" }: Props) => {
     `px-7 py-2 rounded-xl font-normal text-xs md:text-sm font-poppins`,
     {
       "bg-ui-ui_dark_300 text-white": variant === "dark",
-      "text-white bg-ui-ui_yellow_100": variant === "light",
+      "text-white bg-ui-ui_yellow_500": variant === "light",
     }
   );
   return <h6 className={bubbleStyle}>{title.toUpperCase()}</h6>;
