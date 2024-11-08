@@ -80,6 +80,16 @@ const config: Config = {
           ui_blue_600: "#1065E3",
           ui_blue_700: "#0657D0",
           ui_blue_800: "#084DB3",
+          //Yellow
+          ui_yellow_200: "#FFB407",
+          ui_yellow_300: "#FFA700",
+          ui_yellow_400: "#FFA100",
+          ui_yellow_500: "#FF9200",
+          // green
+          ui_green_200: "#42D986",
+          ui_green_300: "#13B554",
+          ui_green_400: "#16B247",
+          ui_green_500: "#0F9C38",
         },
         gradient: {
           gradient1: "#DEE8F5",

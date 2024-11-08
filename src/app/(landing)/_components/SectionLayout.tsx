@@ -8,9 +8,16 @@ type Props = {
   className?: string;
   withPadding?: boolean;
   ref?: React.RefObject<HTMLDivElement>;
+  paddingTop?: string | number;
 };
 
-const SectionLayout = ({ children, className, withPadding, ref }: Props) => {
+const SectionLayout = ({
+  children,
+  className,
+  withPadding,
+  ref,
+  paddingTop,
+}: Props) => {
   const sectionStyling = cn(`relative px-2 py-[8rem]  `, className, {
     "md:px-[4rem] lg:px-[6rem] ": withPadding,
   });
