@@ -20,6 +20,8 @@ const config: Config = {
         "hero-background":
           "linear-gradient(120deg, #070C14, #212A40,#191C24,#14161E)",
         "custom-gradient": "linear-gradient(to bottom, #14161E, #070C14)",
+        "benefit-card-background":
+          "linear-gradient(to bottom, #DEE8F5, #FFFFFF)",
       },
       keyframes: {
         blob: {

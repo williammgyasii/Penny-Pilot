@@ -4,7 +4,9 @@ import GradientBlobs from "@/animated/GradientBlob";
 import { ScrollFadeInEffect } from "@/animated/ScrollFadeInEffect";
 import TitleBubble from "../_components/TitleBubble";
 import SectionTitle from "../_components/SectionTitle";
-import FeaturesCard from "../_components/FeaturesCard";
+import FeaturesCard from "../_components/BenefitsCards";
+import BenefitsCards from "../_components/BenefitsCards";
+import fintapImage from "@public/Fintap.png";
 
 type Props = {};
 
@@ -36,9 +38,18 @@ const BenefitsSection = (props: Props) => {
           </div>
         </ScrollFadeInEffect>
 
-        <ScrollFadeInEffect className="mt-9 block" fullWidth="100%" animationNum={1}>
+        <ScrollFadeInEffect
+          className="mt-9 block"
+          fullWidth="100%"
+          animationNum={1}
+        >
           <div className="bg-red-900 grid grid-cols-6">
-            <FeaturesCard />
+            <BenefitsCards
+              className="col-span-3"
+              brief="Automatically move money to savings based on personalized financial recommendations."
+              title="Automated Savings"
+              image={fintapImage}
+            />
           </div>
         </ScrollFadeInEffect>
       </div>
