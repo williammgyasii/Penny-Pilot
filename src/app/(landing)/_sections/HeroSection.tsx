@@ -7,6 +7,7 @@ import GradientBorder from "@/animated/GradientBorder";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 import { ScrollFadeInEffect } from "@/animated/ScrollFadeInEffect";
+import BrandsMarquee from "../_components/BrandsMarquee";
 
 const HeroSection = () => {
   return (
@@ -14,13 +15,13 @@ const HeroSection = () => {
       withPadding
       className="min-h-screen md:overflow-hidden text-white bg-hero-background"
     >
-      <div className="grid md:space-x-3 max-md:space-y-5 grid-cols-2">
+      <div className="grid md:space-x-5 max-md:space-y-5 grid-cols-2">
         <div className="col-span-2 md:col-span-1 flex flex-col justify-start md:space-y-3 lg:space-y-4 space-y-6 items-start w-full ">
           <ScrollFadeInEffect animationNum={0}>
             <div className=" space-y-5 md:space-y-5 items-center flex flex-col md:items-start">
               <TitleBubble title="Join the future" variant="dark" />
               <h1
-                className="text-4xl text-center md:text-left md:text-5xl xl:text-7xl
+                className="text-4xl text-center md:text-left md:text-4xl lg:text-5xl xl:text-7xl
             text-balance w-full md:w-full lg:w-[80%] leading-little tracking-tighter 
             font-poppins font-medium"
               >
@@ -64,6 +65,8 @@ const HeroSection = () => {
           </ScrollFadeInEffect>
         </div>
       </div>
+
+      <BrandsMarquee />
     </SectionLayout>
   );
 };

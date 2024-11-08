@@ -11,8 +11,8 @@ type Props = {
 };
 
 const SectionLayout = ({ children, className, withPadding, ref }: Props) => {
-  const sectionStyling = cn(`relative px-2 py-[5rem] lg:py-[6rem]`, className, {
-    "md:px-[7rem] ": withPadding,
+  const sectionStyling = cn(`relative px-2 py-[8rem]  `, className, {
+    "md:px-[4rem] ": withPadding,
   });
   return (
     <section ref={ref} className={sectionStyling}>

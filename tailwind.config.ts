@@ -11,6 +11,9 @@ const config: Config = {
     extend: {
       animation: {
         border: "border 4s linear infinite",
+        "infinite-scroll": "infinite-scroll 40s linear infinite",
+        marquee: "marquee var(--duration) linear infinite",
+        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
       },
       backgroundImage: {
         "hero-background":
@@ -22,6 +25,18 @@ const config: Config = {
           "linear-gradient(var(--border-angle), #080b11, #172033)",
       },
       keyframes: {
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
+        },
+        "infinite-scroll": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-100%)" },
+        },
         border: {
           to: { "--border-angle": "360deg" },
         },

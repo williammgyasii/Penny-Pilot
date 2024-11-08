@@ -28,7 +28,7 @@ const Navbar = () => {
       backdrop-filter backdrop-blur-xl bg-opacity-50 text-white border-gray-100 
       h-[60px]`}
     >
-      <nav className="flex flex-row items-center justify-between w-full h-full px-4 md:px-28">
+      <nav className="flex flex-row items-center justify-between w-full h-full px-4 md:px-20">
         <Logo link size="small" />
 
         {/* Desktop Navigation */}
