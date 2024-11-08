@@ -2,21 +2,23 @@
 import { cn } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { twMerge } from "tailwind-merge";
 
 export const ScrollFadeInEffect = ({
   children,
   animationNum,
   className,
   flexCenter,
+  width,
+  fullWidth,
 }: {
   children: React.ReactNode;
   animationNum: number;
   className?: string;
   flexCenter?: boolean;
+  width?: string;
+  fullWidth?: string;
 }) => {
   const timelineRef = useRef<HTMLDivElement | null>(null);
-  const styles = cn(className, `w-full`, flexCenter && `bg-red-900`);
   const sequenceVariants = {
     visible: (i: number) => ({
       filter: "blur(0px)",
@@ -38,18 +40,16 @@ export const ScrollFadeInEffect = ({
   });
   return (
     <>
-      <>
-        <motion.div
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          custom={animationNum}
-          variants={sequenceVariants}
-          className={styles}
-          ref={timelineRef}
-        >
-          {children}
-        </motion.div>
-      </>
+      <motion.div
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        custom={animationNum}
+        variants={sequenceVariants}
+        ref={timelineRef}
+        style={{ width: fullWidth }}
+      >
+        {children}
+      </motion.div>
     </>
   );
 };

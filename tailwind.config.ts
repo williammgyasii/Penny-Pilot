@@ -110,7 +110,13 @@ const config: Config = {
         poppins: ["var(--font-poppins)"],
       },
       screens: {
-        xs: "376px",
+        xs: "475px", // Custom small screen (e.g., for small mobile devices)
+        sm: "640px", // Default small screen
+        md: "768px", // Default medium screen
+        lg: "1024px", // Default large screen
+        xl: "1280px", // Default extra-large screen
+        "2xl": "1536px", // Default 2xl screen
+        "3xl": "1920px", // Custom screen for very large monitors or high-resolution displays
       },
     },
   },
