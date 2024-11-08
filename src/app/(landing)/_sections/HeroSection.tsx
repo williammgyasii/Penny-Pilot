@@ -6,23 +6,26 @@ import TitleBubble from "../_components/TitleBubble";
 import GradientBorder from "@/animated/GradientBorder";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
-import { TimelineContent } from "@/animated/ScrollFadeInEffect";
+import { ScrollFadeInEffect } from "@/animated/ScrollFadeInEffect";
 
 const HeroSection = () => {
   return (
     <SectionLayout
       withPadding
-      className="min-h-screen overflow-hidden text-white bg-hero-background"
+      className="min-h-screen md:overflow-hidden text-white bg-hero-background"
     >
-      <div className="grid space-x-3 grid-cols-2">
-        <div className="col-span-1 flex flex-col justify-start space-y-7 items-start">
-          <TimelineContent className="space-y-7" animationNum={0}>
+      <div className="grid sm:space-x-3 grid-cols-2">
+        <div
+          className="col-span-2 md:col-span-1 flex flex-col justify-center 
+        md:space-y-7 space-y-2 items-start"
+        >
+          <ScrollFadeInEffect className="space-y-7" flexCenter animationNum={0}>
             <TitleBubble title="Join the future" variant="dark" />
-            <h1 className="text-7xl text-balance w-[80%] leading-little tracking-tighter font-poppins font-medium">
+            <h1 className="text-5xl md:text-7xl text-balance w-full  md:w-[80%] leading-little tracking-tighter font-poppins font-medium">
               Take Charge of Your Finances with Penny Pilot
             </h1>
-          </TimelineContent>
-          <TimelineContent animationNum={1}>
+          </ScrollFadeInEffect>
+          <ScrollFadeInEffect animationNum={1}>
             <GradientBorder>
               <p className="text-sm p-3 max-w-[30rem] text-ui-ui_light_400 leading-relaxed">
                 Penny Pilot is designed to help you track earnings, manage
@@ -32,17 +35,17 @@ const HeroSection = () => {
                 taking control of your financial future today.
               </p>
             </GradientBorder>
-          </TimelineContent>
+          </ScrollFadeInEffect>
 
-          <TimelineContent animationNum={1}>
+          <ScrollFadeInEffect animationNum={1}>
             <Button size={"lg"} icon={ArrowUpRight}>
               Lets Get Started
             </Button>
-          </TimelineContent>
+          </ScrollFadeInEffect>
         </div>
 
-        <div className="col-span-1">
-          <TimelineContent animationNum={3}>
+        <div className="col-span-2 md:col-span-1">
+          <ScrollFadeInEffect animationNum={3}>
             <div
               className="lg:w-[48rem] p-1 [background:linear-gradient(45deg,#080b11,theme(colors.slate.800)_50%,#172033)_padding-box,conic-gradient(from_var(--border-angle),theme(colors.slate.600/.48)_80%,_theme(colors.indigo.500)_86%,_theme(colors.indigo.300)_90%,_theme(colors.indigo.500)_94%,_theme(colors.slate.600/.48))_border-box] 
         rounded-2xl border-2 border-transparent animate-border"
@@ -53,7 +56,7 @@ const HeroSection = () => {
                 alt="Hero Illustration"
               />
             </div>
-          </TimelineContent>
+          </ScrollFadeInEffect>
         </div>
       </div>
     </SectionLayout>

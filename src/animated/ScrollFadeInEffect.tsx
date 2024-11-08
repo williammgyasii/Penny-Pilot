@@ -2,19 +2,21 @@
 import { cn } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { twMerge } from "tailwind-merge";
 
-export const TimelineContent = ({
+export const ScrollFadeInEffect = ({
   children,
   animationNum,
   className,
+  flexCenter,
 }: {
   children: React.ReactNode;
   animationNum: number;
   className?: string;
+  flexCenter?: boolean;
 }) => {
   const timelineRef = useRef<HTMLDivElement | null>(null);
-  console.log(timelineRef.current);
-  const styles = cn(className);
+  const styles = cn(className, `w-full`, flexCenter && `bg-red-900`);
   const sequenceVariants = {
     visible: (i: number) => ({
       filter: "blur(0px)",
