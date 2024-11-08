@@ -66,7 +66,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <BrandsMarquee />
+      {/* <BrandsMarquee /> */}
     </SectionLayout>
   );
 };
