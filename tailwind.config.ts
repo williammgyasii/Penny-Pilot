@@ -14,17 +14,28 @@ const config: Config = {
         "infinite-scroll": "infinite-scroll 40s linear infinite",
         marquee: "marquee var(--duration) linear infinite",
         "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
+        "slow-blob": "blob 15s infinite",
       },
       backgroundImage: {
         "hero-background":
           "linear-gradient(120deg, #070C14, #212A40,#191C24,#14161E)",
-        "conic-gradient":
-          "conic-gradient(from 45deg, #1B1F26, #3b82f6, #9333ea)",
-        // You can also use CSS variables or custom gradients
-        "gradient-with-variables":
-          "linear-gradient(var(--border-angle), #080b11, #172033)",
+        "custom-gradient": "linear-gradient(to bottom, #14161E, #070C14)",
       },
       keyframes: {
+        blob: {
+          "0%": {
+            transform: "translate(0px, 0px) scale(1)",
+          },
+          "33%": {
+            transform: "translate(20px, -20px) scale(1.1)",
+          },
+          "66%": {
+            transform: "translate(-20px, 20px) scale(0.9)",
+          },
+          "100%": {
+            transform: "translate(0px, 0px) scale(1)",
+          },
+        },
         marquee: {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(calc(-100% - var(--gap)))" },
