@@ -29,7 +29,7 @@ const Logo: React.FC<LogoProps> = ({
   link = true,
 }) => {
   const classNames = useMemo(() => {
-    return `flex items-center justify-center ${sizeClasses[size]} ${orientationClasses[orientation]} h-auto`;
+    return `flex items-center  justify-center ${sizeClasses[size]} ${orientationClasses[orientation]} h-auto`;
   }, [size, orientation]);
 
   const logoImage = (
@@ -45,7 +45,7 @@ const Logo: React.FC<LogoProps> = ({
 
   if (link) {
     return (
-      <Link href="/" aria-label="Go to homepage">
+      <Link className="z-50" href="/" aria-label="Go to homepage">
         {logoImage}
       </Link>
     );

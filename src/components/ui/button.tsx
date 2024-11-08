@@ -69,7 +69,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         <div
           className="absolute inset-0 h-[200%] w-[200%] 
         rotate-45 translate-x-[-70%] transition-all 
-        group-hover:scale-100 bg-white/30 group-hover:translate-x-[50%] z-20 duration-1000"
+        group-hover:scale-100 bg-white/50 group-hover:translate-x-[50%] z-20 duration-1000"
         />
         {children}
         {Icon && (
