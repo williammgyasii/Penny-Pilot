@@ -19,24 +19,23 @@ const BenefitsCardLarge = (props: Props) => {
   return (
     <div
       className={cn(
-        "flex flex-col w-full items-start justify-between space-x-6 bg-benefit-card-background px-7 py-7 rounded-xl",
+        "flex flex-col w-full items-start justify-between space-y-6 bg-benefit-card-background px-7 py-7 rounded-xl",
         props.className
       )}
     >
-      <TitleBubble title="PFeaceful Tomorrow" variant="purple" />
-      <div className="flex flex-col w-[50%] items-start h-full justify-between text-ui-ui_dark_500 ">
-        <h2 className="text-4xl text-left mb-7">{props.title}</h2>
-        <p className="text-md font-light font-poppins leading-snug text-left">
-          {props.brief}
-        </p>
-      </div>
-
-      <div className="w-[50%] h-full">
+      <TitleBubble size="small" title="Peaceful Tomorrow" variant="purple" />
+      <div className="h-full">
         <Image
           src={props.image!}
           className="object-cover rounded-xl h-full w-full"
           alt="Product Alt"
         />
+      </div>
+      <div className="flex flex-col md:flex-row w-full  items-center h-full justify-between text-ui-ui_dark_500 ">
+        <h2 className="md:text-3xl text-2xl  text-left">{props.title}</h2>
+        <p className="text-sm w-full md:w-[50%] font-light font-poppins leading-snug text-left">
+          {props.brief}
+        </p>
       </div>
     </div>
   );

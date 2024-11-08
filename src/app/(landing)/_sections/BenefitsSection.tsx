@@ -44,23 +44,23 @@ const BenefitsSection = (props: Props) => {
           fullWidth="100%"
           animationNum={1}
         >
-          <div className="bg-red-900 grid-rows-2 gap-5 grid grid-cols-6">
+          <div className="grid-rows-2 gap-5 grid grid-cols-6">
             <BenefitsCards
-              className="col-span-3"
+              className="md:col-span-3 col-span-6 "
               brief="Automatically move money to savings based on personalized financial recommendations."
               title="Automated Savings"
               image={fintapImage}
             />
             <BenefitsCardLarge
-              className="col-span-3 row-span-2"
-              brief="Automatically move money to savings based on personalized financial recommendations."
-              title="Automated Savings"
+              className="md:col-span-3 col-span-6 md:row-span-2 row-span-1"
+              brief="Guiding your journey comfortable retirement tools guide."
+              title="Retirement Planning"
               image={fintapImage}
             />
             <BenefitsCards
-              className="col-span-3"
-              brief="Automatically move money to savings based on personalized financial recommendations."
-              title="Automated Savings"
+              className="md:col-span-3 col-span-6"
+              brief="Explore a wide range of budget tools tailored to your unique financial goals."
+              title="Budget Options"
               image={fintapImage}
             />
           </div>

@@ -13,24 +13,25 @@ type Props = {
 };
 
 const BenefitsCards = (props: Props) => {
-  console.log(props.title);
-  console.log(props.className);
   return (
     <div
       className={cn(
-        "flex items-start w-full justify-between space-x-6 bg-benefit-card-background px-7 py-7 rounded-xl",
-        props.isReversed ? "flex-row-reverse" : "flex-row",
+        "flex items-start w-full md:justify-between md:space-x-6 bg-benefit-card-background px-7 py-7 rounded-xl",
+        "md:flex-row",
+        "flex-col",
         props.className
       )}
     >
-      <div className="flex flex-col w-[50%] items-start h-full justify-between text-ui-ui_dark_500 ">
-        <h2 className="text-4xl text-left mb-7">{props.title}</h2>
+      <div className="flex flex-col w-full md:w-[50%] items-start max-md:mb-4 md:h-full  md:justify-between text-ui-ui_dark_500 ">
+        <h2 className="md:text-4xl text-2xl text-left md:mb-7">
+          {props.title}
+        </h2>
         <p className="text-md font-light font-poppins leading-snug text-left">
           {props.brief}
         </p>
       </div>
 
-      <div className="w-[50%] h-full">
+      <div className="md:w-[50%] w-full h-full">
         <Image
           src={props.image!}
           className="object-cover rounded-xl h-full w-full"
