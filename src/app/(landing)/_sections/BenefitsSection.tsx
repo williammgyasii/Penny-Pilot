@@ -7,6 +7,7 @@ import SectionTitle from "../_components/SectionTitle";
 import FeaturesCard from "../_components/BenefitsCards";
 import BenefitsCards from "../_components/BenefitsCards";
 import fintapImage from "@public/Fintap.png";
+import BenefitsCardLarge from "../_components/BenefitCardLarge";
 
 type Props = {};
 
@@ -43,7 +44,19 @@ const BenefitsSection = (props: Props) => {
           fullWidth="100%"
           animationNum={1}
         >
-          <div className="bg-red-900 grid grid-cols-6">
+          <div className="bg-red-900 grid-rows-2 gap-5 grid grid-cols-6">
+            <BenefitsCards
+              className="col-span-3"
+              brief="Automatically move money to savings based on personalized financial recommendations."
+              title="Automated Savings"
+              image={fintapImage}
+            />
+            <BenefitsCardLarge
+              className="col-span-3 row-span-2"
+              brief="Automatically move money to savings based on personalized financial recommendations."
+              title="Automated Savings"
+              image={fintapImage}
+            />
             <BenefitsCards
               className="col-span-3"
               brief="Automatically move money to savings based on personalized financial recommendations."

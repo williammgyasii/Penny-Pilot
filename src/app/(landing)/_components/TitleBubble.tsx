@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 
-type Variant = "dark" | "light";
+type Variant = "dark" | "light" | "blue" | "purple";
 
 type Props = {
   title: string;
@@ -14,6 +14,8 @@ const TitleBubble = ({ title, variant = "dark" }: Props) => {
     {
       "bg-ui-ui_dark_300 text-white": variant === "dark",
       "text-white bg-ui-ui_yellow_500": variant === "light",
+      "text-blue-900 bg-ui-ui_light_400": variant === "blue",
+      "text-white bg-purple-900": variant === "purple",
     }
   );
   return <h6 className={bubbleStyle}>{title.toUpperCase()}</h6>;

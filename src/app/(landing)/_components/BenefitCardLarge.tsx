@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import React from "react";
+import TitleBubble from "./TitleBubble";
 
 type Props = {
   title: string;
@@ -12,17 +13,17 @@ type Props = {
   className?: string;
 };
 
-const BenefitsCards = (props: Props) => {
+const BenefitsCardLarge = (props: Props) => {
   console.log(props.title);
   console.log(props.className);
   return (
     <div
       className={cn(
-        "flex items-start w-full justify-between space-x-6 bg-benefit-card-background px-7 py-7 rounded-xl",
-        props.isReversed ? "flex-row-reverse" : "flex-row",
+        "flex flex-col w-full items-start justify-between space-x-6 bg-benefit-card-background px-7 py-7 rounded-xl",
         props.className
       )}
     >
+      <TitleBubble title="PFeaceful Tomorrow" variant="purple" />
       <div className="flex flex-col w-[50%] items-start h-full justify-between text-ui-ui_dark_500 ">
         <h2 className="text-4xl text-left mb-7">{props.title}</h2>
         <p className="text-md font-light font-poppins leading-snug text-left">
@@ -41,4 +42,4 @@ const BenefitsCards = (props: Props) => {
   );
 };
 
-export default BenefitsCards;
+export default BenefitsCardLarge;
