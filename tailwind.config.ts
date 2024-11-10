@@ -12,8 +12,8 @@ const config: Config = {
       animation: {
         border: "border 4s linear infinite",
         "infinite-scroll": "infinite-scroll 40s linear infinite",
-        marquee: "marquee var(--duration) linear infinite",
-        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
+        marquee: "marquee 25s linear infinite",
+        marquee2: "marquee2 25s linear infinite",
         "slow-blob": "blob 15s infinite",
       },
       backgroundImage: {
@@ -26,11 +26,11 @@ const config: Config = {
       keyframes: {
         marquee: {
           from: { transform: "translateX(0)" },
-          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+          to: { transform: "translateX(-100%)" },
         },
-        "marquee-vertical": {
+        marquee2: {
           from: { transform: "translateY(0)" },
-          to: { transform: "translateY(calc(-100% - var(--gap)))" },
+          to: { transform: "translateY(-100%)" },
         },
         blob: {
           "0%": {
@@ -46,7 +46,6 @@ const config: Config = {
             transform: "translate(0px, 0px) scale(1)",
           },
         },
-
         "infinite-scroll": {
           from: {
             transform: "translateX(0)",
@@ -153,6 +152,7 @@ const config: Config = {
       },
     },
   },
+
   plugins: [require("tailwindcss-animate")],
 };
 export default config;

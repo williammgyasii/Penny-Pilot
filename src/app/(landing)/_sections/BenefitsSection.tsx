@@ -9,10 +9,7 @@ import BenefitsCardLarge from "../_components/BenefitCardLarge";
 
 const BenefitsSection = () => {
   return (
-    <SectionLayout
-      withPadding
-      className="bg-custom-gradient py-[4rem]"
-    >
+    <SectionLayout withPadding className="bg-custom-gradient py-[4rem]">
       <div
         className="absolute top-1/4 left-0 -translate-x-2/3 -translate-y-1/2
         w-[500px] h-[500px] rounded-full
