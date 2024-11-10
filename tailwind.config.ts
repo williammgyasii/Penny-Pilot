@@ -24,6 +24,14 @@ const config: Config = {
           "linear-gradient(to bottom, #DEE8F5, #FFFFFF)",
       },
       keyframes: {
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
+        },
         blob: {
           "0%": {
             transform: "translate(0px, 0px) scale(1)",
@@ -38,22 +46,7 @@ const config: Config = {
             transform: "translate(0px, 0px) scale(1)",
           },
         },
-        marquee: {
-          from: {
-            transform: "translateX(0)",
-          },
-          to: {
-            transform: "translateX(calc(-100% - var(--gap)))",
-          },
-        },
-        "marquee-vertical": {
-          from: {
-            transform: "translateY(0)",
-          },
-          to: {
-            transform: "translateY(calc(-100% - var(--gap)))",
-          },
-        },
+
         "infinite-scroll": {
           from: {
             transform: "translateX(0)",

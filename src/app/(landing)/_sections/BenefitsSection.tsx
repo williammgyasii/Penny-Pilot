@@ -11,7 +11,7 @@ const BenefitsSection = () => {
   return (
     <SectionLayout
       withPadding
-      className="md:overflow-hidden bg-custom-gradient py-[4rem]"
+      className="bg-custom-gradient py-[4rem]"
     >
       <div
         className="absolute top-1/4 left-0 -translate-x-2/3 -translate-y-1/2
