@@ -7,11 +7,14 @@ import Image from "next/image";
 import fintapImage from "@public/Fintap.png";
 import GradientBorder from "@/animated/GradientBorder";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowBigDownDashIcon, ArrowUpRight } from "lucide-react";
 
 const ExceptionalSection = () => {
   return (
-    <SectionLayout withPadding className="bg-ui-ui_light_200 -mt-2 py-[4rem] ">
+    <SectionLayout
+      withPadding
+      className="bg-ui-ui_light_200 -mt-2 py-[4rem] overflow-hidden "
+    >
       <div
         className="absolute top-1/4 left-0 -translate-x-2/3
         w-[500px] h-[500px] rounded-full
@@ -46,8 +49,8 @@ const ExceptionalSection = () => {
           animationNum={1}
         >
           <div
-            className="grid-cols-6 gap-6 grid w-[80%] 
-          overflow-hidden  relative rounded-xl bg-ui-ui_dark_700 p-10"
+            className="grid-cols-6 gap-6 grid w-full lg:w-[85%] 
+          overflow-hidden  relative rounded-xl bg-ui-ui_dark_700 lg:p-10 p-4"
           >
             <div
               className="absolute top-1/4 left-0 translate-y-1/3
@@ -58,16 +61,16 @@ const ExceptionalSection = () => {
         animate-[pulse_8s_ease-in-out_infinite]
         hover:bg-blue-500/40 transition-colors duration-2000"
             />
-            <div className="col-span-2 flex items-center justify-center z-10">
+            <div className="col-span-6 md:col-span-2 flex items-center justify-center z-10">
               <Image
                 src={fintapImage}
                 alt="Financial Discipline"
                 className="object-cover rounded-xl w-full h-full"
               />
             </div>
-            <div className="col-span-4 z-10 flex flex-col  items-start w-full text-white space-y-3">
+            <div className="col-span-6 md:col-span-4 z-10 flex flex-col  items-start w-full text-white space-y-3">
               <h1
-                className="text-4xl text-center md:text-left md:text-4xl lg:text-5xl xl:text-6xl
+                className="text-4xl text-center md:text-left md:text-3xl lg:text-4xl xl:text-5xl
             text-balance w-full md:w-full  leading-little tracking-tighter 
             font-poppins font-medium"
               >
@@ -79,9 +82,11 @@ const ExceptionalSection = () => {
                   control, and seamless transactions.
                 </p>
               </GradientBorder>
-              <Button size={"lg"} variant={"ghost"} icon={ArrowUpRight}>
-                Read More
-              </Button>
+              <div className="w-full flex justify-center md:justify-start ">
+                <Button size={"lg"} variant={"ghost"} icon={ArrowBigDownDashIcon}>
+                  Read More
+                </Button>
+              </div>
             </div>
           </div>
         </ScrollFadeInEffect>
