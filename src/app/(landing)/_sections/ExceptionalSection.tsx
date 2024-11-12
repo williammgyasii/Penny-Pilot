@@ -49,14 +49,23 @@ const ExceptionalSection = () => {
             className="grid-cols-6 gap-6 grid w-[80%] 
           overflow-hidden  relative rounded-xl bg-ui-ui_dark_700 p-10"
           >
-            <div className="col-span-2 flex items-center justify-center">
+            <div
+              className="absolute top-1/4 left-0 translate-y-1/3
+        w-[800px] h-[500px] rounded-full
+        bg-blue-500 
+        blur-xl 
+        z-1
+        animate-[pulse_8s_ease-in-out_infinite]
+        hover:bg-blue-500/40 transition-colors duration-2000"
+            />
+            <div className="col-span-2 flex items-center justify-center z-10">
               <Image
                 src={fintapImage}
                 alt="Financial Discipline"
                 className="object-cover rounded-xl w-full h-full"
               />
             </div>
-            <div className="col-span-4 flex flex-col  items-start w-full text-white space-y-3">
+            <div className="col-span-4 z-10 flex flex-col  items-start w-full text-white space-y-3">
               <h1
                 className="text-4xl text-center md:text-left md:text-4xl lg:text-5xl xl:text-6xl
             text-balance w-full md:w-full  leading-little tracking-tighter 
@@ -74,6 +83,21 @@ const ExceptionalSection = () => {
                 Read More
               </Button>
             </div>
+          </div>
+        </ScrollFadeInEffect>
+
+        <ScrollFadeInEffect
+          fullWidth="100%"
+          className="pt-[10rem]"
+          animationNum={0}
+        >
+          <div className="md:space-y-5  space-y-1 items-center flex flex-col">
+            <TitleBubble title="Explore our benefits" variant="blue" />
+            <SectionTitle
+              dark
+              subtitle="Explore what makes us exceptional in the finance industry. Experience innovative solutions, personalized services, and seamless transactions."
+              title="Make a Lasting Financial Journey With Finance"
+            />
           </div>
         </ScrollFadeInEffect>
       </div>
