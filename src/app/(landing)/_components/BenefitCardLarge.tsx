@@ -14,8 +14,6 @@ type Props = {
 };
 
 const BenefitsCardLarge = (props: Props) => {
-  console.log(props.title);
-  console.log(props.className);
   return (
     <div
       className={cn(
