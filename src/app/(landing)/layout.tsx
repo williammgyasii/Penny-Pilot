@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./_components/Navbar";
 import { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import Footer from "./_components/Footer";
 
 type Props = {
   children: Readonly<React.ReactNode>;
@@ -9,7 +10,7 @@ type Props = {
 
 const poppinsFont = Poppins({
   subsets: ["latin"],
-  weight: ["400","100","200"],
+  weight: ["400", "100", "200"],
   variable: "--font-poppins",
 });
 
@@ -23,6 +24,7 @@ const LandingPageLayout = ({ children }: Props) => {
     <>
       <Navbar />
       <main className={`${poppinsFont.variable}`}>{children}</main>
+      <Footer />
     </>
   );
 };
