@@ -12,8 +12,8 @@ const config: Config = {
       animation: {
         border: "border 4s linear infinite",
         "infinite-scroll": "infinite-scroll 40s linear infinite",
-        marquee: "marquee 25s linear infinite",
-        marquee2: "marquee2 25s linear infinite",
+        marquee: "marquee var(--duration) linear infinite",
+        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
         "slow-blob": "blob 15s infinite",
       },
       backgroundImage: {
@@ -25,12 +25,12 @@ const config: Config = {
       },
       keyframes: {
         marquee: {
-          from: { transform: "translateX(0)" },
-          to: { transform: "translateX(-100%)" },
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(calc(-100% - var(--gap)))" },
         },
         marquee2: {
-          from: { transform: "translateY(0)" },
-          to: { transform: "translateY(-100%)" },
+          "0%": { transform: "translateY(0)" },
+          "100%": { transform: "translateY(-100%)" },
         },
         blob: {
           "0%": {
