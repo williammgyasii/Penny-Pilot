@@ -7,7 +7,7 @@ import Image from "next/image";
 import fintapImage from "@public/Fintap.png";
 import GradientBorder from "@/animated/GradientBorder";
 import { Button } from "@/components/ui/button";
-import { ArrowBigDownDashIcon, ArrowUpRight } from "lucide-react";
+import { ArrowBigDownDashIcon, ArrowBigLeft, ArrowUpRight } from "lucide-react";
 
 const ExceptionalSection = () => {
   return (
@@ -83,26 +83,11 @@ const ExceptionalSection = () => {
                 </p>
               </GradientBorder>
               <div className="w-full flex justify-center md:justify-start ">
-                <Button size={"lg"} variant={"ghost"} icon={ArrowBigDownDashIcon}>
+                <Button size={"lg"} variant={"ghost"} icon={ArrowBigLeft}>
                   Read More
                 </Button>
               </div>
             </div>
-          </div>
-        </ScrollFadeInEffect>
-
-        <ScrollFadeInEffect
-          fullWidth="100%"
-          className="pt-[10rem]"
-          animationNum={0}
-        >
-          <div className="md:space-y-5  space-y-1 items-center flex flex-col">
-            <TitleBubble title="Explore our benefits" variant="blue" />
-            <SectionTitle
-              dark
-              subtitle="Explore what makes us exceptional in the finance industry. Experience innovative solutions, personalized services, and seamless transactions."
-              title="Make a Lasting Financial Journey With Finance"
-            />
           </div>
         </ScrollFadeInEffect>
       </div>

@@ -19,7 +19,7 @@ const HeroSection = () => {
         <div className="col-span-2 md:col-span-1 flex flex-col justify-start md:space-y-3 lg:space-y-4 space-y-6 items-start w-full ">
           <ScrollFadeInEffect animationNum={0}>
             <div className=" space-y-5 md:space-y-5 items-center flex flex-col md:items-start">
-              <TitleBubble title="Join the future" variant="dark" />
+              <TitleBubble title="Join the future" variant="purple" />
               <h1
                 className="text-4xl text-center md:text-left md:text-4xl lg:text-5xl xl:text-7xl
             text-balance w-full md:w-full lg:w-[80%] leading-little tracking-tighter 
