@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 const buttonVariants = cva(
   `inline-flex items-center justify-center relative gap-2 whitespace-nowrap rounded-md 
   text-sm font-medium ring-offset-background transition-colors overflow-hidden
-  group bg-blue-600 px-7 py-2.5`,
+  group  px-7 py-2.5`,
   {
     variants: {
       variant: {
@@ -20,7 +20,7 @@ const buttonVariants = cva(
           "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        ghost: " bg-gray-600 hover:text-white",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
@@ -67,7 +67,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         <div
-          className="absolute inset-0 h-[200%] w-[200%] 
+          className="absolute  inset-0 h-[200%] w-[200%] 
         rotate-45 translate-x-[-70%] transition-all 
         group-hover:scale-100 bg-white/50 group-hover:translate-x-[50%] z-20 duration-1000"
         />

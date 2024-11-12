@@ -5,6 +5,9 @@ import TitleBubble from "../_components/TitleBubble";
 import SectionTitle from "../_components/SectionTitle";
 import Image from "next/image";
 import fintapImage from "@public/Fintap.png";
+import GradientBorder from "@/animated/GradientBorder";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
 
 const ExceptionalSection = () => {
   return (
@@ -43,24 +46,33 @@ const ExceptionalSection = () => {
           animationNum={1}
         >
           <div
-            className="grid-cols-2 gap-5 grid w-[80%] 
-          overflow-hidden h-[25rem] relative rounded-xl bg-ui-ui_dark_700 p-3"
+            className="grid-cols-6 gap-6 grid w-[80%] 
+          overflow-hidden  relative rounded-xl bg-ui-ui_dark_700 p-10"
           >
-            <div className="col-span-1">
+            <div className="col-span-2 flex items-center justify-center">
               <Image
                 src={fintapImage}
                 alt="Financial Discipline"
                 className="object-cover rounded-xl w-full h-full"
               />
             </div>
-            <div className="col-span-1 flex flex-col items-start w-full">
-              <div className="text-white text-xl font-bold">
-                Fintap is an innovative financial discipline made easy
-              </div>
-              <div className="text-white text-sm">
-                With Fintap, you can explore personalized solutions, seamless
-                transactions, and personalized insights.
-              </div>
+            <div className="col-span-4 flex flex-col  items-start w-full text-white space-y-3">
+              <h1
+                className="text-4xl text-center md:text-left md:text-4xl lg:text-5xl xl:text-6xl
+            text-balance w-full md:w-full  leading-little tracking-tighter 
+            font-poppins font-medium"
+              >
+                Redefine your finances with the best way
+              </h1>
+              <GradientBorder>
+                <p className="text-sm text-center md:text-left p-3  text-ui-ui_light_400 leading-relaxed">
+                  Financial Cards transform banking, offering convenience,
+                  control, and seamless transactions.
+                </p>
+              </GradientBorder>
+              <Button size={"lg"} variant={"ghost"} icon={ArrowUpRight}>
+                Read More
+              </Button>
             </div>
           </div>
         </ScrollFadeInEffect>
