@@ -23,8 +23,9 @@ const FeaturesSection = () => {
 
         <FeaturesCard
           title="Personalized Budget Planner Tool"
+          subtitle="Navigate your financial journey with our Comprehensive Debt Management system, effective debt reduction strategies."
           topIcon={Coins}
-          className="w-full bg-red-900"
+          className="w-full"
         />
       </div>
     </SectionLayout>
