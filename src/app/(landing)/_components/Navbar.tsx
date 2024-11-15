@@ -5,7 +5,8 @@ import React, { useState } from "react";
 import NavLink from "./NavLink";
 import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { ArrowRight, ArrowRightCircle, Menu, X } from "lucide-react";
+import LinkButton from "@/components/LinkButton";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -47,13 +48,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Login Button */}
-        <Button
-          className="hidden md:flex bg-ui-ui_blue_500"
-          onClick={() => router.push("/login")}
-        >
-          <span>Login</span>
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
+        <LinkButton icon={ArrowRightCircle} href={"/login"} title="Login" />
 
         {/* Mobile Menu Button */}
         <button

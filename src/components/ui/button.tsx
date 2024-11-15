@@ -4,6 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const buttonVariants = cva(
   `inline-flex items-center justify-center relative gap-2 whitespace-nowrap rounded-md 
@@ -43,6 +44,8 @@ export interface ButtonProps
   asChild?: boolean;
   icon?: LucideIcon;
   iconSize?: number;
+  href?: string;
+  isLink?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -55,6 +58,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       icon: Icon,
       iconSize = 24,
       children,
+      href,
+      isLink = false,
       ...props
     },
     ref
@@ -63,6 +68,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
+        // href={href}
         ref={ref}
         {...props}
       >

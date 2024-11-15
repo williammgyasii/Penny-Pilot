@@ -5,9 +5,11 @@ import Image from "next/image";
 import TitleBubble from "../_components/TitleBubble";
 import GradientBorder from "@/animated/GradientBorder";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRightCircle, ArrowUpRight, CircleArrowRight } from "lucide-react";
 import { ScrollFadeInEffect } from "@/animated/ScrollFadeInEffect";
 import BrandsMarquee from "../_components/BrandsMarquee";
+import Link from "next/link";
+import LinkButton from "@/components/LinkButton";
 
 const HeroSection = () => {
   return (
@@ -35,17 +37,23 @@ const HeroSection = () => {
                 Penny Pilot is designed to help you track earnings, manage
                 expenses, and project future income, all in one place. Our
                 tailored insights make it easier than ever to navigate the
-                unpredictable income streams of freelancing and gig work. Start
-                taking control of your financial future today.
+                unpredictable income streams. Start taking control of your
+                financial future today.
               </p>
             </GradientBorder>
           </ScrollFadeInEffect>
 
           <ScrollFadeInEffect fullWidth={"100%"} animationNum={1}>
             <div className="w-full flex justify-center md:justify-start ">
-              <Button size={"lg"}  icon={ArrowUpRight}>
-                Lets Get Started
-              </Button>
+              {/* <CustomLinkButton href={"/register"}>
+                <span>Lets Get Started</span>
+                <CircleArrowRight />
+              </CustomLinkButton> */}
+              <LinkButton
+                icon={ArrowRightCircle}
+                href={"/register"}
+                title="Get Started"
+              />
             </div>
           </ScrollFadeInEffect>
         </div>
