@@ -43,7 +43,7 @@ const HeroSection = () => {
 
           <ScrollFadeInEffect fullWidth={"100%"} animationNum={1}>
             <div className="w-full flex justify-center md:justify-start ">
-              <Button size={"lg"} icon={ArrowUpRight}>
+              <Button size={"lg"}  icon={ArrowUpRight}>
                 Lets Get Started
               </Button>
             </div>
