@@ -64,7 +64,7 @@ const ReviewCard = ({
       className={cn(
         "relative w-64 cursor-pointer overflow-hidden rounded-xl p-4",
         // light styles
-        "bg-ui-ui_dark_500 hover:bg-gray-950/[.05] ",
+        "bg-ui-ui_dark_500 hover:bg-gray-950/[.05] m-1 ",
         // dark styles
         "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]"
       )}
@@ -111,13 +111,29 @@ const TestimonialsSection = () => {
           <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-gray-800 to-transparent z-10"></div>
 
           {/* ACTUAL MARQUEE */}
+          {/* <div
+            className={
+              "flex shrink-0 justify-around animate-marquee flex-row hover:[animation-play-state:paused] [animation-direction:reverse]"
+            }
+          >
+            {firstRow.map((review) => (
+              <ReviewCard key={review.username} {...review} />
+            ))}
+            {firstRow.map((review) => (
+              <ReviewCard key={review.username} {...review} />
+            ))}
+            {firstRow.map((review) => (
+              <ReviewCard key={review.username} {...review} />
+            ))}
+            
+          </div> */}
 
-          <Marquee reverse className="[--duration:20s]">
+          <Marquee className="[--duration:20s]">
             {secondRow.map((review) => (
               <ReviewCard key={review.username} {...review} />
             ))}
           </Marquee>
-          <Marquee className="[--duration:20s]">
+          <Marquee reverse className="[--duration:20s]">
             {secondRow.map((review) => (
               <ReviewCard key={review.username} {...review} />
             ))}

@@ -26,7 +26,7 @@ const config: Config = {
       keyframes: {
         marquee: {
           "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(calc(-100% - var(--gap)))" },
+          "100%": { transform: "translateX(-100%)" },
         },
         marquee2: {
           "0%": { transform: "translateY(0)" },
