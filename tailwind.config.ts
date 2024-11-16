@@ -10,6 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       animation: {
+        gradient: 'animatedgradient 6s ease infinite alternate',
         border: "border 4s linear infinite",
         "infinite-scroll": "infinite-scroll 40s linear infinite",
         marquee: "marquee var(--duration) linear infinite",
@@ -23,7 +24,15 @@ const config: Config = {
         "benefit-card-background":
           "linear-gradient(to bottom, #DEE8F5, #FFFFFF)",
       },
+      backgroundSize: {
+        "300%": "300%",
+      },
       keyframes: {
+        animatedgradient: {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
         marquee: {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-100%)" },
