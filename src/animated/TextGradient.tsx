@@ -1,3 +1,4 @@
+"use client";
 import { cn } from "@/lib/utils";
 
 declare type Variants = "small" | "medium" | "large";
@@ -14,17 +15,16 @@ declare type TextGradientProps = {
 
 export default function TextGradient({
   gradientType = "gray",
+  text,
   ...props
 }: TextGradientProps) {
   const from = props.from || "from-orange-700";
   const via = props.via || "via-blue-500";
   const to = props.to || "to-green-400";
 
-  const styles = cn(
-    "bg-gradient-to-r text-purple-500 text-white font-bold text-5xl text-transparent bg-clip-text animate-gradient",
-    props.className,
-    "bg-[linear-gradient(to_right,theme(colors.indigo.400),theme(colors.indigo.100),theme(colors.sky.400),theme(colors.fuchsia.400),theme(colors.sky.400),theme(colors.indigo.100),theme(colors.indigo.400))]"
+  return (
+    <h1 className="animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent text-5xl font-black">
+      {text}
+    </h1>
   );
-
-  return <h1 className={styles}>{props.text}</h1>;
 }
