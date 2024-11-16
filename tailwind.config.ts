@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       animation: {
-        gradient: 'animatedgradient 6s ease infinite alternate',
+        gradient: "gradient 8s linear infinite",
         border: "border 4s linear infinite",
         "infinite-scroll": "infinite-scroll 40s linear infinite",
         marquee: "marquee var(--duration) linear infinite",
@@ -28,10 +28,8 @@ const config: Config = {
         "300%": "300%",
       },
       keyframes: {
-        animatedgradient: {
-          "0%": { backgroundPosition: "0% 50%" },
-          "50%": { backgroundPosition: "100% 50%" },
-          "100%": { backgroundPosition: "0% 50%" },
+        gradient: {
+          to: { "background-position": "200% center" },
         },
         marquee: {
           "0%": { transform: "translateX(0)" },
