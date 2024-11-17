@@ -1,4 +1,5 @@
 "use client";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -214,15 +215,15 @@ export default function RegisterReactForm() {
             />
 
             <Button
-              className="w-full"
+              className="w-full "
               isLoading={form.formState.isSubmitting}
               disabled={form.formState.isSubmitting}
               type="submit"
             >
-              Submit
+              Register
             </Button>
           </form>
-          
+          <GoogleSignInButton />
         </div>
       </Form>
     </>
