@@ -3,7 +3,8 @@ import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Check, X } from "lucide-react";
+import { useForm } from "react-hook-form";
 
 interface FormData {
   firstName: string;
@@ -21,6 +22,13 @@ interface FormErrors {
 
 interface PasswordStrengthIndicatorProps {
   strength: number;
+}
+
+interface PasswordRule {
+  id: string;
+  label: string;
+  validator: (password: string) => boolean;
+  met: boolean;
 }
 
 const PasswordStrengthIndicator: React.FC<PasswordStrengthIndicatorProps> = ({
@@ -46,7 +54,79 @@ const PasswordStrengthIndicator: React.FC<PasswordStrengthIndicatorProps> = ({
   );
 };
 
+const PasswordRequirements: React.FC<{ password: string }> = ({ password }) => {
+  const [rules, setRules] = useState<PasswordRule[]>([
+    {
+      id: "length",
+      label: "At least 8 characters long",
+      validator: (pass) => pass.length >= 8,
+      met: false,
+    },
+    {
+      id: "uppercase",
+      label: "Contains uppercase letter",
+      validator: (pass) => /[A-Z]/.test(pass),
+      met: false,
+    },
+    {
+      id: "lowercase",
+      label: "Contains lowercase letter",
+      validator: (pass) => /[a-z]/.test(pass),
+      met: false,
+    },
+    {
+      id: "number",
+      label: "Contains number",
+      validator: (pass) => /[0-9]/.test(pass),
+      met: false,
+    },
+    {
+      id: "special",
+      label: "Contains special character",
+      validator: (pass) => /[^A-Za-z0-9]/.test(pass),
+      met: false,
+    },
+  ]);
+
+  useEffect(() => {
+    setRules((prevRules) =>
+      prevRules.map((rule) => ({
+        ...rule,
+        met: rule.validator(password),
+      }))
+    );
+  }, [password]);
+
+  return (
+    <div className="mt-2 space-y-2">
+      <p className="text-sm font-medium text-gray-700">
+        Password requirements:
+      </p>
+      <ul className="space-y-1">
+        {rules.map((rule) => (
+          <li
+            key={rule.id}
+            className="flex items-center gap-2 text-sm transition-colors duration-200"
+          >
+            <span className="flex-shrink-0">
+              {rule.met ? (
+                <Check className="w-4 h-4 text-green-500" />
+              ) : (
+                <X className="w-4 h-4 text-red-500" />
+              )}
+            </span>
+            <span className={rule.met ? "text-green-700" : "text-gray-600"}>
+              {rule.label}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
 const RegistrationForm: React.FC = () => {
+  const form = useForm();
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -108,69 +188,77 @@ const RegistrationForm: React.FC = () => {
   };
 
   return (
-    <div className="w-full bg-red-900">
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
+    <Card className="w-full max-w-2xl mx-auto">
+      <CardHeader>
+        <CardTitle className="text-2xl font-bold text-center">
+          Create Account
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Input
+                placeholder="First Name"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                className={errors.firstName ? "border-red-500" : ""}
+              />
+              {errors.firstName && (
+                <p className="text-red-500 text-sm">{errors.firstName}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <Input
+                placeholder="Last Name"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                className={errors.lastName ? "border-red-500" : ""}
+              />
+              {errors.lastName && (
+                <p className="text-red-500 text-sm">{errors.lastName}</p>
+              )}
+            </div>
+          </div>
+
           <div className="space-y-2">
             <Input
-              placeholder="First Name"
-              name="firstName"
-              value={formData.firstName}
+              placeholder="Email"
+              type="email"
+              name="email"
+              value={formData.email}
               onChange={handleChange}
-              className={errors.firstName ? "border-red-500" : ""}
+              className={`w-full ${errors.email ? "border-red-500" : ""}`}
             />
-            {errors.firstName && (
-              <p className="text-red-500 text-sm">{errors.firstName}</p>
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email}</p>
             )}
           </div>
+
           <div className="space-y-2">
             <Input
-              placeholder="Last Name"
-              name="lastName"
-              value={formData.lastName}
+              placeholder="Password"
+              type="password"
+              name="password"
+              value={formData.password}
               onChange={handleChange}
-              className={errors.lastName ? "border-red-500" : ""}
+              className={`w-full ${errors.password ? "border-red-500" : ""}`}
             />
-            {errors.lastName && (
-              <p className="text-red-500 text-sm">{errors.lastName}</p>
+            <PasswordStrengthIndicator strength={passwordStrength} />
+            <PasswordRequirements password={formData.password} />
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password}</p>
             )}
           </div>
-        </div>
 
-        <div className="space-y-2">
-          <Input
-            placeholder="Email"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className={`w-full ${errors.email ? "border-red-500" : ""}`}
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email}</p>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <Input
-            placeholder="Password"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className={`w-full ${errors.password ? "border-red-500" : ""}`}
-          />
-          <PasswordStrengthIndicator strength={passwordStrength} />
-          {errors.password && (
-            <p className="text-red-500 text-sm">{errors.password}</p>
-          )}
-        </div>
-
-        <Button type="submit" className="w-full">
-          Register
-        </Button>
-      </form>
-    </div>
+          <Button type="submit" className="w-full">
+            Register
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 };
 
