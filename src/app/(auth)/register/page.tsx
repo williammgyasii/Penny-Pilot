@@ -1,9 +1,9 @@
-"use client";
 import { Metadata } from "next";
 import React from "react";
 import registerBackground from "@public/Fintap.png";
 import Image from "next/image";
 import TextGradient from "@/animated/TextGradient";
+import RegisterForm from "./_components/RegisterForm";
 
 export const metadata: Metadata = {
   title: "Register Page",
@@ -42,11 +42,12 @@ const RegisterPage = () => {
       </div>
 
       <div className="col-span-8 md:col-span-5 lg:col-span-4 h-full -ml-2 py-[6rem]">
-        <div className="flex flex-col items-center justify-center w-full">
+        <div className="flex flex-col items-center justify-center w-full space-y-1 px-[5rem]">
           <TextGradient
             text="Create Account"
             subtitle="Getting started on your path to freedom"
           />
+          <RegisterForm />
         </div>
       </div>
     </div>
