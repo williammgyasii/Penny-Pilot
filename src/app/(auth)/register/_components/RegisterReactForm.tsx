@@ -1,5 +1,5 @@
 "use client";
-import { SIGN_UP_SCHEMA, SignUpSchema } from "@/types/types";
+import { SIGN_UP_SCHEMA, SignUpSchema } from "@/types/registerTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as React from "react";
 import { useForm } from "react-hook-form";
@@ -12,6 +12,7 @@ export default function RegisterReactForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
     getValues,
+    setError,
     reset,
   } = useForm<SIGN_UP_SCHEMA>({
     resolver: zodResolver(SignUpSchema),
