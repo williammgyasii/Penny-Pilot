@@ -90,7 +90,7 @@ const PasswordRequirements: React.FC<{ password: string }> = ({ password }) => {
   }, [password]);
 
   return (
-    <div className="mt-2 space-y-2 bg-gray-800 rounded-lg px-4 py-3 text-white text-sm">
+    <div className="mt-2 space-y-2 bg-gray-800 rounded-lg px-4 py-3 text-white text-xs">
       <div className="flex flex-row items-center w-full justify-center space-x-2">
         <Info size={20} className="inline-block" />
         <p className="font-medium text-white">Password requirements:</p>
@@ -132,95 +132,98 @@ export default function RegisterReactForm() {
   return (
     <>
       <Form {...form}>
-        <form onSubmit={onSubmit} className="space-y-4 pt-4 w-[80%]">
-          <div className="grid grid-cols-2 w-full gap-2">
-            <FormField
-              control={form.control}
-              name="firstName"
-              render={({ field }) => (
-                <FormItem className="col-span-1">
-                  {/* <FormLabel>First Name</FormLabel> */}
-                  <FormControl>
-                    <Input
-                      type="text"
-                      className="focus:border-cyan-700"
-                      placeholder="First Name"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem className="col-span-1">
-                  {/* <FormLabel>First Name</FormLabel> */}
-                  <FormControl>
-                    <Input
-                      type="text"
-                      className="focus:border-cyan-700"
-                      placeholder="Last Name"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                {/* <FormLabel>First Name</FormLabel> */}
-                <FormControl>
-                  <Input
-                    type="email"
-                    className="focus:border-cyan-700"
-                    placeholder="Email"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                {/* <FormLabel>First Name</FormLabel> */}
-                <FormControl>
-                  <Input
-                    type="password"
-                    className="focus:border-cyan-700"
-                    placeholder="Password"
-                    {...field}
-                  />
-                </FormControl>
-                {form.formState.errors.password && (
-                  <PasswordRequirements password={field.value} />
+        <div className="pt-4 w-[80%]">
+          <form onSubmit={onSubmit} className="space-y-4 ">
+            <div className="grid grid-cols-2 w-full gap-2">
+              <FormField
+                control={form.control}
+                name="firstName"
+                render={({ field }) => (
+                  <FormItem className="col-span-1">
+                    {/* <FormLabel>First Name</FormLabel> */}
+                    <FormControl>
+                      <Input
+                        type="text"
+                        className="focus:border-cyan-700"
+                        placeholder="First Name"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
                 )}
-                {/* <FormMessage /> */}
-              </FormItem>
-            )}
-          />
+              />
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem className="col-span-1">
+                    {/* <FormLabel>First Name</FormLabel> */}
+                    <FormControl>
+                      <Input
+                        type="text"
+                        className="focus:border-cyan-700"
+                        placeholder="Last Name"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-          <Button
-            className="w-full"
-            isLoading={form.formState.isSubmitting}
-            disabled={form.formState.isSubmitting}
-            type="submit"
-          >
-            Submit
-          </Button>
-        </form>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  {/* <FormLabel>First Name</FormLabel> */}
+                  <FormControl>
+                    <Input
+                      type="email"
+                      className="focus:border-cyan-700"
+                      placeholder="Email"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  {/* <FormLabel>First Name</FormLabel> */}
+                  <FormControl>
+                    <Input
+                      type="password"
+                      className="focus:border-cyan-700"
+                      placeholder="Password"
+                      {...field}
+                    />
+                  </FormControl>
+                  {form.formState.errors.password && (
+                    <PasswordRequirements password={field.value} />
+                  )}
+                  {/* <FormMessage /> */}
+                </FormItem>
+              )}
+            />
+
+            <Button
+              className="w-full"
+              isLoading={form.formState.isSubmitting}
+              disabled={form.formState.isSubmitting}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </form>
+          
+        </div>
       </Form>
     </>
   );
