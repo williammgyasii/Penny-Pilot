@@ -1,31 +1,27 @@
 "use client";
-import { cn } from "@/lib/utils";
 
-// declare type Variants = "small" | "medium" | "large";
-declare type GradientColors = "gray" | "green";
 declare type TextGradientProps = {
   text: string;
-  from?: string;
-  via?: string;
-  to?: string;
-  // variant`s: Variants;
   className?: string;
-  gradientType?: GradientColors;
   subtitle?: string;
 };
 
-export default function TextGradient({
-  gradientType = "gray",
-  text,
-  subtitle,
-  ...props
-}: TextGradientProps) {
+const TextGradient = ({ text, subtitle }: TextGradientProps) => {
   return (
-    <>
-      <h1 className="animate-text font-semibold font-poppins bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent text-6xl">
+    <div className="relative">
+      <h1
+        className={`font-semibold text-6xl font-poppins 
+        [background:linear-gradient(to_right,theme(colors.teal.500),theme(colors.purple.500),theme(colors.orange.500))]
+        [-webkit-background-clip:text] [background-clip:text] text-transparent
+        [animation:gradient_5s_ease-in-out_infinite] bg-[length:200%_auto]`}
+      >
         {text}
       </h1>
-      <span className="inline-block text-red-900 text-sm">{subtitle}</span>
-    </>
+      {subtitle && (
+        <span className="inline-block text-blue-900 text-sm">{subtitle}</span>
+      )}
+    </div>
   );
-}
+};
+
+export default TextGradient;
