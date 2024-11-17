@@ -42,9 +42,6 @@ const RegisterPage = () => {
 
       <div className="col-span-8 md:col-span-5 lg:col-span-4 h-full -ml-2 py-[6rem]">
         <div className="flex flex-col items-center justify-center w-full">
-          <h1 className="animate-text font-semibold bg-clip-text text-transparent text-6xl font-poppins bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 background-animate">
-            Create Account
-          </h1>
           <TextGradient
             text="Create Account"
             subtitle="Create an account to get started"
