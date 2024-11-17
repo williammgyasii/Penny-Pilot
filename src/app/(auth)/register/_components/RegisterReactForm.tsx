@@ -1,38 +1,61 @@
 "use client";
-import { SIGN_UP_SCHEMA, SignUpSchema } from "@/types/registerTypes";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { REGISTER_SCHEMA, TYPE_REGISTER_SCHEMA } from "@/schema/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as React from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 export default function RegisterReactForm() {
-  const {
-    register,
-    setValue,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    getValues,
-    setError,
-    reset,
-  } = useForm<SIGN_UP_SCHEMA>({
-    resolver: zodResolver(SignUpSchema),
+  const form = useForm<TYPE_REGISTER_SCHEMA>({
+    resolver: zodResolver(REGISTER_SCHEMA),
   });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = form.handleSubmit((data: TYPE_REGISTER_SCHEMA) => {
     console.log(data);
-    reset();
+    // reset();
   });
   // firstName and lastName will have correct type
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col space-y-4">
-      <label>First Name</label>
-      <input {...register("firstName", { required: "Email is required" })} />
-      <label>Last Name</label>
-      <input {...register("lastName", { required: "Password is required" })} />
-      <button className="bg-blue-800" type="button">
-        SetValue
-      </button>
-    </form>
+    <>
+      <Form {...form}>
+        <form onSubmit={onSubmit} className="space-y-8 pt-4 w-[80%]">
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem>
+                {/* <FormLabel>First Name</FormLabel> */}
+                <FormControl>
+                  <Input
+                    className="focus:border-cyan-700"
+                    placeholder="First Name"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            className="w-full"
+            isLoading={form.formState.isSubmitting}
+            disabled={form.formState.isSubmitting}
+            type="submit"
+          >
+            Submit
+          </Button>
+        </form>
+      </Form>
+    </>
   );
 }

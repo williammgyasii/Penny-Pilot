@@ -2,9 +2,9 @@ import * as React from "react";
 
 import { cva, type VariantProps } from "class-variance-authority";
 import { LucideIcon } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import Spinner from "../Spinner";
 
 const buttonVariants = cva(
   `inline-flex items-center justify-center relative gap-2 whitespace-nowrap rounded-md 
@@ -46,6 +46,7 @@ export interface ButtonProps
   iconSize?: number;
   href?: string;
   isLink?: boolean;
+  isLoading?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -60,6 +61,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       href,
       isLink = false,
+      isLoading = false,
       ...props
     },
     ref
@@ -78,6 +80,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         group-hover:scale-100 bg-white/50 group-hover:translate-x-[50%] z-20 duration-1000"
         />
         {children}
+        {isLoading && <Spinner />}
         {Icon && (
           <span
             className="inline-block transition-transform 

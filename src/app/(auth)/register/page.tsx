@@ -43,7 +43,7 @@ const RegisterPage = () => {
       </div>
 
       <div className="col-span-8 md:col-span-5 lg:col-span-4 h-full -ml-2 py-[6rem]">
-        <div className="flex flex-col items-center justify-center w-full space-y-1 px-[5rem]">
+        <div className="flex flex-col items-center justify-center w-full px-[5rem]">
           <TextGradient
             text="Create Account"
             subtitle="Getting started on your path to freedom"
