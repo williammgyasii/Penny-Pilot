@@ -1,3 +1,4 @@
+"use client";
 import { Metadata } from "next";
 import React from "react";
 import registerBackground from "@public/Fintap.png";
@@ -44,7 +45,7 @@ const RegisterPage = () => {
         <div className="flex flex-col items-center justify-center w-full">
           <TextGradient
             text="Create Account"
-            subtitle="Create an account to get started"
+            subtitle="Getting started on your path to freedom"
           />
         </div>
       </div>
