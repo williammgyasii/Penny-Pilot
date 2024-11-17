@@ -1,22 +1,9 @@
 "use client";
-import { SignUpData } from "@/types/types";
+import { SIGN_UP_SCHEMA, SignUpSchema } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-const SignUpSchema = z
-  .object({
-    firstName: z.string().min(2),
-    lastName: z.string().min(2),
-    email: z.string().email(),
-    password: z.string().min(10, "Password must be at least 10 characters"),
-    confirmPassword: z.string().min(10),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
 
 export default function RegisterReactForm() {
   const {
@@ -26,7 +13,7 @@ export default function RegisterReactForm() {
     formState: { errors, isSubmitting },
     getValues,
     reset,
-  } = useForm<SignUpData>({
+  } = useForm<SIGN_UP_SCHEMA>({
     resolver: zodResolver(SignUpSchema),
   });
 
