@@ -4,10 +4,7 @@ export const REGISTER_SCHEMA = z
   .object({
     firstName: z.string().min(2, "First Name is required"),
     lastName: z.string().min(2, "Last Name is required"),
-    email: z
-      .string()
-      .email()
-      .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
+    email: z.string().email(),
     password: z
       .string()
       .min(10, "Password must be at least 10 characters")
