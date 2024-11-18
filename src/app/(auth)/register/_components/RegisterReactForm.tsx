@@ -27,9 +27,15 @@ interface PasswordRule {
   met: boolean;
 }
 
-const PasswordStrengthIndicator: React.FC<{ strength: number }> = ({
-  strength,
-}) => {
+const PasswordStrengthIndicator: React.FC<{
+  passwordValue: string;
+  errorValue?: string | null;
+}> = ({ passwordValue }) => {
+  // console.log(errorValue);
+  let strength: number = 0;
+  if (passwordValue.length >= 8) strength++;
+  // if (/[A-Z]/.test(password) && /[a-z]/.test(password)) strength++;
+  // if (/[0-9]/.test(password) && /[^A-Za-z0-9]/.test(password)) strength++;
   return (
     <div className="flex gap-2 mt-2">
       {[1, 2, 3].map((level) => (
@@ -126,9 +132,10 @@ export default function RegisterReactForm() {
   const form = useForm<TYPE_REGISTER_SCHEMA>({
     resolver: zodResolver(REGISTER_SCHEMA),
   });
-  const [passwordStrength, setPasswordStrength] = useState(0);
   const router = useRouter();
   const dispatch = useAppDispatch();
+
+  console.log(form.formState.errors)
 
   const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {
     console.log(data);
@@ -212,7 +219,11 @@ export default function RegisterReactForm() {
                     />
                   </FormControl>
                   {form.getValues("password") && (
-                    <PasswordStrengthIndicator strength={3} />
+                    <PasswordStrengthIndicator
+                      passwordValue={form.getValues("password")}
+                      // passwordError={form.formState.errors}
+                      // strength={3}
+                    />
                   )}
                   {form.formState.errors.password && (
                     <PasswordRequirements password={field.value} />

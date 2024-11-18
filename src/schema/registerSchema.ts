@@ -7,10 +7,19 @@ export const REGISTER_SCHEMA = z.object({
   password: z
     .string()
     .min(10, "Password must be at least 10 characters")
-    .regex(/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])/),
-  // confirmPassword: z
-  //   .string()
-  //   .min(10, "Confirm Password must be at least 10 characters"),
+    .refine(
+      (password) => {
+        let strength = 0;
+        if (password.length >= 8) strength++;
+        if (/[A-Z]/.test(password) && /[a-z]/.test(password)) strength++;
+        if (/[0-9]/.test(password) && /[^A-Za-z0-9]/.test(password)) strength++;
+
+        return strength; // Adjust the minimum strength threshold as needed
+      },
+      {
+        message: "Password is too weak",
+      }
+    ),
 });
 // .refine((data) => data.password === data.confirmPassword, {
 //   message: "Passwords do not match",
