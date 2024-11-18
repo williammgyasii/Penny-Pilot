@@ -1,12 +1,14 @@
 "use client";
-
+import { getFirebaseAuth } from "@/lib/firebase/getFirebaseConfig";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
-export interface UserData  {
+export interface UserData {
   firstName: string;
   lastName: string;
   email: string;
-  uid?: string;
+  password: string;
+  uid: string;
 }
 
 interface AuthState {
@@ -25,12 +27,12 @@ export const registerUser = createAsyncThunk(
   "auth/register",
   async (userData: UserData, { rejectWithValue }) => {
     try {
-      console.log(userData);
-      // const { user } = await createUserWithEmailAndPassword(
-      //   getFirebaseAuth,
-      //   userData.email,
-      //   userData.password
-      // );
+      // console.log(userData);
+      const { user } = await createUserWithEmailAndPassword(
+        getFirebaseAuth,
+        userData.email,
+        userData.password
+      );
 
       // await updateProfile(user, {
       //   displayName: `${userData.firstName} ${userData.lastName}`,
