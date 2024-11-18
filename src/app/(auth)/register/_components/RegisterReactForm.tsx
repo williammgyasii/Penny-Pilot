@@ -31,11 +31,17 @@ const PasswordStrengthIndicator: React.FC<{
   passwordValue: string;
   errorValue?: string | null;
 }> = ({ passwordValue }) => {
-  // console.log(errorValue);
+  console.log(passwordValue);
   let strength: number = 0;
-  if (passwordValue.length >= 8) strength++;
-  // if (/[A-Z]/.test(password) && /[a-z]/.test(password)) strength++;
-  // if (/[0-9]/.test(password) && /[^A-Za-z0-9]/.test(password)) strength++;
+  if (passwordValue.length >= 8) {
+    strength++;
+  }
+  if (/[A-Z]/.test(passwordValue) && /[a-z]/.test(passwordValue)) {
+    strength++;
+  }
+  if (/[0-9]/.test(passwordValue) && /[^A-Za-z0-9]/.test(passwordValue)) {
+    strength++;
+  }
   return (
     <div className="flex gap-2 mt-2">
       {[1, 2, 3].map((level) => (
@@ -135,7 +141,7 @@ export default function RegisterReactForm() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  console.log(form.formState.errors)
+  console.log(form.formState.errors);
 
   const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {
     console.log(data);
