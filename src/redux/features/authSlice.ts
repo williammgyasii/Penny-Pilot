@@ -9,12 +9,13 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 import { getFirebaseErrorMessage } from "@/lib/utils";
+import { TYPE_REGISTER_SCHEMA } from "@/schema/registerSchema";
 
-interface UserData {
+export interface UserData {
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber: string;
+  // phoneNumber: string;
   uid: string;
 }
 
@@ -66,7 +67,7 @@ export const registerUser = createAsyncThunk(
       return userDoc;
     } catch (error) {
       if (error instanceof FirebaseError) {
-        getFirebaseErrorMessage(error.code)
+        getFirebaseErrorMessage(error.code);
       }
       return rejectWithValue("an unknown error occurred");
     }

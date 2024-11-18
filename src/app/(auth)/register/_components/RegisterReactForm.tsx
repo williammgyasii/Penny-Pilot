@@ -11,9 +11,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { registerUser, UserData } from "@/redux/features/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { REGISTER_SCHEMA, TYPE_REGISTER_SCHEMA } from "@/schema/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, Info, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -123,11 +126,10 @@ export default function RegisterReactForm() {
   const form = useForm<TYPE_REGISTER_SCHEMA>({
     resolver: zodResolver(REGISTER_SCHEMA),
   });
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  const onSubmit = form.handleSubmit((data: TYPE_REGISTER_SCHEMA) => {
-    console.log(data);
-    // reset();
-  });
+  const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {});
   // firstName and lastName will have correct type
 
   return (
