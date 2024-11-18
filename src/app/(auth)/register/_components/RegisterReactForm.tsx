@@ -126,6 +126,7 @@ export default function RegisterReactForm() {
   const form = useForm<TYPE_REGISTER_SCHEMA>({
     resolver: zodResolver(REGISTER_SCHEMA),
   });
+  const [passwordStrength, setPasswordStrength] = useState(0);
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -210,9 +211,13 @@ export default function RegisterReactForm() {
                       {...field}
                     />
                   </FormControl>
+                  {form.getValues("password") && (
+                    <PasswordStrengthIndicator strength={3} />
+                  )}
                   {form.formState.errors.password && (
                     <PasswordRequirements password={field.value} />
                   )}
+
                   {/* <FormMessage /> */}
                 </FormItem>
               )}
