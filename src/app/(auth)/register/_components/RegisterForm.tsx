@@ -142,7 +142,7 @@ export default function RegisterForm() {
 
   const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {
     console.log(data);
-    const result = await dispatch(registerUser)
+    const result = await dispatch(registerUser(data))
   });
   // firstName and lastName will have correct type
 

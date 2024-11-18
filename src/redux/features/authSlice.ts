@@ -38,7 +38,6 @@ export const registerUser = createAsyncThunk(
       password: string;
       firstName: string;
       lastName: string;
-      phoneNumber: string;
     },
     { rejectWithValue }
   ) => {
@@ -58,7 +57,7 @@ export const registerUser = createAsyncThunk(
         firstName: userData.firstName,
         lastName: userData.lastName,
         email: userData.email,
-        phoneNumber: userData.phoneNumber,
+        // phoneNumber: userData.phoneNumber,
       };
 
       await setDoc(doc(getFirebaseFirestore, "users", user.uid), userDoc);
