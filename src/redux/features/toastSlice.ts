@@ -1,16 +1,19 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { nanoid } from "@reduxjs/toolkit";
+"use client";
 
-export interface Toast {
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+export type ToastVariant = "default" | "destructive" | "success" | "warning";
+
+export interface ToastMessage {
   id: string;
   title?: string;
-  description: string;
-  variant?: "default" | "destructive" | "success";
+  message: string;
+  variant?: ToastVariant;
   duration?: number;
 }
 
 interface ToastState {
-  toasts: Toast[];
+  toasts: ToastMessage[];
 }
 
 const initialState: ToastState = {
@@ -21,14 +24,9 @@ export const toastSlice = createSlice({
   name: "toast",
   initialState,
   reducers: {
-    addToast: (state, action: PayloadAction<Omit<Toast, "id">>) => {
-      const toast = {
-        id: nanoid(),
-        variant: "default",
-        duration: 5000,
-        ...action.payload,
-      } as const;
-      state.toasts.push(toast);
+    addToast: (state, action: PayloadAction<Omit<ToastMessage, "id">>) => {
+      const id = Date.now().toString();
+      state.toasts.push({ ...action.payload, id });
     },
     removeToast: (state, action: PayloadAction<string>) => {
       state.toasts = state.toasts.filter(
