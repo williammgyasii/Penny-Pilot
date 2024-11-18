@@ -38,32 +38,33 @@ export const registerUser = createAsyncThunk(
   "auth/register",
   async (userData: UserData, { rejectWithValue }) => {
     try {
-      const { user } = await createUserWithEmailAndPassword(
-        getFirebaseAuth,
-        userData.email,
-        userData.password
-      );
+      console.log(userData);
+      // const { user } = await createUserWithEmailAndPassword(
+      //   getFirebaseAuth,
+      //   userData.email,
+      //   userData.password
+      // );
 
-      await updateProfile(user, {
-        displayName: `${userData.firstName} ${userData.lastName}`,
-      });
+      // await updateProfile(user, {
+      //   displayName: `${userData.firstName} ${userData.lastName}`,
+      // });
 
-      const userDoc = {
-        uid: user.uid,
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        email: userData.email,
-        // phoneNumber: userData.phoneNumber,
-      };
+      // const userDoc = {
+      //   uid: user.uid,
+      //   firstName: userData.firstName,
+      //   lastName: userData.lastName,
+      //   email: userData.email,
+      //   // phoneNumber: userData.phoneNumber,
+      // };
 
-      await setDoc(doc(getFirebaseFirestore, "users", user.uid), userDoc);
+      // await setDoc(doc(getFirebaseFirestore, "users", user.uid), userDoc);
 
-      return userDoc;
+      // return userDoc;
     } catch (error) {
-      if (error instanceof FirebaseError) {
-        getFirebaseErrorMessage(error.code);
-      }
-      return rejectWithValue("an unknown error occurred");
+      // if (error instanceof FirebaseError) {
+      //   getFirebaseErrorMessage(error.code);
+      // }
+      // return rejectWithValue("an unknown error occurred");
     }
   }
 );
