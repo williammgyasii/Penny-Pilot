@@ -140,10 +140,9 @@ export default function RegisterForm() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  // console.log(form.formState.errors.password);
-
   const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {
     console.log(data);
+    const result = await dispatch(registerUser)
   });
   // firstName and lastName will have correct type
 
