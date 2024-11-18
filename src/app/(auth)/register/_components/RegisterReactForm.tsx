@@ -129,21 +129,23 @@ export default function RegisterReactForm() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {});
+  const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {
+    console.log(data);
+  });
   // firstName and lastName will have correct type
 
   return (
     <>
       <Form {...form}>
-        <div className="pt-4 w-[80%]">
-          <form onSubmit={onSubmit} className="space-y-4 ">
+        <div className="pt-4 md:w-full xl:w-[85%]">
+          <form onSubmit={onSubmit} className="space-y-2 ">
             <div className="grid grid-cols-2 w-full gap-2">
               <FormField
                 control={form.control}
                 name="firstName"
                 render={({ field }) => (
                   <FormItem className="col-span-1">
-                    {/* <FormLabel>First Name</FormLabel> */}
+                    <FormLabel>First Name</FormLabel>
                     <FormControl>
                       <Input
                         type="text"
@@ -161,7 +163,7 @@ export default function RegisterReactForm() {
                 name="lastName"
                 render={({ field }) => (
                   <FormItem className="col-span-1">
-                    {/* <FormLabel>First Name</FormLabel> */}
+                    <FormLabel>Last Name</FormLabel>
                     <FormControl>
                       <Input
                         type="text"
@@ -181,7 +183,7 @@ export default function RegisterReactForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  {/* <FormLabel>First Name</FormLabel> */}
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
@@ -199,7 +201,7 @@ export default function RegisterReactForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  {/* <FormLabel>First Name</FormLabel> */}
+                  <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
