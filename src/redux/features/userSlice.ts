@@ -1,46 +1,107 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  getFirebaseAuth,
+  getFirebaseFirestore,
+} from "@/lib/firebase/getFirebaseConfig";
+import { getFirebaseErrorMessage } from "@/lib/utils";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { FirebaseError } from "firebase/app";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
-interface UserState {
+export const registerUser = createAsyncThunk(
+  "auth/register",
+  async (
+    userData: {
+      email: string;
+      password: string;
+      firstName: string;
+      lastName: string;
+      phoneNumber: string;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { user } = await createUserWithEmailAndPassword(
+        getFirebaseAuth,
+        userData.email,
+        userData.password
+      );
+
+      await updateProfile(user, {
+        displayName: `${userData.firstName} ${userData.lastName}`,
+      });
+
+      const userDoc = {
+        uid: user.uid,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+        phoneNumber: userData.phoneNumber,
+      };
+
+      await setDoc(doc(getFirebaseFirestore, "users", user.uid), userDoc);
+
+      return userDoc;
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        getFirebaseErrorMessage(error.code);
+      }
+      return rejectWithValue("An unknown error occurred");
+    }
+  }
+);
+
+interface AuthState {
   user: {
     uid: string;
     email: string;
-    name: string;
-    phone: string;
-    address: string;
+    firstName: string;
+    lastName: string;
+    phone?: string;
   } | null;
   loading: boolean;
   error: string | null;
 }
 
-const initialState: UserState = {
+const initialState: AuthState = {
   user: null,
-  loading: false,
+  loading: true,
   error: null,
 };
 
 const userSlice = createSlice({
-  name: "user",
+  name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<UserState["user"]>) => {
+    setUser: (state, action: PayloadAction<AuthState["user"]>) => {
       state.user = action.payload;
       state.loading = false;
-      state.error = null;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
-    setError: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-      state.loading = false;
-    },
-    clearUser: (state) => {
+    logout: (state) => {
       state.user = null;
       state.loading = false;
-      state.error = null;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 
-export const { setUser, setLoading, setError, clearUser } = userSlice.actions;
+export const { setUser, setLoading, logout } = userSlice.actions;
 export default userSlice.reducer;
