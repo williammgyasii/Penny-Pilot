@@ -64,7 +64,7 @@ const ReviewCard = ({
       className={cn(
         "relative w-64 cursor-pointer overflow-hidden rounded-xl p-4",
         // light styles
-        "bg-ui-ui_dark_500 hover:bg-gray-950/[.05] m-1 ",
+        "bg-ui-ui_dark_500 hover:bg-gray-950/[.05]  ",
         // dark styles
         "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]"
       )}
