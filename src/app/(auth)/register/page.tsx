@@ -4,7 +4,6 @@ import registerBackground from "@public/Fintap.png";
 import Image from "next/image";
 import TextGradient from "@/animated/TextGradient";
 import RegisterForm from "./_components/RegisterForm";
-import RegisterReactForm from "./_components/RegisterReactForm";
 
 export const metadata: Metadata = {
   title: "Register Page",
@@ -48,7 +47,7 @@ const RegisterPage = () => {
             text="Create Account"
             subtitle="Getting started on your path to freedom"
           />
-          <RegisterReactForm />
+          <RegisterForm />
           {/* <RegisterForm /> */}
         </div>
       </div>

@@ -1,28 +1,24 @@
 "use client";
-import { useState, useEffect, ChangeEvent, FormEvent } from "react";
-import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 import { Button } from "@/components/ui/button";
-import { Check, X } from "lucide-react";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { registerUser, UserData } from "@/redux/features/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import { REGISTER_SCHEMA, TYPE_REGISTER_SCHEMA } from "@/schema/registerSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Check, Info, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
-
-interface FormErrors {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-}
-
-interface PasswordStrengthIndicatorProps {
-  strength: number;
-}
 
 interface PasswordRule {
   id: string;
@@ -31,9 +27,20 @@ interface PasswordRule {
   met: boolean;
 }
 
-const PasswordStrengthIndicator: React.FC<PasswordStrengthIndicatorProps> = ({
-  strength,
-}) => {
+const PasswordStrengthIndicator: React.FC<{
+  passwordValue: string;
+  errorValue?: string | null;
+}> = ({ passwordValue }) => {
+  let strength: number = 0;
+  if (passwordValue.length >= 4) {
+    strength++;
+  }
+  if (/[A-Z]/.test(passwordValue) && /[a-z]/.test(passwordValue)) {
+    strength++;
+  }
+  if (/[0-9]/.test(passwordValue) && /[^A-Za-z0-9]/.test(passwordValue)) {
+    strength++;
+  }
   return (
     <div className="flex gap-2 mt-2">
       {[1, 2, 3].map((level) => (
@@ -59,7 +66,7 @@ const PasswordRequirements: React.FC<{ password: string }> = ({ password }) => {
     {
       id: "length",
       label: "At least 8 characters long",
-      validator: (pass) => pass.length >= 8,
+      validator: (pass) => pass?.length >= 8,
       met: false,
     },
     {
@@ -98,15 +105,16 @@ const PasswordRequirements: React.FC<{ password: string }> = ({ password }) => {
   }, [password]);
 
   return (
-    <div className="mt-2 space-y-2">
-      <p className="text-sm font-medium text-gray-700">
-        Password requirements:
-      </p>
+    <div className="mt-2 space-y-2 bg-gray-800 rounded-lg px-4 py-3 text-white text-xs">
+      <div className="flex flex-row items-center w-full justify-center space-x-2">
+        <Info size={20} className="inline-block" />
+        <p className="font-medium text-white">Password requirements:</p>
+      </div>
       <ul className="space-y-1">
         {rules.map((rule) => (
           <li
             key={rule.id}
-            className="flex items-center gap-2 text-sm transition-colors duration-200"
+            className="flex items-center gap-2 transition-colors duration-200"
           >
             <span className="flex-shrink-0">
               {rule.met ? (
@@ -115,7 +123,7 @@ const PasswordRequirements: React.FC<{ password: string }> = ({ password }) => {
                 <X className="w-4 h-4 text-red-500" />
               )}
             </span>
-            <span className={rule.met ? "text-green-700" : "text-gray-600"}>
+            <span className={rule.met ? "text-green-700" : "text-white-600"}>
               {rule.label}
             </span>
           </li>
@@ -125,141 +133,123 @@ const PasswordRequirements: React.FC<{ password: string }> = ({ password }) => {
   );
 };
 
-const RegistrationForm: React.FC = () => {
-  const form = useForm();
-  const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
+export default function RegisterForm() {
+  const form = useForm<TYPE_REGISTER_SCHEMA>({
+    resolver: zodResolver(REGISTER_SCHEMA),
   });
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [passwordStrength, setPasswordStrength] = useState<number>(0);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  const validatePassword = (password: string): number => {
-    let strength = 0;
-    if (password.length >= 8) strength++;
-    if (/[A-Z]/.test(password) && /[a-z]/.test(password)) strength++;
-    if (/[0-9]/.test(password) && /[^A-Za-z0-9]/.test(password)) strength++;
-    return strength;
-  };
+  // console.log(form.formState.errors.password);
 
-  const validateEmail = (email: string): boolean => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  useEffect(() => {
-    const strength = validatePassword(formData.password);
-    setPasswordStrength(strength);
-  }, [formData.password]);
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newErrors: FormErrors = {};
-
-    if (!formData.firstName.trim())
-      newErrors.firstName = "First name is required";
-    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!validateEmail(formData.email)) {
-      newErrors.email = "Invalid email format";
-    }
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    } else if (passwordStrength < 2) {
-      newErrors.password = "Password is too weak";
-    }
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      console.log("Form submitted:", formData);
-      // Handle form submission
-    }
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {
+    console.log(data);
+  });
+  // firstName and lastName will have correct type
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">
-          Create Account
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Input
-                placeholder="First Name"
+    <>
+      <Form {...form}>
+        <div className=" w-[90%]  xl:w-[85%]">
+          <form onSubmit={onSubmit} className="space-y-2">
+            <div className="grid grid-cols-2 w-full gap-2">
+              <FormField
+                control={form.control}
                 name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-                className={errors.firstName ? "border-red-500" : ""}
+                render={({ field }) => (
+                  <FormItem className="col-span-2 lg:col-span-1">
+                    <FormLabel>First Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        className="focus:border-cyan-700"
+                        placeholder="First Name"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {errors.firstName && (
-                <p className="text-red-500 text-sm">{errors.firstName}</p>
-              )}
-            </div>
-            <div className="space-y-2">
-              <Input
-                placeholder="Last Name"
+              <FormField
+                control={form.control}
                 name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-                className={errors.lastName ? "border-red-500" : ""}
+                render={({ field }) => (
+                  <FormItem className=" col-span-2 lg:col-span-1">
+                    <FormLabel>Last Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        className="focus:border-cyan-700"
+                        placeholder="Last Name"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {errors.lastName && (
-                <p className="text-red-500 text-sm">{errors.lastName}</p>
-              )}
             </div>
-          </div>
 
-          <div className="space-y-2">
-            <Input
-              placeholder="Email"
-              type="email"
+            <FormField
+              control={form.control}
               name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className={`w-full ${errors.email ? "border-red-500" : ""}`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      className="focus:border-cyan-700"
+                      placeholder="Email"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            {errors.email && (
-              <p className="text-red-500 text-sm">{errors.email}</p>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <Input
-              placeholder="Password"
-              type="password"
+            <FormField
+              control={form.control}
               name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className={`w-full ${errors.password ? "border-red-500" : ""}`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      minLength={10}
+                      type="password"
+                      className="focus:border-cyan-700"
+                      placeholder="************"
+                      {...field}
+                    />
+                  </FormControl>
+                  {form.getValues("password") && (
+                    <PasswordStrengthIndicator
+                      passwordValue={form.getValues("password")}
+                    />
+                  )}
+                  {form.getValues("password") && (
+                    <PasswordRequirements password={field.value} />
+                  )}
+
+                  {/* <FormMessage /> */}
+                </FormItem>
+              )}
             />
-            <PasswordStrengthIndicator strength={passwordStrength} />
-            <PasswordRequirements password={formData.password} />
-            {errors.password && (
-              <p className="text-red-500 text-sm">{errors.password}</p>
-            )}
-          </div>
 
-          <Button type="submit" className="w-full">
-            Register
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+            <Button
+              className="w-full "
+              isLoading={form.formState.isSubmitting}
+              disabled={form.formState.isSubmitting}
+              type="submit"
+            >
+              Register
+            </Button>
+          </form>
+          <GoogleSignInButton />
+        </div>
+      </Form>
+    </>
   );
-};
-
-export default RegistrationForm;
+}
