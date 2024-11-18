@@ -213,6 +213,7 @@ export default function RegisterReactForm() {
             <FormField
               control={form.control}
               name="password"
+              
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
