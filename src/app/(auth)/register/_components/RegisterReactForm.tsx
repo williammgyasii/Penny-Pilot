@@ -218,9 +218,10 @@ export default function RegisterReactForm() {
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
+                      
                       type="password"
                       className="focus:border-cyan-700"
-                      placeholder="Password"
+                      placeholder="************"
                       {...field}
                     />
                   </FormControl>
