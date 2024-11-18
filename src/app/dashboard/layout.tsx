@@ -1,11 +1,9 @@
-import React from "react";
+import { AuthProvider } from "@/components/AuthProvider";
 
-type Props = {
+export default function DashboardLayout({
+  children,
+}: {
   children: React.ReactNode;
-};
-
-const DashboardLayout = ({ children }: Props) => {
-  return <div>{children}</div>;
-};
-
-export default DashboardLayout;
+}) {
+  return <AuthProvider>{children}</AuthProvider>;
+}

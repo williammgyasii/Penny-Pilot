@@ -1,23 +1,29 @@
+// app/lib/store.ts
+"use client";
+
 import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import toastReducer from "@/redux/features/toastSlice";
-import authReducer from "@/redux/features/userSlice";
-// import { api } from "./services/api";
+import authReducer from "./features/authSlice";
+import toastReducer from "./features/toastSlice";
 
-export const store = configureStore({
-  reducer: {
-    auth: authReducer,
-    toast: toastReducer,
-    // [api.reducerPath]: api.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }).concat(api.middleware),
-  devTools: process.env.NODE_ENV !== "production",
-});
+export const makeStore = () => {
+  return configureStore({
+    reducer: {
+      auth: authReducer,
+      toast: toastReducer,
+    },
+    devTools: process.env.NODE_ENV !== "production",
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: ["auth/setUser"],
+          ignoredActionPaths: ["payload.user"],
+          ignoredPaths: ["auth.user"],
+        },
+      }),
+  });
+};
 
-setupListeners(store.dispatch);
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+// Infer types from store
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];

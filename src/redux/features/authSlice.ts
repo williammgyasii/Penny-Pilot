@@ -1,12 +1,34 @@
+"use client";
+
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   getFirebaseAuth,
   getFirebaseFirestore,
 } from "@/lib/firebase/getFirebaseConfig";
-import { getFirebaseErrorMessage } from "@/lib/utils";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { FirebaseError } from "firebase/app";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import { FirebaseError } from "firebase/app";
+import { getFirebaseErrorMessage } from "@/lib/utils";
+
+interface UserData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  uid: string;
+}
+
+interface AuthState {
+  user: UserData | null;
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: AuthState = {
+  user: null,
+  loading: false,
+  error: null,
+};
 
 export const registerUser = createAsyncThunk(
   "auth/register",
@@ -44,45 +66,22 @@ export const registerUser = createAsyncThunk(
       return userDoc;
     } catch (error) {
       if (error instanceof FirebaseError) {
-        getFirebaseErrorMessage(error.code);
+        getFirebaseErrorMessage(error.code)
       }
-      return rejectWithValue("An unknown error occurred");
+      return rejectWithValue("an unknown error occurred");
     }
   }
 );
 
-interface AuthState {
-  user: {
-    uid: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    phone?: string;
-  } | null;
-  loading: boolean;
-  error: string | null;
-}
-
-const initialState: AuthState = {
-  user: null,
-  loading: true,
-  error: null,
-};
-
-const userSlice = createSlice({
+const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<AuthState["user"]>) => {
+    setUser: (state, action) => {
       state.user = action.payload;
-      state.loading = false;
     },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.loading = action.payload;
-    },
-    logout: (state) => {
+    clearUser: (state) => {
       state.user = null;
-      state.loading = false;
     },
   },
   extraReducers: (builder) => {
@@ -103,5 +102,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, setLoading, logout } = userSlice.actions;
-export default userSlice.reducer;
+export const { setUser, clearUser } = authSlice.actions;
+export default authSlice.reducer;

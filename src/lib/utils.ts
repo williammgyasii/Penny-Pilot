@@ -15,5 +15,5 @@ export function getFirebaseErrorMessage(errorCode: string): string {
       "Network error. Please check your connection.",
   };
 
-  return errorMessages[errorCode] || "An unexpected error occurred.";
+  return errorMessages[errorCode];
 }

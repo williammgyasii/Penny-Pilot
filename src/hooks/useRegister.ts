@@ -5,11 +5,14 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "@/lib/firebase";
 import { RegisterInput } from "@/lib/validations/auth";
 import { setUser } from "@/lib/redux/features/userSlice";
 import { getFirebaseErrorMessage } from "@/lib/utils";
 import { useToast } from "./useToast";
+import {
+  getFirebaseAuth,
+  getFirebaseFirestore,
+} from "@/lib/firebase/getFirebaseConfig";
 
 export function useRegister() {
   const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +25,11 @@ export function useRegister() {
     try {
       // Create user and prepare user data in parallel
       const [userCredential] = await Promise.all([
-        createUserWithEmailAndPassword(auth, data.email, data.password),
+        createUserWithEmailAndPassword(
+          getFirebaseAuth,
+          data.email,
+          data.password
+        ),
         // Add artificial delay to prevent race conditions
         new Promise((resolve) => setTimeout(resolve, 100)),
       ]);
@@ -38,7 +45,10 @@ export function useRegister() {
 
       // Store user data and update Redux state in parallel
       await Promise.all([
-        setDoc(doc(db, "users", userCredential.user.uid), userData),
+        setDoc(
+          doc(getFirebaseFirestore, "users", userCredential.user.uid),
+          userData
+        ),
         dispatch(setUser(userData)),
       ]);
 
@@ -50,7 +60,7 @@ export function useRegister() {
       // Small delay before redirect to ensure toast is visible
       await new Promise((resolve) => setTimeout(resolve, 500));
       router.push("/dashboard");
-    } catch (error: unknown) {
+    } catch (error: any) {
       const errorMessage = error.code
         ? getFirebaseErrorMessage(error.code)
         : "Something went wrong. Please try again.";
