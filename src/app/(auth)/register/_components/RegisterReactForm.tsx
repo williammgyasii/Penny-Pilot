@@ -137,14 +137,14 @@ export default function RegisterReactForm() {
   return (
     <>
       <Form {...form}>
-        <div className="pt-4 md:w-full xl:w-[85%]">
-          <form onSubmit={onSubmit} className="space-y-2 ">
+        <div className=" w-[90%]  xl:w-[85%]">
+          <form onSubmit={onSubmit} className="space-y-2">
             <div className="grid grid-cols-2 w-full gap-2">
               <FormField
                 control={form.control}
                 name="firstName"
                 render={({ field }) => (
-                  <FormItem className="col-span-1">
+                  <FormItem className="col-span-2 lg:col-span-1">
                     <FormLabel>First Name</FormLabel>
                     <FormControl>
                       <Input
@@ -162,7 +162,7 @@ export default function RegisterReactForm() {
                 control={form.control}
                 name="lastName"
                 render={({ field }) => (
-                  <FormItem className="col-span-1">
+                  <FormItem className=" col-span-2 lg:col-span-1">
                     <FormLabel>Last Name</FormLabel>
                     <FormControl>
                       <Input
