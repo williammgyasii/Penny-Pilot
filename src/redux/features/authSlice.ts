@@ -1,21 +1,8 @@
 "use client";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  getFirebaseAuth,
-  getFirebaseFirestore,
-} from "@/lib/firebase/getFirebaseConfig";
-import {
-  createUserWithEmailAndPassword,
-  updateProfile,
-  User,
-} from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { FirebaseError } from "firebase/app";
-import { getFirebaseErrorMessage } from "@/lib/utils";
-import { TYPE_REGISTER_SCHEMA } from "@/schema/registerSchema";
 
-export interface UserData extends TYPE_REGISTER_SCHEMA {
+export interface UserData  {
   firstName: string;
   lastName: string;
   email: string;
