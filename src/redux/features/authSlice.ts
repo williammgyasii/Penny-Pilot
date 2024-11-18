@@ -4,13 +4,9 @@ import {
   getFirebaseFirestore,
 } from "@/lib/firebase/getFirebaseConfig";
 import { getFirebaseErrorMessage } from "@/lib/utils";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { FirebaseError } from "firebase/app";
-import {
-  createUserWithEmailAndPassword,
-  updateProfile,
-  User,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
 export interface UserData {
@@ -23,13 +19,13 @@ export interface UserData {
 
 interface AuthState {
   user: UserData | null;
-  loading: boolean;
+  AUTH_SLICE_LOADING: boolean;
   error: string | null;
 }
 
 const initialState: AuthState = {
   user: null,
-  loading: false,
+  AUTH_SLICE_LOADING: false,
   error: null,
 };
 
@@ -71,26 +67,30 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action) => {
+    setUser: (state, action: PayloadAction<AuthState["user"]>) => {
       state.user = action.payload;
     },
     clearUser: (state) => {
       state.user = null;
     },
+    logout: (state) => {
+      state.user = null;
+      state.AUTH_SLICE_LOADING = false;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, (state) => {
-        state.loading = true;
+        state.AUTH_SLICE_LOADING = true;
         state.error = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.loading = false;
-        // state.user = action.payload;
+        state.AUTH_SLICE_LOADING = false;
+        state.user = action.payload;
         state.error = null;
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.loading = false;
+        state.AUTH_SLICE_LOADING = false;
         state.error = action.payload as string;
       });
   },
