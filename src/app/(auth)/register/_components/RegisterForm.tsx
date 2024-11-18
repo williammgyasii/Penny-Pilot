@@ -137,12 +137,11 @@ export default function RegisterForm() {
   const form = useForm<TYPE_REGISTER_SCHEMA>({
     resolver: zodResolver(REGISTER_SCHEMA),
   });
-  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {
     console.log(data);
-    const result = await dispatch(registerUser(data))
+    const result = await dispatch(registerUser(data));
   });
   // firstName and lastName will have correct type
 

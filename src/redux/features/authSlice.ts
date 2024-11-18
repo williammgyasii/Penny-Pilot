@@ -1,14 +1,24 @@
 "use client";
-import { getFirebaseAuth } from "@/lib/firebase/getFirebaseConfig";
+import {
+  getFirebaseAuth,
+  getFirebaseFirestore,
+} from "@/lib/firebase/getFirebaseConfig";
+import { getFirebaseErrorMessage } from "@/lib/utils";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  User,
+} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 export interface UserData {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  uid: string;
+  uid?: string;
 }
 
 interface AuthState {
@@ -34,26 +44,25 @@ export const registerUser = createAsyncThunk(
         userData.password
       );
 
-      // await updateProfile(user, {
-      //   displayName: `${userData.firstName} ${userData.lastName}`,
-      // });
+      await updateProfile(user, {
+        displayName: `${userData.firstName} ${userData.lastName}`,
+      });
 
-      // const userDoc = {
-      //   uid: user.uid,
-      //   firstName: userData.firstName,
-      //   lastName: userData.lastName,
-      //   email: userData.email,
-      //   // phoneNumber: userData.phoneNumber,
-      // };
+      const userDoc: Omit<UserData, "password"> = {
+        uid: user.uid,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+      };
 
-      // await setDoc(doc(getFirebaseFirestore, "users", user.uid), userDoc);
+      await setDoc(doc(getFirebaseFirestore, "users", user.uid), userDoc);
 
-      // return userDoc;
+      return userDoc;
     } catch (error) {
-      // if (error instanceof FirebaseError) {
-      //   getFirebaseErrorMessage(error.code);
-      // }
-      // return rejectWithValue("an unknown error occurred");
+      if (error instanceof FirebaseError) {
+        getFirebaseErrorMessage(error.code);
+      }
+      return rejectWithValue("an unknown error occurred");
     }
   }
 );
