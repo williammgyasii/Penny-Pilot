@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={`${inter.variable}`}>
         <ReduxProvider>
           {children}
-          <ToastProvider />
+          {/* <ToastProvider /> */}
         </ReduxProvider>
       </body>
     </html>
