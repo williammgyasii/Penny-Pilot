@@ -5,17 +5,21 @@ import {
   getFirebaseAuth,
   getFirebaseFirestore,
 } from "@/lib/firebase/getFirebaseConfig";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  User,
+} from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 import { getFirebaseErrorMessage } from "@/lib/utils";
 import { TYPE_REGISTER_SCHEMA } from "@/schema/registerSchema";
 
-export interface UserData {
+export interface UserData extends TYPE_REGISTER_SCHEMA {
   firstName: string;
   lastName: string;
   email: string;
-  uid: string;
+  uid?: string;
 }
 
 interface AuthState {
@@ -38,6 +42,7 @@ export const registerUser = createAsyncThunk(
       password: string;
       firstName: string;
       lastName: string;
+      uid: string;
     },
     { rejectWithValue }
   ) => {
@@ -91,7 +96,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        // state.user = action.payload;
         state.error = null;
       })
       .addCase(registerUser.rejected, (state, action) => {
