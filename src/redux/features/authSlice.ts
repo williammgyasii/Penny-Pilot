@@ -36,16 +36,7 @@ const initialState: AuthState = {
 
 export const registerUser = createAsyncThunk(
   "auth/register",
-  async (
-    userData: {
-      email: string;
-      password: string;
-      firstName: string;
-      lastName: string;
-      uid: string;
-    },
-    { rejectWithValue }
-  ) => {
+  async (userData: UserData, { rejectWithValue }) => {
     try {
       const { user } = await createUserWithEmailAndPassword(
         getFirebaseAuth,
