@@ -9,7 +9,11 @@ import { clearUser, setUser } from "@/redux/features/authSlice";
 
 const publicPaths = ["/login", "/register", "/forgot-password"];
 
-export default function AuthGuard({ children }: { children: React.ReactNode }) {
+export default function AuthProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const dispatch = useDispatch();

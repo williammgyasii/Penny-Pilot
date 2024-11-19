@@ -14,14 +14,13 @@ import { doc, setDoc } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 import { getFirebaseErrorMessage } from "@/lib/utils";
 
-export const LOGOUT_USER = createAsyncThunk(
+export const LOGOUT_USER = createAsyncThunk<void, void>(
   "auth/logout",
   async (_, { rejectWithValue }) => {
     try {
       await signOut(getFirebaseAuth);
-      return "User logged out successfully"; // Optional success message
-    } catch (error: any) {
-      return { error: error.message };
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
   }
 );

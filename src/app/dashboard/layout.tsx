@@ -1,4 +1,4 @@
-import { AuthProvider } from "@/components/AuthProvider";
+import AuthProvider from "@/components/AuthProvider";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
