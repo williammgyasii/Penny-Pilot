@@ -20,6 +20,7 @@ import PasswordRequirements from "./PasswordRequirements";
 import PasswordStrengthIndicator from "./PasswordStrengthIndicator";
 import { useRouter } from "next/navigation";
 import { registerUser } from "@/redux/functions/authFunctions";
+import { addToast } from "@/redux/features/toastSlice";
 
 export default function RegisterForm() {
   const form = useForm<TYPE_REGISTER_SCHEMA>({
@@ -36,8 +37,14 @@ export default function RegisterForm() {
   const { AUTH_SLICE_LOADING } = useSelector((state: RootState) => state.auth);
 
   const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {
-    const result = await dispatch(registerUser(data));
+    const result = await dispatch(registerUser(data)).unwrap();
     if (result) {
+      dispatch(
+        addToast({
+          message: "Account created successfully!",
+          type: "success",
+        })
+      );
       router.push("/dashboard");
       form.reset();
     }

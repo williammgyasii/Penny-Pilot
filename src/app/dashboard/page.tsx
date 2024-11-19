@@ -1,34 +1,38 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { LOGOUT_USER } from "@/redux/functions/authFunctions";
 import { addToast } from "@/redux/features/toastSlice";
 import { useAppDispatch } from "@/redux/hooks";
+import { RootState } from "@/redux/store";
 
 export default function DashboardPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
+  const { user } = useSelector((state: RootState) => state.auth);
+
   const handleLogout = async () => {
-    try {
-      await dispatch(LOGOUT_USER());
-      dispatch(
-        addToast({
-          message: "Logged out successfully",
-          type: "success",
-        })
-      );
-      router.push("/login");
-    } catch (error: any) {
-      dispatch(
-        addToast({
-          message: error.message || "Logout failed",
-          type: "error",
-        })
-      );
-    }
+    console.log(user);
+    // try {
+    //   await dispatch(LOGOUT_USER());
+    //   dispatch(
+    //     addToast({
+    //       message: "Logged out successfully",
+    //       type: "success",
+    //     })
+    //   );
+    //   router.push("/login");
+    // } catch (error: any) {
+    //   dispatch(
+    //     addToast({
+    //       message: error.message || "Logout failed",
+    //       type: "error",
+    //     })
+    //   );
+    // }
   };
 
   return (
