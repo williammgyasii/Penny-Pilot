@@ -13,8 +13,6 @@ export default function DashboardPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const { user } = useSelector((state: RootState) => state.auth);
-
   const handleLogout = async () => {
     console.log(user);
     try {

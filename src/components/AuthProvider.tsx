@@ -54,7 +54,7 @@ export default function AuthProvider({
 
         // If the user is logged in and trying to access non-protected route ("/dashboard")
         if (user && !isProtectedRoute) {
-          router.push("/dashboard");
+          router.push("/dashboard/overview");
         } else {
           dispatch(clearUser());
           router.push("/login");
