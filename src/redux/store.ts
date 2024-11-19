@@ -6,6 +6,7 @@ import authReducer from "./features/authSlice";
 import toastReducer from "./features/toastSlice";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { persistStore, persistReducer } from "redux-persist";
+import systemReducer from "./features/systemSlice";
 
 const createNoopStorage = () => {
   return {
@@ -29,7 +30,7 @@ const storage =
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth"],
+  whitelist: ["auth", "system"],
 };
 
 const persistedReducer = persistReducer(persistConfig, authReducer);
@@ -38,6 +39,7 @@ export const makeStore = configureStore({
   reducer: {
     auth: persistedReducer,
     toast: toastReducer,
+    system: systemReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
