@@ -16,23 +16,23 @@ export default function DashboardPage() {
 
   const handleLogout = async () => {
     console.log(user);
-    // try {
-    //   await dispatch(LOGOUT_USER());
-    //   dispatch(
-    //     addToast({
-    //       message: "Logged out successfully",
-    //       type: "success",
-    //     })
-    //   );
-    //   router.push("/login");
-    // } catch (error: any) {
-    //   dispatch(
-    //     addToast({
-    //       message: error.message || "Logout failed",
-    //       type: "error",
-    //     })
-    //   );
-    // }
+    try {
+      await dispatch(LOGOUT_USER());
+      dispatch(
+        addToast({
+          message: "Logged out successfully",
+          type: "success",
+        })
+      );
+      router.push("/login");
+    } catch (error: any) {
+      dispatch(
+        addToast({
+          message: error.message || "Logout failed",
+          type: "error",
+        })
+      );
+    }
   };
 
   return (
