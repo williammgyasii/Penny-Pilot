@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { addToast } from "@/redux/features/toastSlice";
 import { LOGOUT_USER } from "@/redux/functions/authFunctions";
