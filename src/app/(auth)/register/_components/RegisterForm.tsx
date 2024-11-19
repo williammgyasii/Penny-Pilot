@@ -19,8 +19,8 @@ import { useSelector } from "react-redux";
 import PasswordRequirements from "./PasswordRequirements";
 import PasswordStrengthIndicator from "./PasswordStrengthIndicator";
 import { useRouter } from "next/navigation";
-import { registerUser } from "@/redux/functions/authFunctions";
 import { addToast } from "@/redux/features/toastSlice";
+import { registerUser } from "@/redux/asyncfunctions/authFunctions";
 
 export default function RegisterForm() {
   const form = useForm<TYPE_REGISTER_SCHEMA>({
