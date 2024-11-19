@@ -3,17 +3,12 @@ import { handle } from "hono/vercel";
 
 export const runtime = "edge";
 
-const app = new Hono().basePath("/api");
+const app = new Hono().basePath("/api/test/");
 
-app.get("/hello", (c) => {
+app.get("/testing", (c) => {
   return c.json({
-    message: "Hello Next.js!",
-  });
-});
-
-app.get("/", (c) => {
-  return c.json({
-    message: "Hello Next.js! Home",
+    message: "Hello Next.js! Test",
+    firstName: "Wulliam",
   });
 });
 
