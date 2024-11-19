@@ -37,16 +37,26 @@ export default function RegisterForm() {
   const { AUTH_SLICE_LOADING } = useSelector((state: RootState) => state.auth);
 
   const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {
-    const result = await dispatch(registerUser(data)).unwrap();
-    if (result) {
+    try {
+      const result = await dispatch(registerUser(data)).unwrap();
+      if (result) {
+        dispatch(
+          addToast({
+            message: "Account created successfully!",
+            type: "success",
+          })
+        );
+        router.push("/dashboard");
+        form.reset();
+      }
+      form.reset();
+    } catch (error: unknown) {
       dispatch(
         addToast({
-          message: "Account created successfully!",
-          type: "success",
+          message: (error as string) || "Registration failed",
+          type: "error",
         })
       );
-      router.push("/dashboard");
-      form.reset();
     }
   });
 

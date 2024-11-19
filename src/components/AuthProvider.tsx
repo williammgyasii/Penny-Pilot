@@ -3,16 +3,14 @@
 import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { useAppDispatch } from "@/redux/hooks";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { useDispatch } from "react-redux";
 import { clearUser, setLoading, setUser } from "@/redux/features/authSlice";
 import {
   getFirebaseAuth,
   getFirebaseFirestore,
 } from "@/lib/firebase/getFirebaseConfig";
 import { addToast } from "@/redux/features/toastSlice";
-
-const publicPaths = ["/login", "/register", "/forgot-password"];
 
 export default function AuthProvider({
   children,
@@ -21,7 +19,7 @@ export default function AuthProvider({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setLoading(true));
@@ -35,28 +33,23 @@ export default function AuthProvider({
           );
 
           if (userDoc.exists()) {
-            dispatch(setUser(userDoc.data()));
-
-            if (publicPaths.includes(pathname)) {
-              router.push("/dashboard");
-            }
+            dispatch(setUser(userDoc.data() as any));
+            router.push("/dashboard");
           } else {
             throw new Error("User data not found");
           }
         } else {
           dispatch(clearUser());
-          if (!publicPaths.includes(pathname)) {
-            router.push("/login");
-          }
+          router.push("/login");
         }
       } catch (error: any) {
         dispatch(clearUser());
-        dispatch(
-          addToast({
-            message: "Error loading user data",
-            type: "error",
-          })
-        );
+        // dispatch(
+        //   addToast({
+        //     message: "Error loading user data",
+        //     type: "error",
+        //   })
+        // );
         router.push("/login");
       }
     });
