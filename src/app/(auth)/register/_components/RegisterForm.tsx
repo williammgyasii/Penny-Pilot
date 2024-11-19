@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import PasswordRequirements from "./PasswordRequirements";
 import PasswordStrengthIndicator from "./PasswordStrengthIndicator";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
   const form = useForm<TYPE_REGISTER_SCHEMA>({
@@ -31,11 +32,15 @@ export default function RegisterForm() {
     },
   });
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const { AUTH_SLICE_LOADING } = useSelector((state: RootState) => state.auth);
 
   const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {
     const result = await dispatch(registerUser(data));
-    form.reset();
+    if (result) {
+      router.push("/dashboard");
+      form.reset();
+    }
   });
 
   return (
