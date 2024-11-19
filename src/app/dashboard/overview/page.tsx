@@ -1,32 +1,38 @@
 import { Button } from "@/components/ui/button";
+import { addToast } from "@/redux/features/toastSlice";
+import { LOGOUT_USER } from "@/redux/functions/authFunctions";
+import { useAppDispatch } from "@/redux/hooks";
+import { RootState } from "@/redux/store";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 import React from "react";
-
-
-const handleLogout = async () => {
-
-  
-
-  console.log(user);
-  try {
-    await dispatch(LOGOUT_USER());
-    dispatch(
-      addToast({
-        message: "Logged out successfully",
-        type: "success",
-      })
-    );
-    router.push("/login");
-  } catch (error) {
-    dispatch(
-      addToast({
-        message: (error as string) || "Logout failed",
-        type: "error",
-      })
-    );
-  }
-};
+import { useSelector } from "react-redux";
 
 const DashboardOverview = () => {
+  const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useAppDispatch();
+
+  const handleLogout = async () => {
+    console.log(user);
+    try {
+      await dispatch(LOGOUT_USER());
+      dispatch(
+        addToast({
+          message: "Logged out successfully",
+          type: "success",
+        })
+      );
+      redirect("/login");
+    } catch (error) {
+      dispatch(
+        addToast({
+          message: (error as string) || "Logout failed",
+          type: "error",
+        })
+      );
+    }
+  };
+
   return (
     <div className="min-h-screen p-8">
       <div className="max-w-4xl mx-auto">

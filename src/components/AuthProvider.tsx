@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, redirect } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
@@ -48,8 +48,7 @@ export default function AuthProvider({
         // If no user and trying to access a protected route, redirect to login
         if (!user && isProtectedRoute) {
           dispatch(clearUser());
-          router.push("/login");
-          return;
+          redirect("/login");
         }
 
         // If the user is logged in and trying to access non-protected route ("/dashboard")
@@ -57,13 +56,13 @@ export default function AuthProvider({
           router.push("/dashboard/overview");
         } else {
           dispatch(clearUser());
-          router.push("/login");
+          redirect("/login");
         }
       } catch (error: unknown) {
         dispatch(clearUser());
         // Optionally, you can display a toast message for errors (commented out for now)
         // dispatch(addToast({ message: "Error loading user data", type: "error" }));
-        router.push("/login");
+        redirect("/login");
       }
     });
 
