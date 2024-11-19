@@ -33,10 +33,10 @@ export default function AuthProvider({
 
           if (userDoc.exists()) {
             // User data exists, dispatch user data to the store
-            dispatch(setUser(userDoc.data() as any));
+            dispatch(setUser(userDoc.data()));
             return; // Allow access to the protected route
           } else {
-            throw new Error("User data not found");
+            // throw new Error("User data not found");
           }
         }
 
@@ -55,7 +55,7 @@ export default function AuthProvider({
           router.push("/login");
         }
 
-      } catch (error: any) {
+      } catch (error: unknown) {
         dispatch(clearUser());
         // Optionally, you can display a toast message for errors (commented out for now)
         // dispatch(addToast({ message: "Error loading user data", type: "error" }));

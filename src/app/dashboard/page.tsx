@@ -26,10 +26,10 @@ export default function DashboardPage() {
         })
       );
       router.push("/login");
-    } catch (error: any) {
+    } catch (error) {
       dispatch(
         addToast({
-          message: error.message || "Logout failed",
+          message: (error as string) || "Logout failed",
           type: "error",
         })
       );
