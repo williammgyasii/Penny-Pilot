@@ -21,7 +21,7 @@ const buttonVariants = cva(
           "border border-blue-900 text-blue-800 shadow-sm shadow-blue-900/20 bg-transparent hover:bg-accent hover:text-accent-foreground",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        ghost: " hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
@@ -47,6 +47,7 @@ export interface ButtonProps
   href?: string;
   isLink?: boolean;
   isLoading?: boolean;
+  isAninmated?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -60,6 +61,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       iconSize = 24,
       children,
       href,
+      isAninmated = true,
       isLink = false,
       isLoading = false,
       ...props
@@ -74,17 +76,23 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        <div
-          className="absolute  inset-0 h-[200%] w-[200%] 
+        {isAninmated && (
+          <div
+            className="absolute  inset-0 h-[200%] w-[200%] 
         rotate-45 translate-x-[-70%] transition-all 
         group-hover:scale-100 bg-white/50 group-hover:translate-x-[50%] z-20 duration-1000"
-        />
+          />
+        )}
         {children}
         {isLoading && <Spinner />}
         {Icon && (
           <span
-            className="inline-block transition-transform 
-          duration-300 ease-in-out group-hover:animate-bounce"
+            className={cn(
+              "inline-block transition-transform duration-300 ease-in-out ",
+              {
+                "group-hover:animate-bounce": isAninmated === true,
+              }
+            )}
           >
             <Icon size={iconSize} />
           </span>

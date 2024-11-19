@@ -3,7 +3,12 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
-import { PanelLeft, PanelLeftClose } from "lucide-react";
+import {
+  CheckSquare,
+  ListCollapse,
+  PanelLeft,
+  PanelLeftClose,
+} from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -141,7 +146,7 @@ const SidebarProvider = React.forwardRef<
               } as React.CSSProperties
             }
             className={cn(
-              "group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar",
+              "group/sidebar-wrapper font-poppins flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar",
               className
             )}
             ref={ref}
@@ -271,15 +276,16 @@ const SidebarTrigger = React.forwardRef<
       data-sidebar="trigger"
       variant="ghost"
       size="icon"
+      iconSize={20}
       className={cn("h-7 w-7", className)}
       onClick={(event) => {
         onClick?.(event);
         toggleSidebar();
       }}
+      icon={PanelLeft}
       {...props}
     >
-      <PanelLeftClose color="#fff" />
-      <span className="sr-only">Toggle Sidebar</span>
+      
     </Button>
   );
 });
@@ -523,7 +529,7 @@ const sidebarMenuButtonVariants = cva(
       size: {
         default: "h-8 text-sm",
         sm: "h-7 text-xs",
-        lg: "h-12 text-sm group-data-[collapsible=icon]:!p-0",
+        lg: "h-10 text-sm group-data-[collapsible=icon]:!p-0",
       },
     },
     defaultVariants: {

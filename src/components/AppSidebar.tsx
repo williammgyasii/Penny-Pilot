@@ -48,6 +48,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { navItems } from "@/lib/data";
 import { Button } from "./ui/button";
+import { Icons } from "./ui/icons";
 
 export const company = {
   name: "Acme Inc",
@@ -62,13 +63,20 @@ export default function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <div className="flex gap-2 py-2 text-sidebar-accent-foreground ">
+        <div className="flex gap-4 py-4 px-4 text-sidebar-accent-foreground ">
           <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-            <company.logo className="size-4" />
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
           </div>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">{company.name}</span>
-            <span className="truncate text-xs">{company.plan}</span>
+          <div className="grid flex-1 font-poppins text-left text-sm leading-tight">
+            <span className="truncate text-inherit text-md font-semibold">
+              {company.name}
+            </span>
+            <span className="truncate text-inherit text-xs text-gray-500">
+              {company.plan}
+            </span>
           </div>
         </div>
       </SidebarHeader>
@@ -78,8 +86,8 @@ export default function AppSidebar() {
           <SidebarGroupLabel>Overview</SidebarGroupLabel>
           <SidebarMenu>
             {navItems.map((item) => {
-              //   const Icon = item.icon ? Icons[item.icon] : Icons.logo;
-              const Icon = item.icon ? CheckCircle : CheckCheckIcon;
+              const Icon = item.icon ? Icons[item.icon] : Icons.logo;
+              // const Icon = item.icon ? CheckCircle : CheckCheckIcon;
               return item?.items && item?.items?.length > 0 ? (
                 <Collapsible
                   key={item.title}
@@ -119,6 +127,7 @@ export default function AppSidebar() {
               ) : (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
+                    size={"lg"}
                     asChild
                     tooltip={item.title}
                     isActive={pathname === item.url}

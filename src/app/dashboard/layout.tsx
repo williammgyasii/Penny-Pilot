@@ -26,6 +26,7 @@ export default function DashboardLayout({
           <DashboardHeader />
           {/* page main content */}
           {children}
+
           {/* page main content ends */}
         </SidebarInset>
       </SidebarProvider>

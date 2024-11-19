@@ -19,9 +19,9 @@ export function Breadcrumbs() {
     <Breadcrumb>
       <BreadcrumbList>
         {items.map((item, index) => (
-          <Fragment key={item.title}>
+          <Fragment  key={item.title}>
             {index !== items.length - 1 && (
-              <BreadcrumbItem className="hidden md:block">
+              <BreadcrumbItem className="hidden md:block font-poppins">
                 <BreadcrumbLink href={item.link}>{item.title}</BreadcrumbLink>
               </BreadcrumbItem>
             )}
