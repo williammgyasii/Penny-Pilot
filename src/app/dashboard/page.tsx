@@ -7,6 +7,7 @@ import { LOGOUT_USER } from "@/redux/functions/authFunctions";
 import { addToast } from "@/redux/features/toastSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
+import Link from "next/link";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -53,6 +54,7 @@ export default function DashboardPage() {
               This is a protected route. You can only see this page if you are
               authenticated.
             </p>
+            <Link href={"/dashboard/profile"}>To Profile</Link>
           </div>
         </div>
       </div>
