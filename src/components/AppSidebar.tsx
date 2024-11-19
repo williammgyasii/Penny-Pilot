@@ -39,6 +39,7 @@ import {
   CreditCard,
   GalleryVerticalEnd,
   LogOut,
+  LogOutIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -46,6 +47,7 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { navItems } from "@/lib/data";
+import { Button } from "./ui/button";
 
 export const company = {
   name: "Acme Inc",
@@ -136,7 +138,10 @@ export default function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu>
+            <Button className="bg-red-900" icon={LogOutIcon}>
+              Logout
+            </Button>
+            {/* <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
                   size="lg"
@@ -145,18 +150,19 @@ export default function AppSidebar() {
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage
                       src={currentUser?.image || ""}
-                      alt={currentUser?.user?.name || ""}
+                      alt={currentUser?.fullName || ""}
                     />
                     <AvatarFallback className="rounded-lg">
-                      {session?.user?.name?.slice(0, 2)?.toUpperCase() || "CN"}
+                      {currentUser?.fullName?.slice(0, 2)?.toUpperCase() ||
+                        "CN"}
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-semibold">
-                      {session?.user?.name || ""}
+                      {currentUser?.fullName || ""}
                     </span>
                     <span className="truncate text-xs">
-                      {session?.user?.email || ""}
+                      {currentUser?.email || ""}
                     </span>
                   </div>
                   <ChevronsUpDown className="ml-auto size-4" />
@@ -213,7 +219,7 @@ export default function AppSidebar() {
                   Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> */}
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>

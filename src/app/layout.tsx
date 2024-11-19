@@ -5,6 +5,7 @@ import { ToastContainer } from "@/components/ToastContainer";
 import { ReduxProvider } from "@/redux/provider";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
+import AppSidebar from "@/components/AppSidebar";
 
 const inter = Inter({
   subsets: ["latin"],
