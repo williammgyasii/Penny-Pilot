@@ -1,20 +1,8 @@
 "use client";
-import {
-  getFirebaseAuth,
-  getFirebaseFirestore,
-} from "@/lib/firebase/getFirebaseConfig";
-import { getFirebaseErrorMessage } from "@/lib/utils";
-import { TYPE_REGISTER_SCHEMA } from "@/schema/registerSchema";
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { FirebaseError } from "firebase/app";
-import {
-  createUserWithEmailAndPassword,
-  updateProfile,
-  UserCredential,
-} from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { LOGOUT_USER, registerUser } from "../functions/authFunctions";
 import { UserData } from "@/types/userTypes";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
   user: UserData | null;

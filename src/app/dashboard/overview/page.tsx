@@ -17,14 +17,14 @@ const DashboardOverview = () => {
   const handleLogout = async () => {
     console.log(user);
     try {
-      await dispatch(LOGOUT_USER());
+      // await dispatch(LOGOUT_USER());
       dispatch(
         addToast({
           message: "Logged out successfully",
           type: "success",
         })
       );
-      router.push("/login");
+      // router.push("/login");
     } catch (error) {
       console.log(error);
       // dispatch(
