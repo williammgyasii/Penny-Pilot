@@ -6,8 +6,11 @@ import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { clearUser, setLoading, setUser } from "@/redux/features/authSlice";
-import { getFirebaseAuth, getFirebaseFirestore } from "@/lib/firebase/getFirebaseConfig";
 import { addToast } from "@/redux/features/toastSlice";
+import {
+  getFirebaseAuth,
+  getFirebaseFirestore,
+} from "@/firebase/getFirebaseConfig";
 
 export default function AuthProvider({
   children,
@@ -29,7 +32,9 @@ export default function AuthProvider({
         // If user is logged in and accessing a protected route
         if (user && isProtectedRoute) {
           // Fetch user details from Firestore
-          const userDoc = await getDoc(doc(getFirebaseFirestore, "users", user.uid));
+          const userDoc = await getDoc(
+            doc(getFirebaseFirestore, "users", user.uid)
+          );
 
           if (userDoc.exists()) {
             // User data exists, dispatch user data to the store
@@ -54,7 +59,6 @@ export default function AuthProvider({
           dispatch(clearUser());
           router.push("/login");
         }
-
       } catch (error: unknown) {
         dispatch(clearUser());
         // Optionally, you can display a toast message for errors (commented out for now)
