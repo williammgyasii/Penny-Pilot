@@ -48,7 +48,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Login Button */}
-        <LinkButton icon={ArrowRightCircle} href={"/dashboard"} title="Login" />
+        <LinkButton icon={ArrowRightCircle} href={"/dashboard/overview"} title="Login" />
 
         {/* Mobile Menu Button */}
         <button

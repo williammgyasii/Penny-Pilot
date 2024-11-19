@@ -27,7 +27,7 @@ export default function AuthProvider({
     const unsubscribe = onAuthStateChanged(getFirebaseAuth, async (user) => {
       try {
         // Check if the path is a protected route (starts with "/dashboard/")
-        const isProtectedRoute = pathname.startsWith("/dashboard/");
+        const isProtectedRoute = pathname.startsWith("/dashboard/*");
 
         // If user is logged in and accessing a protected route
         if (user && isProtectedRoute) {
@@ -61,7 +61,9 @@ export default function AuthProvider({
       } catch (error: unknown) {
         dispatch(clearUser());
         // Optionally, you can display a toast message for errors (commented out for now)
-        // dispatch(addToast({ message: "Error loading user data", type: "error" }));
+        dispatch(
+          addToast({ message: "Error loading user data", type: "error" })
+        );
         redirect("/login");
       }
     });

@@ -40,7 +40,7 @@ export default function RegisterForm() {
     try {
       const result = await dispatch(registerUser(data)).unwrap();
       if (result) {
-        router.push("/dashboard");
+        router.push("/dashboard/overview");
         form.reset();
         dispatch(
           addToast({
