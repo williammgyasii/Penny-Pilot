@@ -23,7 +23,18 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable}`}>
         <ReduxProvider>
-          {children}
+          <KBar>
+            <SidebarProvider defaultOpen={defaultOpen}>
+              <AppSidebar />
+              <SidebarInset>
+                <Header />
+                {/* page main content */}
+                {children}
+                {/* page main content ends */}
+              </SidebarInset>
+            </SidebarProvider>
+          </KBar>
+
           {/* <ToastProvider /> */}
           <ToastContainer />
         </ReduxProvider>
