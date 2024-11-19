@@ -9,7 +9,7 @@ import Spinner from "../Spinner";
 const buttonVariants = cva(
   `inline-flex items-center justify-center relative gap-2 whitespace-nowrap rounded-md 
   text-sm font-medium ring-offset-background transition-colors overflow-hidden
-  group  px-7 py-2.5`,
+  group px-7 py-2.5`,
   {
     variants: {
       variant: {
@@ -21,7 +21,7 @@ const buttonVariants = cva(
           "border border-blue-900 text-blue-800 shadow-sm shadow-blue-900/20 bg-transparent hover:bg-accent hover:text-accent-foreground",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: " bg-gray-600 hover:text-white",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
