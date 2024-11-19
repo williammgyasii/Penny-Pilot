@@ -51,7 +51,7 @@ export default function DashboardPage() {
             </h2>
             <p className="text-muted-foreground">
               This is a protected route. You can only see this page if you are
-              not authenticated.
+              authenticated.
             </p>
           </div>
         </div>
