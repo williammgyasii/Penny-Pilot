@@ -4,7 +4,4 @@ export interface UserData {
   email: string;
   uid: string;
   createdAt: Date;
-  updatedAt: Date;
 }
-
-

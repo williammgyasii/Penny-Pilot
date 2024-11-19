@@ -48,7 +48,6 @@ export const registerUser = createAsyncThunk<
       lastName: userData.lastName,
       email: userData.email,
       createdAt: new Date(),
-      updatedAt: new Date(),
       // ...userData,
     };
     await setDoc(doc(getFirebaseFirestore, "users", user.uid), userDoc);
