@@ -4,26 +4,51 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/authSlice";
 import toastReducer from "./features/toastSlice";
+import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+import { persistStore, persistReducer } from "redux-persist";
 
-export const makeStore = () => {
-  return configureStore({
-    reducer: {
-      auth: authReducer,
-      toast: toastReducer,
+const createNoopStorage = () => {
+  return {
+    getItem(_key: string) {
+      return Promise.resolve(null);
     },
-    devTools: process.env.NODE_ENV !== "production",
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({
-        serializableCheck: {
-          ignoredActions: ["auth/setUser"],
-          ignoredActionPaths: ["payload.user"],
-          ignoredPaths: ["auth.user"],
-        },
-      }),
-  });
+    setItem(_key: string, value: unknown) {
+      return Promise.resolve(value);
+    },
+    removeItem(_key: string) {
+      return Promise.resolve();
+    },
+  };
 };
 
+const storage =
+  typeof window !== "undefined"
+    ? createWebStorage("local")
+    : createNoopStorage();
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["auth"],
+};
+
+const persistedReducer = persistReducer(persistConfig, authReducer);
+
+export const makeStore = configureStore({
+  reducer: {
+    auth: persistedReducer,
+    toast: toastReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+      },
+    }),
+});
+
 // Infer types from store
-export type AppStore = ReturnType<typeof makeStore>;
-export type RootState = ReturnType<AppStore["getState"]>;
-export type AppDispatch = AppStore["dispatch"];
+export const persistor = persistStore(makeStore);
+
+export type RootState = ReturnType<typeof makeStore.getState>;
+export type AppDispatch = typeof makeStore.dispatch;

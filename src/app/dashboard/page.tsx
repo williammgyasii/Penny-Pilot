@@ -2,18 +2,17 @@
 
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { useLogoutMutation } from "@/lib/redux/services/authApi";
 import { Button } from "@/components/ui/button";
-import { addToast } from "@/lib/redux/features/toastSlice";
+import { LOGOUT_USER } from "@/redux/functions/authFunctions";
+import { addToast } from "@/redux/features/toastSlice";
 
 export default function DashboardPage() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [logout] = useLogoutMutation();
 
   const handleLogout = async () => {
     try {
-      await logout().unwrap();
+      await dispatch(LOGOUT_USER());
       dispatch(
         addToast({
           message: "Logged out successfully",

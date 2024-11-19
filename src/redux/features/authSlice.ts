@@ -13,99 +13,22 @@ import {
   UserCredential,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-
-export interface UserData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  uid: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { LOGOUT_USER, registerUser } from "../functions/authFunctions";
+import { UserData } from "@/types/userTypes";
 
 interface AuthState {
   user: UserData | null;
   AUTH_SLICE_LOADING: boolean;
   error: string | null;
+  AUTH_SLICE_STATE: "idle" | "loading" | "completed" | "failed";
 }
 
 const initialState: AuthState = {
   user: null,
   AUTH_SLICE_LOADING: false,
   error: null,
+  AUTH_SLICE_STATE: "idle",
 };
-
-// export const registerUser = createAsyncThunk<
-//   UserData,
-//   TYPE_REGISTER_SCHEMA,
-//   {
-//     rejectValue: string;
-//   }
-// >("auth/register",({data},{rejectWithValue})) => {
-//   try {
-//     console.log("accr");
-//     // console.log(Credentials);
-//     // const { user } = await createUserWithEmailAndPassword(
-//     //   getFirebaseAuth,
-//     //   userData.email,
-//     //   userData.password
-//     // );
-//     // await updateProfile(user, {
-//     //   displayName: `${userData.firstName} ${userData.lastName}`,
-//     // });
-//     // const userDoc = {
-//     //   uid: user.uid,
-//     //   firstName: userData.firstName,
-//     //   lastName: userData.lastName,
-//     //   email: userData.email,
-//     // };
-//     // await setDoc(doc(getFirebaseFirestore, "users", user.uid), userDoc);
-//     // return userDoc;
-//   } catch (error) {
-//     if (error instanceof FirebaseError) {
-//       rejectWithValue(getFirebaseErrorMessage(error.code);)
-//     }
-//     return rejectWithValue("an unknown error occurred");
-//   }
-
-// });
-
-export const registerUser = createAsyncThunk<
-  UserData,
-  TYPE_REGISTER_SCHEMA,
-  {
-    rejectValue: string;
-  }
->("auth/register", async (userData, { rejectWithValue }) => {
-  try {
-    // console.log(Cred/entials);
-    const { user } = await createUserWithEmailAndPassword(
-      getFirebaseAuth,
-      userData.email,
-      userData.password
-    );
-    await updateProfile(user, {
-      displayName: `${userData.firstName} ${userData.lastName}`,
-    });
-
-    const userDoc = {
-      uid: user.uid,
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      email: userData.email,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      // ...userData,
-    };
-    await setDoc(doc(getFirebaseFirestore, "users", user.uid), userDoc);
-    return userDoc;
-  } catch (error) {
-    if (error instanceof FirebaseError) {
-      return rejectWithValue(getFirebaseErrorMessage(error.code));
-    }
-    return rejectWithValue("Registration failed");
-  }
-});
 
 const authSlice = createSlice({
   name: "auth",
@@ -135,6 +58,19 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.AUTH_SLICE_LOADING = false;
+        state.error = action.payload as string;
+      });
+    builder
+      .addCase(LOGOUT_USER.pending, (state) => {
+        state.AUTH_SLICE_STATE = "loading";
+        state.error = null;
+      })
+      .addCase(LOGOUT_USER.fulfilled, (state) => {
+        state.user = null;
+        state.AUTH_SLICE_STATE = "completed";
+      })
+      .addCase(LOGOUT_USER.rejected, (state, action) => {
+        state.AUTH_SLICE_STATE = "failed";
         state.error = action.payload as string;
       });
   },

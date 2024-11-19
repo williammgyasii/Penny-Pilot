@@ -1,19 +1,14 @@
-"use client";
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type ToastVariant = "default" | "destructive" | "success" | "warning";
-
-export interface ToastMessage {
+export interface Toast {
   id: string;
-  title?: string;
   message: string;
-  variant?: ToastVariant;
+  type: "success" | "error" | "info";
   duration?: number;
 }
 
 interface ToastState {
-  toasts: ToastMessage[];
+  toasts: Toast[];
 }
 
 const initialState: ToastState = {
@@ -24,8 +19,8 @@ export const toastSlice = createSlice({
   name: "toast",
   initialState,
   reducers: {
-    addToast: (state, action: PayloadAction<Omit<ToastMessage, "id">>) => {
-      const id = Date.now().toString();
+    addToast: (state, action: PayloadAction<Omit<Toast, "id">>) => {
+      const id = Math.random().toString(36).substring(7);
       state.toasts.push({ ...action.payload, id });
     },
     removeToast: (state, action: PayloadAction<string>) => {
