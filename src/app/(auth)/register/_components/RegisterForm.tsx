@@ -40,14 +40,14 @@ export default function RegisterForm() {
     try {
       const result = await dispatch(registerUser(data)).unwrap();
       if (result) {
+        router.push("/dashboard");
+        form.reset();
         dispatch(
           addToast({
             message: "Account created successfully!",
             type: "success",
           })
         );
-        router.push("/dashboard");
-        form.reset();
       }
       form.reset();
     } catch (error: unknown) {

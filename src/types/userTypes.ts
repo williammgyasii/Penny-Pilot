@@ -6,3 +6,5 @@ export interface UserData {
   createdAt: Date;
   updatedAt: Date;
 }
+
+

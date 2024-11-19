@@ -11,8 +11,3 @@ export const REGISTER_SCHEMA = z.object({
 });
 
 export type TYPE_REGISTER_SCHEMA = z.infer<typeof REGISTER_SCHEMA>;
-
-export const LOGIN_SCHEMA = z.object({
-  email: z.string().email(),
-  password: z.string(),
-});
