@@ -1,7 +1,3 @@
-import {
-  getFirebaseAuth,
-  getFirebaseFirestore,
-} from "@/lib/firebase/getFirebaseConfig";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createUserWithEmailAndPassword,
@@ -13,6 +9,7 @@ import { UserData } from "@/types/userTypes";
 import { doc, setDoc } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 import { getFirebaseErrorMessage } from "@/lib/utils";
+import { getFirebaseAuth, getFirebaseFirestore } from "@/firebase/getFirebaseConfig";
 
 export const LOGOUT_USER = createAsyncThunk<void, void>(
   "auth/logout",
