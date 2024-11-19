@@ -15,15 +15,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getFirebaseAuth, async (user) => {
       console.log(user);
-      if (user) {
-        // setUser({
-        //   uid: user.uid,
-        //   email: user.email || "",
-        //   firstName: user.displayName?.split(" ")[0] || "",
-        //   lastName: user.displayName?.split(" ")[1] || "",
-        //   // phoneNumber: user.phoneNumber || "",
-        // });
-      } else {
+      if (!user) {
         dispatch(clearUser());
         if (pathname.startsWith("/dashboard")) {
           router.push("/login");
