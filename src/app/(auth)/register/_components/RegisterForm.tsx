@@ -23,12 +23,18 @@ import PasswordStrengthIndicator from "./PasswordStrengthIndicator";
 export default function RegisterForm() {
   const form = useForm<TYPE_REGISTER_SCHEMA>({
     resolver: zodResolver(REGISTER_SCHEMA),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    },
   });
   const dispatch = useAppDispatch();
   const { AUTH_SLICE_LOADING } = useSelector((state: RootState) => state.auth);
 
   const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {
-    // const result = await dispatch(registerUser(data));
+    const result = await dispatch(registerUser(data));
     form.reset();
   });
 

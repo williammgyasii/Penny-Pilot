@@ -20,6 +20,8 @@ const RegisterPage = () => {
           src={registerBackground}
           className="w-full h-full object-cover z-10"
           alt="Register Background"
+          sizes={"auto"}
+          priority={true}
         />
         {/* Gradient */}
         <div className="absolute z-10 inset-0 bg-gradient-to-t from-black  to-black/30 opacity-95"></div>
