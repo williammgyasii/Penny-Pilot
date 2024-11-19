@@ -5,7 +5,6 @@ import { ToastContainer } from "@/components/ToastContainer";
 import { ReduxProvider } from "@/redux/provider";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
-import KBar from "@/components/kbar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,17 +28,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable}`}>
         <ReduxProvider>
-          <KBar>
-            <SidebarProvider defaultOpen={defaultOpen}>
-              <AppSidebar />
-              <SidebarInset>
-                <Header />
-                {/* page main content */}
-                {children}
-                {/* page main content ends */}
-              </SidebarInset>
-            </SidebarProvider>
-          </KBar>
+          <SidebarProvider defaultOpen={defaultOpen}>
+            <AppSidebar />
+            <SidebarInset>
+              <Header />
+              {/* page main content */}
+              {children}
+              {/* page main content ends */}
+            </SidebarInset>
+          </SidebarProvider>
 
           {/* <ToastProvider /> */}
           <ToastContainer />

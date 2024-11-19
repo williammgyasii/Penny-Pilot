@@ -46,7 +46,6 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { navItems } from "@/lib/data";
-import { Icons } from "../ui/icons";
 
 export const company = {
   name: "Acme Inc",
@@ -55,7 +54,7 @@ export const company = {
 };
 
 export default function AppSidebar() {
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { currentUser } = useSelector((state: RootState) => state.auth);
   const pathname = usePathname();
 
   return (
@@ -71,6 +70,7 @@ export default function AppSidebar() {
           </div>
         </div>
       </SidebarHeader>
+
       <SidebarContent className="overflow-x-hidden">
         <SidebarGroup>
           <SidebarGroupLabel>Overview</SidebarGroupLabel>
@@ -132,6 +132,7 @@ export default function AppSidebar() {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
+
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -143,8 +144,8 @@ export default function AppSidebar() {
                 >
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage
-                      src={session?.user?.image || ""}
-                      alt={session?.user?.name || ""}
+                      src={currentUser?.image || ""}
+                      alt={currentUser?.user?.name || ""}
                     />
                     <AvatarFallback className="rounded-lg">
                       {session?.user?.name?.slice(0, 2)?.toUpperCase() || "CN"}

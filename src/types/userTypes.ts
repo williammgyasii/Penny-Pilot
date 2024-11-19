@@ -6,6 +6,8 @@ export interface UserData {
   email: string;
   uid: string;
   createdAt: Date;
+  image?: string;
+  fullName?: string;
 }
 
 export interface NavItem {

@@ -1,18 +1,18 @@
 "use client";
 import { doc, setDoc } from "firebase/firestore";
-import { LOGOUT_USER, registerUser } from "../functions/authFunctions";
 import { UserData } from "@/types/userTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { LOGOUT_USER, registerUser } from "../asyncfunctions/authFunctions";
 
 interface AuthState {
-  user: UserData | null;
+  currentUser: UserData | null;
   AUTH_SLICE_LOADING: boolean;
   error: string | null;
   AUTH_SLICE_STATE: "idle" | "loading" | "completed" | "failed";
 }
 
 const initialState: AuthState = {
-  user: null,
+  currentUser: null,
   AUTH_SLICE_LOADING: false,
   error: null,
   AUTH_SLICE_STATE: "idle",
@@ -23,16 +23,19 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.user = action.payload;
+      state.currentUser = {
+        ...action.payload,
+        fullName: `${action.payload.firstName} ${action.payload.lastName}`,
+      };
     },
     clearUser: (state) => {
-      state.user = null;
+      state.currentUser = null;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.AUTH_SLICE_LOADING = action.payload;
     },
     logout: (state) => {
-      state.user = null;
+      state.currentUser = null;
       state.AUTH_SLICE_LOADING = false;
     },
   },
@@ -44,7 +47,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.AUTH_SLICE_LOADING = false;
-        state.user = action.payload;
+        state.currentUser = action.payload;
         state.error = null;
       })
       .addCase(registerUser.rejected, (state, action) => {
@@ -57,7 +60,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(LOGOUT_USER.fulfilled, (state) => {
-        state.user = null;
+        state.currentUser = null;
         state.AUTH_SLICE_STATE = "completed";
       })
       .addCase(LOGOUT_USER.rejected, (state, action) => {
@@ -67,5 +70,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser, clearUser, logout,setLoading } = authSlice.actions;
+export const { setUser, clearUser, logout, setLoading } = authSlice.actions;
 export default authSlice.reducer;
