@@ -10,7 +10,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { registerUser, UserData } from "@/redux/features/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 import { REGISTER_SCHEMA, TYPE_REGISTER_SCHEMA } from "@/schema/registerSchema";
@@ -20,6 +19,7 @@ import { useSelector } from "react-redux";
 import PasswordRequirements from "./PasswordRequirements";
 import PasswordStrengthIndicator from "./PasswordStrengthIndicator";
 import { useRouter } from "next/navigation";
+import { registerUser } from "@/redux/functions/authFunctions";
 
 export default function RegisterForm() {
   const form = useForm<TYPE_REGISTER_SCHEMA>({

@@ -7,10 +7,10 @@ import { CheckCircle, XCircle, Info, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RootState } from "@/redux/store";
 import { removeToast } from "@/redux/features/toastSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 export function ToastContainer() {
   const toasts = useSelector((state: RootState) => state.toast.toasts);
-  const dispatch = useDispatch();
 
   return (
     <div className="fixed top-4 right-4 z-50 flex flex-col gap-2">
@@ -32,7 +32,7 @@ function Toast({
   type: "success" | "error" | "info";
   duration?: number;
 }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const timer = setTimeout(() => {

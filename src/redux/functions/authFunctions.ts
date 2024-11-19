@@ -20,7 +20,9 @@ export const LOGOUT_USER = createAsyncThunk<void, void>(
     try {
       await signOut(getFirebaseAuth);
     } catch (error) {
-      return rejectWithValue(error.message);
+      if (error instanceof FirebaseError) {
+        return rejectWithValue(error.message);
+      }
     }
   }
 );

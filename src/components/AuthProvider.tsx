@@ -6,6 +6,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { getFirebaseAuth } from "@/lib/firebase/getFirebaseConfig";
 import { clearUser, setUser } from "@/redux/features/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 const publicPaths = ["/login", "/register", "/forgot-password"];
 
@@ -16,7 +17,7 @@ export default function AuthProvider({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getFirebaseAuth, (user) => {

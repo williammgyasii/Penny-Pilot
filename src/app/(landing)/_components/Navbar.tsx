@@ -48,7 +48,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Login Button */}
-        <LinkButton icon={ArrowRightCircle} href={"/login"} title="Login" />
+        <LinkButton icon={ArrowRightCircle} href={"/dashboard"} title="Login" />
 
         {/* Mobile Menu Button */}
         <button
@@ -95,7 +95,7 @@ const Navbar = () => {
                 <Button
                   className="w-full bg-ui-ui_blue_500"
                   onClick={() => {
-                    router.push("/login");
+                    router.push("/dashboard");
                     setIsMobileMenuOpen(false);
                     document.body.style.overflow = "unset";
                   }}

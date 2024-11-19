@@ -5,10 +5,11 @@ import { useDispatch } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { LOGOUT_USER } from "@/redux/functions/authFunctions";
 import { addToast } from "@/redux/features/toastSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 export default function DashboardPage() {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleLogout = async () => {
     try {
