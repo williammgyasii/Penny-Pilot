@@ -64,6 +64,27 @@ export const navItems: NavItem[] = [
     ],
   },
   {
+    title: "AI Forecasting",
+    url: "/dashboard/ai-forecasting",
+    icon: "ai",
+    shortcut: ["a", "f"],
+    isActive: false,
+    items: [
+      {
+        title: "Income Prediction",
+        url: "/dashboard/ai-forecasting/income-prediction",
+        // icon: "prediction",
+        shortcut: ["i", "p"],
+      },
+      {
+        title: "Expense Projection",
+        url: "/dashboard/ai-forecasting/expense-projection",
+        // icon: "projection",
+        shortcut: ["e", "p"],
+      },
+    ],
+  },
+  {
     title: "Tax Tools",
     url: "/dashboard/tax-tools",
     icon: "tax",
@@ -132,27 +153,7 @@ export const navItems: NavItem[] = [
       },
     ],
   },
-  {
-    title: "AI Forecasting",
-    url: "/dashboard/ai-forecasting",
-    icon: "ai",
-    shortcut: ["a", "f"],
-    isActive: false,
-    items: [
-      {
-        title: "Income Prediction",
-        url: "/dashboard/ai-forecasting/income-prediction",
-        // icon: "prediction",
-        shortcut: ["i", "p"],
-      },
-      {
-        title: "Expense Projection",
-        url: "/dashboard/ai-forecasting/expense-projection",
-        // icon: "projection",
-        shortcut: ["e", "p"],
-      },
-    ],
-  },
+
   {
     title: "Reports",
     url: "/dashboard/reports",

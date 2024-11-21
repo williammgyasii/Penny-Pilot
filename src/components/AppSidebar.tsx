@@ -174,10 +174,11 @@ export default function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              className="hover:!bg-purple-400 cursor-pointer"
+              size={"lg"}
+              className="hover:!bg-purple-400 cursor-pointer hover:text-white"
               asChild
             >
-              <div className="w-full bg-red-900 flex justify-between items-center">
+              <div className="w-full bg-red-900 flex text-current justify-between items-center">
                 <span className="group-data-[collapsible=icon]:hidden">
                   Logout
                 </span>

@@ -385,7 +385,10 @@ const SidebarFooter = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="footer"
-      className={cn("flex flex-col gap-2 p-2", className)}
+      className={cn(
+        "flex flex-col gap-2 group-data-[collapsible:icon]:p-2",
+        className
+      )}
       {...props}
     />
   );
@@ -433,7 +436,10 @@ const SidebarGroup = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="group"
-      className={cn("relative flex w-full min-w-0 flex-col group-data-[collapsible=icon]:!p-0", className)}
+      className={cn(
+        "relative flex w-full min-w-0 flex-col group-data-[collapsible=icon]:!p-0",
+        className
+      )}
       {...props}
     />
   );
@@ -517,7 +523,7 @@ const SidebarMenuItem = React.forwardRef<
   <li
     ref={ref}
     data-sidebar="menu-item"
-    className={cn("group/menu-item relative", className)}
+    className={cn("group/menu-item relative w-full", className)}
     {...props}
   />
 ));
