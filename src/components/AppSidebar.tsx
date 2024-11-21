@@ -34,6 +34,7 @@ import {
   Bell,
   CheckCheckIcon,
   CheckCircle,
+  ChevronDown,
   ChevronRight,
   ChevronsUpDown,
   CreditCard,
@@ -49,6 +50,7 @@ import { RootState } from "@/redux/store";
 import { navItems } from "@/lib/data";
 import { Button } from "./ui/button";
 import { Icons } from "./ui/icons";
+import { ProfessionsByCategory } from "@/types/professionTypes";
 
 export const company = {
   name: "Acme Inc",
@@ -59,23 +61,30 @@ export const company = {
 export default function AppSidebar() {
   const { currentUser } = useSelector((state: RootState) => state.auth);
   const pathname = usePathname();
+  const defaultProfession = "Web Developer";
+  const professionCategory = ProfessionsByCategory.find((item) =>
+    item.professions.includes(defaultProfession)
+  );
+  console.log(professionCategory);
 
   return (
     <Sidebar>
       <SidebarHeader>
-        <div className="flex text-white gap-4 text-sidebar-accent-foreground ">
+        <div className="flex h-full text-white gap-4 text-sidebar-accent-foreground ">
           <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </div>
-          <div className=" flex flex-col flex-1 font-poppins text-left text-sm leading-tight">
-            <span className="inline-block truncate text-inherit text-md font-semibold">
-              {currentUser?.firstName}
+          <div className="group-data-[collapsible=icon]:hidden flex flex-col flex-1 font-poppins text-left text-sm leading-tight">
+            <span className="inline-block truncate text-inherit text-md tracking-normal uppercase">
+              {`${currentUser?.firstName} ${currentUser?.lastName}`}
             </span>
-            <span className="inline-block truncate text-inherit text-xs text-gray-500">
-              {currentUser?.lastName}
+            <span className="inline-block truncate text-inherit text-xs text-gray-300">
+              {professionCategory?.professions.find(
+                (item) => item === defaultProfession
+              )}
             </span>
           </div>
         </div>

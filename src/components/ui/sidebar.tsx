@@ -225,6 +225,7 @@ const Sidebar = React.forwardRef<
         data-collapsible={state === "collapsed" ? collapsible : ""}
         data-variant={variant}
         data-side={side}
+        data-stew={"stew"}
       >
         {/* This is what handles the sidebar gap on desktop */}
         <div
@@ -321,17 +322,19 @@ SidebarRail.displayName = "SidebarRail";
 const SidebarInset = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"main">
->(({ className, ...props }, ref) => {
+>(({ className, children, ...props }, ref) => {
   return (
     <main
       ref={ref}
       className={cn(
-        "relative flex min-h-svh flex-1 flex-col bg-background",
+        "relative flex min-h-svh flex-1 flex-col",
         "peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))] md:peer-data-[variant=inset]:m-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow",
         className
       )}
       {...props}
-    />
+    >
+      {children}
+    </main>
   );
 });
 SidebarInset.displayName = "SidebarInset";
@@ -362,7 +365,10 @@ const SidebarHeader = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="header"
-      className={cn("flex flex-col gap-2 p-2 w-full text-white", className)}
+      className={cn(
+        "flex flex-col font-poppins font-normal gap-2 p-2 w-full text-white",
+        className
+      )}
       {...props}
     >
       {children}

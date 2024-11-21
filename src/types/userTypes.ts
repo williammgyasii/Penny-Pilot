@@ -1,4 +1,5 @@
 import { Icons } from "@/components/ui/icons";
+import { ProfessionCategory } from "./professionTypes";
 
 export interface UserData {
   firstName: string;
@@ -8,6 +9,7 @@ export interface UserData {
   createdAt: Date;
   image?: string;
   fullName?: string;
+  profession?: string;
 }
 
 export interface NavItem {
