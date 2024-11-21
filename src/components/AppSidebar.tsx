@@ -61,21 +61,21 @@ export default function AppSidebar() {
   const pathname = usePathname();
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar>
       <SidebarHeader>
-        <div className="flex gap-4 py-4 px-4 text-sidebar-accent-foreground ">
+        <div className="flex text-white gap-4 text-sidebar-accent-foreground ">
           <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </div>
-          <div className="grid flex-1 font-poppins text-left text-sm leading-tight">
-            <span className="truncate text-inherit text-md font-semibold">
-              {company.name}
+          <div className=" flex flex-col flex-1 font-poppins text-left text-sm leading-tight">
+            <span className="inline-block truncate text-inherit text-md font-semibold">
+              {currentUser?.firstName}
             </span>
-            <span className="truncate text-inherit text-xs text-gray-500">
-              {company.plan}
+            <span className="inline-block truncate text-inherit text-xs text-gray-500">
+              {currentUser?.lastName}
             </span>
           </div>
         </div>
