@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ToastContainer } from "@/components/ToastContainer";
 import { ReduxProvider } from "@/redux/provider";
+import NextTopLoader from "nextjs-toploader";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable}`}>
         <ReduxProvider>
+          <NextTopLoader showSpinner={false} />
           {children}
           {/* <ToastProvider /> */}
           <ToastContainer />
