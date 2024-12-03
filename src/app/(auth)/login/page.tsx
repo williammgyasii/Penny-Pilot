@@ -3,9 +3,10 @@ import React from "react";
 import registerBackground from "@public/Fintap.png";
 import Image from "next/image";
 import TextGradient from "@/animated/TextGradient";
+import LoginForm from "../_components/LoginForm";
 
 export const metadata: Metadata = {
-  title: "Register Page",
+  title: "Login Page",
   description: "Getting started to financial freedom",
   keywords: ["penny pilot", "register"],
 };
@@ -45,10 +46,10 @@ const LoginPage = () => {
       <div className="col-span-8 md:col-span-4 h-full lg:-ml-2 py-5 md:py-[4rem]">
         <div className="flex flex-col items-center justify-center w-full lg:px-[3rem] xl:px-[5rem]">
           <TextGradient
-            text="Create Account"
-            subtitle="Getting started on your path to freedom"
+            text="Welcome Back"
+            subtitle="Login to continue with your financial discipline"
           />
-          <RegisterForm />
+          {/* <LoginForm /> */}
           {/* <RegisterForm /> */}
         </div>
       </div>

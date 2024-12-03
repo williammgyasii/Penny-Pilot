@@ -3,7 +3,7 @@ import React from "react";
 import registerBackground from "@public/Fintap.png";
 import Image from "next/image";
 import TextGradient from "@/animated/TextGradient";
-import RegisterForm from "./_components/RegisterForm";
+import RegisterForm from "../_components/RegisterForm";
 
 export const metadata: Metadata = {
   title: "Register Page",

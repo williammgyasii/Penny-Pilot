@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation";
 import { addToast } from "@/redux/features/toastSlice";
 import { registerUser } from "@/redux/asyncfunctions/authFunctions";
 
-export default function RegisterForm() {
+export default function LoginForm() {
   const form = useForm<TYPE_REGISTER_SCHEMA>({
     resolver: zodResolver(REGISTER_SCHEMA),
     defaultValues: {
