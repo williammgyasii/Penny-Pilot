@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { addToast } from "@/redux/features/toastSlice";
-import { LOGOUT_USER } from "@/redux/functions/authFunctions";
 import { useAppDispatch } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 import Link from "next/link";
@@ -10,12 +9,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 const DashboardOverview = () => {
-  const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
   const handleLogout = async () => {
-    console.log(user);
     try {
       // await dispatch(LOGOUT_USER());
       dispatch(
@@ -51,6 +48,7 @@ const DashboardOverview = () => {
               Welcome to your Dashboard!
             </h2>
             <p className="text-muted-foreground">
+              For test purpose you are seeing this page. 
               This is a protected route. You can only see this page if you are
               authenticated.
             </p>

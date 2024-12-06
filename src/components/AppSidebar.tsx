@@ -30,6 +30,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import {
   BadgeCheck,
@@ -91,6 +92,7 @@ export default function AppSidebar() {
               )}
             </span>
           </div>
+          
         </div>
       </SidebarHeader>
 
