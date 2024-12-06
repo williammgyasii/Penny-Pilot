@@ -56,7 +56,7 @@ export const registerNewUser = createAsyncThunk<
   }
 });
 
-export const loginUser = createAsyncThunk<
+export const loginExistingUser = createAsyncThunk<
   UserData,
   TYPE_LOGIN_SCHEMA,
   {
