@@ -11,16 +11,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useAppDispatch } from "@/redux/reduxhooks";
-import { RootState } from "@/redux/store";
 import { REGISTER_SCHEMA, TYPE_REGISTER_SCHEMA } from "@/schema/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import PasswordRequirements from "./PasswordRequirements";
 import PasswordStrengthIndicator from "./PasswordStrengthIndicator";
 import { useRouter } from "next/navigation";
 import { addToast } from "@/redux/features/toastSlice";
-import { registerUser } from "@/redux/asyncfunctions/authFunctions";
+import { REGISTER_NEW_USER } from "@/redux/functions/authFunctions";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export default function RegisterForm() {
   const form = useForm<TYPE_REGISTER_SCHEMA>({
@@ -35,12 +35,11 @@ export default function RegisterForm() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { AUTH_SLICE_LOADING } = useSelector((state: RootState) => state.auth);
-
   const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {
     try {
-      const result = await dispatch(registerUser(data)).unwrap();
+      const result = await dispatch(REGISTER_NEW_USER(data)).unwrap();
       if (result) {
-        router.push("/dashboard/overview");
+        router.push("/dashboard");
         form.reset();
         dispatch(
           addToast({

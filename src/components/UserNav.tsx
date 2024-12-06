@@ -11,7 +11,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LOGOUT_USER } from "@/redux/asyncfunctions/authFunctions";
+import { LOG_OUT_USER } from "@/redux/functions/authFunctions";
 import { useAppDispatch } from "@/redux/reduxhooks";
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
@@ -62,7 +62,7 @@ export function UserNav() {
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem onClick={() => dispatch(LOGOUT_USER())}>
+          <DropdownMenuItem onClick={() => dispatch(LOG_OUT_USER())}>
             Log out
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>

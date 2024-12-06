@@ -1,6 +1,4 @@
 import { cn } from "@/lib/utils";
-import { cva } from "class-variance-authority";
-import { section } from "framer-motion/client";
 import React from "react";
 
 type Props = {
