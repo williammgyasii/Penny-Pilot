@@ -1,63 +1,30 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { addToast } from "@/redux/features/toastSlice";
-import { useAppDispatch } from "@/redux/reduxhooks";
+import { LOG_OUT_USER } from "@/redux/functions/authFunctions";
+import { useAppDispatch, useAppSelector } from "@/redux/reduxhooks";
 import { RootState } from "@/redux/store";
-import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
-import React from "react";
-import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
-const DashboardOverview = () => {
+export function Dashboard() {
+  const user = useAppSelector((state: RootState) => state.auth.currentUser);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const handleLogout = async () => {
+  const handleSignOut = async () => {
     try {
-      // await dispatch(LOGOUT_USER());
-      dispatch(
-        addToast({
-          message: "Logged out successfully",
-          type: "success",
-        })
-      );
-      // router.push("/login");
-    } catch (error) {
-      console.log(error);
-      // dispatch(
-      //   addToast({
-      //     message: (error as string) || "Logout failed",
-      //     type: "error",
-      //   })
-      // );
+      await dispatch(LOG_OUT_USER()).unwrap();
+      router.push("/");
+    } catch (err) {
+      console.error("Failed to sign out:", err);
     }
   };
 
+  if (!user) return null;
+
   return (
-    <div className="min-h-screen p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Dashboard</h1>
-          <Button variant="destructive" onClick={handleLogout}>
-            Logout
-          </Button>
-        </div>
-        <div className="grid gap-6">
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold mb-4">
-              Welcome to your Dashboard!
-            </h2>
-            <p className="text-muted-foreground">
-              For test purpose you are seeing this page. 
-              This is a protected route. You can only see this page if you are
-              authenticated.
-            </p>
-            <Link href={"/dashboard/profile"}>To Profile</Link>
-          </div>
-        </div>
-      </div>
+    <div>
+      <h1>Welcome, {user.firstName}!</h1>
+      <p>Email: {user.email}</p>
+      <button onClick={handleSignOut}>Sign Out</button>
     </div>
   );
-};
-
-export default DashboardOverview;
+}
