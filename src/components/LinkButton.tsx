@@ -13,9 +13,9 @@ const LinkButton = ({ href, icon: Icon, title, iconSize }: Props) => {
   return (
     <Link
       href={href}
-      className="inline-flex items-center justify-center relative gap-2 whitespace-nowrap rounded-md 
+      className="hidden items-center justify-center relative gap-2 whitespace-nowrap rounded-md 
   text-sm font-medium ring-offset-background transition-colors overflow-hidden
-  group  px-7 py-2.5 bg-blue-600"
+  group  px-7 py-2.5 bg-blue-600 md:inline-flex"
     >
       <div
         className="absolute  inset-0 h-[200%] w-[200%] 

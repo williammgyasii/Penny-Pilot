@@ -6,15 +6,23 @@ export type NavbarLinks = {
 
 export const NavbarLinks: NavbarLinks[] = [
   {
-    title: "About",
+    title: "Why Penny",
     href: "/about",
   },
   {
-    title: "Features",
+    title: "Products",
     href: "/features",
+  },
+  {
+    title: "Use Cases",
+    href: "/pricing",
   },
   {
     title: "Pricing",
     href: "/pricing",
+  },
+  {
+    title: "Resources",
+    href: "/Resources",
   },
 ];
