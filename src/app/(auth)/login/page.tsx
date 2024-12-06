@@ -1,17 +1,35 @@
+"use client";
 import { Metadata } from "next";
-import React from "react";
+import React, { useState } from "react";
 import registerBackground from "@public/Fintap.png";
 import Image from "next/image";
 import TextGradient from "@/animated/TextGradient";
 import LoginForm from "../_components/LoginForm";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/redux/reduxhooks";
+import { LOGIN_EXISTING_USER } from "@/redux/functions/authFunctions";
 
-export const metadata: Metadata = {
-  title: "Login Page",
-  description: "Getting started to financial freedom",
-  keywords: ["penny pilot", "register"],
-};
+// export const metadata: Metadata = {
+//   title: "Login Page",
+//   description: "Getting started to financial freedom",
+//   keywords: ["penny pilot", "register"],
+// };
 
 const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await dispatch(LOGIN_EXISTING_USER({ email, password })).unwrap();
+      // router.push("/dashboard");
+    } catch (err) {
+      console.error("Failed to log in:", err);
+    }
+  };
   return (
     <div className="min-h-screen bg-ui-ui_light_200 grid grid-cols-8 p-2 lg:space-x-1 md:space-x-4">
       <div className="col-span-8 md:col-span-4 h-[20rem] md:h-full bg-yellow-900 relative rounded-xl overflow-hidden">
@@ -49,6 +67,24 @@ const LoginPage = () => {
             text="Welcome Back"
             subtitle="Login to continue with your financial discipline"
           />
+
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+              required
+            />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              required
+            />
+            <button type="submit">Log in</button>
+          </form>
           {/* <LoginForm /> */}
           {/* <RegisterForm /> */}
         </div>

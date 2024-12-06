@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/reduxhooks";
 import { RootState } from "@/redux/store";
 import { useRouter } from "next/navigation";
 
-export function Dashboard() {
+export default function Dashboard() {
   const user = useAppSelector((state: RootState) => state.auth.currentUser);
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -18,13 +18,5 @@ export function Dashboard() {
     }
   };
 
-  if (!user) return null;
-
-  return (
-    <div>
-      <h1>Welcome, {user.firstName}!</h1>
-      <p>Email: {user.email}</p>
-      <button onClick={handleSignOut}>Sign Out</button>
-    </div>
-  );
+  return <div>welcome </div>;
 }

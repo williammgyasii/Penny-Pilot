@@ -15,6 +15,7 @@ import {
   getFirebaseFirestore,
 } from "@/firebase/getFirebaseConfig";
 import { TYPE_LOGIN_SCHEMA } from "@/schema/loginSchema";
+import axios from "axios";
 
 export const LOG_OUT_USER = createAsyncThunk("auth/signOut", async () => {
   await signOut(getFirebaseAuth);
@@ -34,9 +35,6 @@ export const REGISTER_NEW_USER = createAsyncThunk<
       userData.email,
       userData.password
     );
-    await updateProfile(user, {
-      displayName: `${userData.firstName} ${userData.lastName}`,
-    });
 
     const userDoc = {
       uid: user.uid,
@@ -46,7 +44,11 @@ export const REGISTER_NEW_USER = createAsyncThunk<
       createdAt: new Date(),
       // ...userData,
     };
-    await setDoc(doc(getFirebaseFirestore, "users", user.uid), userDoc);
+
+    // await setDoc(doc(getFirebaseFirestore, "users", user.uid), userDoc);
+    const idToken = await user.getIdToken();
+    await axios.post("/api/auth/session", { idToken });
+
     return userDoc;
   } catch (error) {
     if (error instanceof FirebaseError) {
@@ -62,17 +64,23 @@ export const LOGIN_EXISTING_USER = createAsyncThunk<
   {
     rejectValue: string;
   }
->("auth/loginUser", async (loginData, { rejectWithValue }) => {
+>("auth/loginUser", async ({ email, password }, { rejectWithValue }) => {
   try {
+    // console.log(email, password);
     const userCredential = await signInWithEmailAndPassword(
       getFirebaseAuth,
-      loginData.email as string,
-      loginData.password as string
+      email,
+      password
     );
     const user = userCredential.user;
+    console.log(user);
     // Fetch additional user details from Firestore
     const userDoc = await getDoc(doc(getFirebaseFirestore, "users", user.uid));
     const userDetails = userDoc.data() as UserData;
+
+    // const idToken = await user.getIdToken();
+    // await axios.post("/api/auth/session", { idToken });
+
     return { ...user, ...userDetails };
   } catch (error) {
     if (error instanceof FirebaseError) {
