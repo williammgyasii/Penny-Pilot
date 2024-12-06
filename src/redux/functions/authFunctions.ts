@@ -1,30 +1,26 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signOut,
   updateProfile,
 } from "firebase/auth";
 import { TYPE_REGISTER_SCHEMA } from "@/schema/registerSchema";
 import { UserData } from "@/types/userTypes";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 import { getFirebaseErrorMessage } from "@/lib/utils";
-import { getFirebaseAuth, getFirebaseFirestore } from "@/firebase/getFirebaseConfig";
+import {
+  getFirebaseAuth,
+  getFirebaseFirestore,
+} from "@/firebase/getFirebaseConfig";
+import { TYPE_LOGIN_SCHEMA } from "@/schema/loginSchema";
 
-export const LOGOUT_USER = createAsyncThunk<void, void>(
-  "auth/logout",
-  async (_, { rejectWithValue }) => {
-    try {
-      await signOut(getFirebaseAuth);
-    } catch (error) {
-      if (error instanceof FirebaseError) {
-        return rejectWithValue(error.message);
-      }
-    }
-  }
-);
+export const SignOutCurrentUser = createAsyncThunk("auth/signOut", async () => {
+  await signOut(getFirebaseAuth);
+});
 
-export const registerUser = createAsyncThunk<
+export const registerNewUser = createAsyncThunk<
   UserData,
   TYPE_REGISTER_SCHEMA,
   {
@@ -52,6 +48,32 @@ export const registerUser = createAsyncThunk<
     };
     await setDoc(doc(getFirebaseFirestore, "users", user.uid), userDoc);
     return userDoc;
+  } catch (error) {
+    if (error instanceof FirebaseError) {
+      return rejectWithValue(getFirebaseErrorMessage(error.code));
+    }
+    return rejectWithValue("Registration failed");
+  }
+});
+
+export const loginUser = createAsyncThunk<
+  UserData,
+  TYPE_LOGIN_SCHEMA,
+  {
+    rejectValue: string;
+  }
+>("auth/loginUser", async (loginData, { rejectWithValue }) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      getFirebaseAuth,
+      loginData.email as string,
+      loginData.password as string
+    );
+    const user = userCredential.user;
+    // Fetch additional user details from Firestore
+    const userDoc = await getDoc(doc(getFirebaseFirestore, "users", user.uid));
+    const userDetails = userDoc.data() as UserData;
+    return { ...user, ...userDetails };
   } catch (error) {
     if (error instanceof FirebaseError) {
       return rejectWithValue(getFirebaseErrorMessage(error.code));
