@@ -25,12 +25,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable}`}>
-        <ReduxProvider>
-          <NextTopLoader showSpinner={false} />
-          {children}
-          {/* <ToastProvider /> */}
-          <ToastContainer />
-        </ReduxProvider>
+        <NextTopLoader showSpinner={false} />
+        {children}
+        {/* <ToastProvider /> */}
       </body>
     </html>
   );
