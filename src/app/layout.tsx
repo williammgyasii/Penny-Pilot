@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ToastContainer } from "@/components/ToastContainer";
-import { ReduxProvider } from "@/redux/provider";
 import NextTopLoader from "nextjs-toploader";
 
 const inter = Inter({
