@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { addToast } from "@/redux/features/toastSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/reduxhooks";
 import { RootState } from "@/redux/store";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";

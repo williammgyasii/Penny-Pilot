@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/reduxhooks";
 import { RootState } from "@/redux/store";
 import { REGISTER_SCHEMA, TYPE_REGISTER_SCHEMA } from "@/schema/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";

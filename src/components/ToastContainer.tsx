@@ -7,7 +7,7 @@ import { CheckCircle, XCircle, Info, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RootState } from "@/redux/store";
 import { removeToast } from "@/redux/features/toastSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/reduxhooks";
 
 export function ToastContainer() {
   const toasts = useSelector((state: RootState) => state.toast.toasts);

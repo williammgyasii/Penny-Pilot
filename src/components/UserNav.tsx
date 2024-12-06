@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LOGOUT_USER } from "@/redux/asyncfunctions/authFunctions";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/reduxhooks";
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
 export function UserNav() {
