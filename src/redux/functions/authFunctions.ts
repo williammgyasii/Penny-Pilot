@@ -16,11 +16,11 @@ import {
 } from "@/firebase/getFirebaseConfig";
 import { TYPE_LOGIN_SCHEMA } from "@/schema/loginSchema";
 
-export const SignOutCurrentUser = createAsyncThunk("auth/signOut", async () => {
+export const LOG_OUT_USER = createAsyncThunk("auth/signOut", async () => {
   await signOut(getFirebaseAuth);
 });
 
-export const registerNewUser = createAsyncThunk<
+export const REGISTER_NEW_USER = createAsyncThunk<
   UserData,
   TYPE_REGISTER_SCHEMA,
   {
@@ -56,7 +56,7 @@ export const registerNewUser = createAsyncThunk<
   }
 });
 
-export const loginExistingUser = createAsyncThunk<
+export const LOGIN_EXISTING_USER = createAsyncThunk<
   UserData,
   TYPE_LOGIN_SCHEMA,
   {

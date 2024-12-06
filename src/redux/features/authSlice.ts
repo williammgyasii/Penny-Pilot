@@ -1,8 +1,11 @@
 "use client";
-import { doc, setDoc } from "firebase/firestore";
 import { UserData } from "@/types/userTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { LOGOUT_USER, registerUser } from "../asyncfunctions/authFunctions";
+import {
+  LOG_OUT_USER,
+  LOGIN_EXISTING_USER,
+  REGISTER_NEW_USER,
+} from "../functions/authFunctions";
 
 interface AuthState {
   currentUser: UserData | null;
@@ -27,6 +30,7 @@ const authSlice = createSlice({
         ...action.payload,
         fullName: `${action.payload.firstName} ${action.payload.lastName}`,
       };
+      state.AUTH_SLICE_LOADING = false;
     },
     clearUser: (state) => {
       state.currentUser = null;
@@ -41,29 +45,43 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.pending, (state) => {
+      //LOGOUT CASES
+      .addCase(LOGIN_EXISTING_USER.pending, (state) => {
+        state.AUTH_SLICE_STATE = "loading";
+        state.error = null;
+      })
+      .addCase(LOGIN_EXISTING_USER.fulfilled, (state, action) => {
+        state.AUTH_SLICE_STATE = "loading";
+        state.currentUser = action.payload;
+      })
+      .addCase(LOGIN_EXISTING_USER.rejected, (state, action) => {
+        state.AUTH_SLICE_LOADING = false;
+        state.error = action.payload as string;
+      })
+      //REGISTER CASES
+      .addCase(REGISTER_NEW_USER.pending, (state) => {
         state.AUTH_SLICE_LOADING = true;
         state.error = null;
       })
-      .addCase(registerUser.fulfilled, (state, action) => {
+      .addCase(REGISTER_NEW_USER.fulfilled, (state, action) => {
         state.AUTH_SLICE_LOADING = false;
         state.currentUser = action.payload;
         state.error = null;
       })
-      .addCase(registerUser.rejected, (state, action) => {
+      .addCase(REGISTER_NEW_USER.rejected, (state, action) => {
         state.AUTH_SLICE_LOADING = false;
         state.error = action.payload as string;
-      });
-    builder
-      .addCase(LOGOUT_USER.pending, (state) => {
+      })
+      //LOGOUT CASES
+      .addCase(LOG_OUT_USER.pending, (state) => {
         state.AUTH_SLICE_STATE = "loading";
         state.error = null;
       })
-      .addCase(LOGOUT_USER.fulfilled, (state) => {
+      .addCase(LOG_OUT_USER.fulfilled, (state) => {
         state.currentUser = null;
         state.AUTH_SLICE_STATE = "completed";
       })
-      .addCase(LOGOUT_USER.rejected, (state, action) => {
+      .addCase(LOG_OUT_USER.rejected, (state, action) => {
         state.AUTH_SLICE_STATE = "failed";
         state.error = action.payload as string;
       });

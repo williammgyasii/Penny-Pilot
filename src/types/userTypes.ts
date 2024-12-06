@@ -1,5 +1,4 @@
 import { Icons } from "@/components/ui/icons";
-import { ProfessionCategory } from "./professionTypes";
 
 export interface UserData {
   firstName: string;
