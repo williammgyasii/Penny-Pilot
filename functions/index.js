@@ -1,8 +1,11 @@
 import functions from "firebase-functions";
 import admin from "firebase-admin";
+import cors from 'cors';
+
 
 // Initialize Firebase Admin SDK
 admin.initializeApp();
+const corsHandler = cors({ origin: true });
 
 export const createSessionCookie = functions.https.onRequest(
   async (req, res) => {
