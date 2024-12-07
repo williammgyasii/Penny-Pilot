@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import {
-  adminAuth,
-  initializeFirebaseAdmin,
-} from "@/firebase/getFirebaseAdmin";
+import { adminAuth } from "@/firebase/getFirebaseAdmin";
 
 export async function POST() {
   const auth = await adminAuth; // Access the auth instance
