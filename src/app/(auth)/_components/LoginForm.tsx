@@ -40,7 +40,6 @@ export default function LoginForm() {
 
   const handleSubmit = form.handleSubmit(async (data: TYPE_LOGIN_SCHEMA) => {
     try {
-      console.log(AUTH_SLICE_LOADING);
       const { email, password } = data;
       await dispatch(LOGIN_EXISTING_USER({ email, password })).unwrap();
       router.push("/dashboard");
