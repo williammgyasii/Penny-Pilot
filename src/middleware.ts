@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { adminAuth } from "./firebase/getFirebaseAdmin";
+import { Buffer } from "buffer";
 
 export async function middleware(request: NextRequest, response: NextResponse) {
   const session = request.cookies.get("session")?.value;
@@ -10,17 +10,18 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   if (!session) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
-  // Validate the session
   try {
-    const decodedToken = await adminAuth.verifySessionCookie(session, true);
+    // research on ways to validate
+    // const result = await axios.get("api/auth/session");
+    // // const decodedToken = await adminAuth.verifySessionCookie(session, true);
     const { pathname } = request.nextUrl;
 
-    // If the user is authenticated and trying to access the login page, redirect to dashboard
     if (pathname === "/login") {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
   } catch (error) {
     // If there's an error, clear the session cookie and redirect to login
+    console.log(error);
     const response = NextResponse.redirect(new URL("/login", request.url));
     response.cookies.delete("session");
     return response;

@@ -2,23 +2,23 @@ import { adminAuth } from "@/firebase/getFirebaseAdmin";
 import { cookies, headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-  const session = cookies().get("session")?.value || "";
+// export async function GET(request: NextRequest) {
+//   const session = cookies().get("session")?.value || "";
 
-  //Validate if the cookie exist in the request
-  if (!session) {
-    return NextResponse.json({ isLogged: false }, { status: 401 });
-  }
+//   //Validate if the cookie exist in the request
+//   if (!session) {
+//     return NextResponse.json({ isLogged: false }, { status: 401 });
+//   }
 
-  //Use Firebase Admin to validate the session cookie
-  const decodedClaims = await adminAuth.verifySessionCookie(session, true);
+//   //Use Firebase Admin to validate the session cookie
+//   const decodedClaims = await adminAuth.verifySessionCookie(session, true);
 
-  if (!decodedClaims) {
-    return NextResponse.json({ isLogged: false }, { status: 401 });
-  }
+//   if (!decodedClaims) {
+//     return NextResponse.json({ isLogged: false }, { status: 401 });
+//   }
 
-  return NextResponse.json({ isLogged: true }, { status: 200 });
-}
+//   return NextResponse.json({ isLogged: true }, { status: 200 });
+// }
 
 export async function POST(request: Request) {
   const { idToken } = await request.json();
@@ -27,6 +27,7 @@ export async function POST(request: Request) {
     const sessionCookie = await adminAuth.createSessionCookie(idToken, {
       expiresIn,
     });
+    
     const response = NextResponse.json({ success: true }, { status: 200 });
     response.cookies.set("session", sessionCookie, {
       maxAge: expiresIn,
