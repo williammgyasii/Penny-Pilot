@@ -1,44 +1,33 @@
-import { NextRequest, NextResponse } from "next/server";
-import axios from "axios";
-import { parse } from "cookie";
-import { CREATE_SESSION_COOKIE_CLOUD_FUNCTION_URL } from "./lib/constants";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-axios.defaults.withCredentials = true;
+export async function middleware(request: NextRequest) {
+  const session = request.cookies.get("session")?.value;
 
-export async function middleware(req: NextRequest) {
-  // Extract cookies from the request headers
-  const cookies = req.headers.get("cookie");
-  let token = null;
-
-  if (cookies) {
-    const parsedCookies = parse(cookies);
-    token = parsedCookies.session; // Get token from the session cookie
+  //Return to /login if don't have a session
+  if (!session) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  console.log(token);
+  try {
+    // research on ways to validate
+    // const result = await axios.get("api/auth/session");
+    // // const decodedToken = await adminAuth.verifySessionCookie(session, true);
+    const { pathname } = request.nextUrl;
 
-  // Redirect to login if the token isn't valid or doesn't exist
-  if (req.nextUrl.pathname.startsWith("/dashboard")) {
-    if (!token) {
-      return NextResponse.redirect(new URL("/login", req.nextUrl));
+    if (pathname === "/login") {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
     }
-
-    try {
-      const response = await axios.post(
-        CREATE_SESSION_COOKIE_CLOUD_FUNCTION_URL,
-        { token }
-      );
-
-      if (!response.data.success) {
-        return NextResponse.redirect(new URL("/login", req.nextUrl));
-      }
-
-      return NextResponse.next();
-    } catch (error) {
-      console.error("Error verifying token with Cloud Function", error);
-      return NextResponse.redirect(new URL("/login", req.nextUrl));
-    }
+  } catch (error) {
+    const response = NextResponse.redirect(new URL("/login", request.url));
+    response.cookies.delete("session");
+    return response;
   }
 
   return NextResponse.next();
 }
+
+// Add your protected routes here
+export const config = {
+  matcher: ["/dashboard/:path*"],
+};
