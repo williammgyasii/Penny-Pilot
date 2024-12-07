@@ -21,6 +21,8 @@ import { addToast } from "@/redux/features/toastSlice";
 import { REGISTER_NEW_USER } from "@/redux/functions/authFunctions";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
 
 export default function RegisterForm() {
   const form = useForm<TYPE_REGISTER_SCHEMA>({
@@ -35,27 +37,21 @@ export default function RegisterForm() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { AUTH_SLICE_LOADING } = useSelector((state: RootState) => state.auth);
+  const { toast } = useToast();
+
   const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {
     try {
-      const result = await dispatch(REGISTER_NEW_USER(data)).unwrap();
-      // if (result) {
-      //   router.push("/dashboard");
-      //   form.reset();
-      //   dispatch(
-      //     addToast({
-      //       message: "Account created successfully!",
-      //       type: "success",
-      //     })
-      //   );
-      // }
+      await dispatch(REGISTER_NEW_USER(data)).unwrap();
+      router.push("/dashboard");
       form.reset();
     } catch (error: unknown) {
-      dispatch(
-        addToast({
-          message: (error as string) || "Registration failed",
-          type: "error",
-        })
-      );
+      console.log("Register error on register page", error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: error as string,
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
     }
   });
 
