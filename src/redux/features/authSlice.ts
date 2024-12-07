@@ -28,7 +28,7 @@ const authSlice = createSlice({
     setUser: (state, action) => {
       state.currentUser = {
         ...action.payload,
-        fullName: `${action.payload.firstName} ${action.payload.lastName}`,
+        fullName: `${action.payload?.firstName} ${action.payload?.lastName}`,
       };
       state.AUTH_SLICE_LOADING = false;
     },

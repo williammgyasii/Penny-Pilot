@@ -1,31 +1,35 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter, usePathname, redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/redux/reduxhooks";
+import { RootState } from "@/redux/store";
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { useDispatch } from "react-redux";
-import { clearUser, setLoading, setUser } from "@/redux/features/authSlice";
-import { addToast } from "@/redux/features/toastSlice";
-import {
-  getFirebaseAuth,
-  getFirebaseFirestore,
-} from "@/firebase/getFirebaseConfig";
+import { getClientAuth } from "@/firebase/getFirebaseConfig";
+import { setUser } from "@/redux/features/authSlice";
 
 export default function AuthProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const dispatch = useDispatch();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state: RootState) => state.auth.currentUser);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(getFirebaseAuth, (user) => {
+    const unsubscribe = onAuthStateChanged(getClientAuth, (user) => {
       dispatch(setUser(user));
+      if (!user) {
+        router.push("/login");
+      }
     });
-
     return () => unsubscribe();
-  }, [dispatch]);
+  }, [dispatch, router]);
 
-  return children;
+  if (!user) {
+    return null; // Or a loading spinner
+  }
+
+  return <>{children}</>;
 }

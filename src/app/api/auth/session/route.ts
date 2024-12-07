@@ -15,8 +15,9 @@ export async function POST(request: Request) {
       maxAge: expiresIn,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      path: "/login",
+      path: "/",
     });
+
     return NextResponse.json({ status: "success" }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
