@@ -1,19 +1,20 @@
-import { serialize } from "cookie";
-import { NextApiResponse } from "next";
-import { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { adminAuth } from "@/firebase/getFirebaseAdmin";
 
-export async function POST(req: NextRequest, res: NextApiResponse) {
-  if (req.method !== "POST") {
-    return res.status(405).end();
+export async function POST() {
+  const sessionCookie = cookies().get("session")?.value;
+
+  if (sessionCookie) {
+    try {
+      const decodedClaims = await adminAuth.verifySessionCookie(sessionCookie);
+      await adminAuth.revokeRefreshTokens(decodedClaims.sub);
+    } catch (error) {
+      // Ignore token verification errors on logout
+    }
   }
 
-  res.setHeader(
-    "Set-Cookie",
-    serialize("session", "", {
-      maxAge: -1,
-      path: "/",
-    })
-  );
+  cookies().delete("session");
 
-  res.status(200).json({ status: "success" });
+  return NextResponse.json({ status: "success" }, { status: 200 });
 }

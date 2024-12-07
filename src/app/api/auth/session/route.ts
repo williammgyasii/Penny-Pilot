@@ -1,27 +1,23 @@
-import { firebaseAdminAuth } from "@/firebase/getFirebaseAdmin";
-import { NextRequest, NextResponse } from "next/server";
-import { serialize } from "cookie";
+import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { adminAuth } from "@/firebase/getFirebaseAdmin";
 
-export async function POST(req: NextRequest) {
+export async function POST(request: Request) {
+  const { idToken } = await request.json();
+
   try {
-    const { idToken } = await req.json();
-    if (!idToken) {
-      return NextResponse.json({ error: "Missing idToken" }, { status: 400 });
-    }
-    const expiresIn = 60 * 60 * 24 * 7 * 1000; // 7 days
-    const sessionCookie = await firebaseAdminAuth.createSessionCookie(idToken, {
+    const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
+    const sessionCookie = await adminAuth.createSessionCookie(idToken, {
       expiresIn,
     });
-    //   const cookie = serialize("session", sessionCookie, {
-    //     maxAge: expiresIn / 1000, // Convert to seconds
-    //     httpOnly: true,
-    //     secure: process.env.NODE_ENV === "production",
-    //     path: "/",
-    //     sameSite: "strict",
-    //   });
-    //   const response = NextResponse.json({ status: "success" });
-    //   response.headers.append("Set-Cookie", cookie);
-    //   return response;
+
+    cookies().set("session", sessionCookie, {
+      maxAge: expiresIn,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      path: "/login",
+    });
+    return NextResponse.json({ status: "success" }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
