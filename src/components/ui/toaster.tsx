@@ -20,14 +20,12 @@ export function Toaster() {
           <Toast key={id} {...props}>
             <div className="grid gap-1 font-poppins">
               {title && (
-                <ToastTitle className="text-md font-semibold">
-                  {title}
-                </ToastTitle>
+                <ToastTitle className="font-semibold">{title}</ToastTitle>
               )}
               {description && (
                 <ToastDescription>{description}</ToastDescription>
               )}
-              <div>Progress...</div>
+              {/* <div>Progress...</div> */}
             </div>
 
             {action}

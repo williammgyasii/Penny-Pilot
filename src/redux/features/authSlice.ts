@@ -48,6 +48,7 @@ const authSlice = createSlice({
       //LOGOUT CASES
       .addCase(LOGIN_EXISTING_USER.pending, (state) => {
         state.AUTH_SLICE_STATE = "loading";
+        state.AUTH_SLICE_LOADING = true;
         state.error = null;
       })
       .addCase(LOGIN_EXISTING_USER.fulfilled, (state, action) => {

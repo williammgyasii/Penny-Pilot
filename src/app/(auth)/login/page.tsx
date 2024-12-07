@@ -1,45 +1,10 @@
-"use client";
-import { Metadata } from "next";
-import React, { useState } from "react";
+import React from "react";
 import registerBackground from "@public/Fintap.png";
 import Image from "next/image";
 import TextGradient from "@/animated/TextGradient";
 import LoginForm from "../_components/LoginForm";
-import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/redux/reduxhooks";
-import { LOGIN_EXISTING_USER } from "@/redux/functions/authFunctions";
-import { addToast } from "@/redux/features/toastSlice";
-import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from "@/components/ui/toast";
-
-// export const metadata: Metadata = {
-//   title: "Login Page",
-//   description: "Getting started to financial freedom",
-//   keywords: ["penny pilot", "register"],
-// };
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const dispatch = useAppDispatch();
-  const router = useRouter();
-  const { toast } = useToast();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await dispatch(LOGIN_EXISTING_USER({ email, password })).unwrap();
-      router.push("/dashboard");
-    } catch (error) {
-      console.log("Login error on login page", error);
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: error as string,
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      });
-    }
-  };
   return (
     <div className="min-h-screen bg-ui-ui_light_200 grid grid-cols-8 p-2 lg:space-x-1 md:space-x-4">
       <div className="col-span-8 md:col-span-4 h-[20rem] md:h-full bg-yellow-900 relative rounded-xl overflow-hidden">
@@ -71,31 +36,13 @@ const LoginPage = () => {
         </div>
       </div>
 
-      <div className="col-span-8 md:col-span-4 h-full lg:-ml-2 py-5 md:py-[4rem]">
+      <div className="col-span-8 md:col-span-4 h-full lg:-ml-2 py-5 md:py-[10rem]">
         <div className="flex flex-col items-center justify-center w-full lg:px-[3rem] xl:px-[5rem]">
           <TextGradient
             text="Welcome Back"
             subtitle="Login to continue with your financial discipline"
           />
-
-          <form onSubmit={handleSubmit}>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
-              required
-            />
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              required
-            />
-            <button type="submit">Log in</button>
-          </form>
-          {/* <LoginForm /> */}
+          <LoginForm />
           {/* <RegisterForm /> */}
         </div>
       </div>
