@@ -15,6 +15,7 @@ import {
   getClientAuth,
   getClientFirestore,
 } from "@/firebase/getFirebaseConfig";
+import { CREATE_SESSION_COOKIE_CLOUD_FUNCTION_URL } from "@/lib/constants";
 
 export const LOG_OUT_USER = createAsyncThunk("auth/signOut", async () => {
   await signOut(getClientAuth);
@@ -46,7 +47,8 @@ export const REGISTER_NEW_USER = createAsyncThunk<
     await setDoc(doc(getClientFirestore, "users", user.uid), userDoc);
     const idToken = await user.getIdToken();
     if (idToken) {
-      await axios.post("/api/auth/session", { idToken });
+      await axios.post(CREATE_SESSION_COOKIE_CLOUD_FUNCTION_URL, { idToken });
+      // await axios.post("/api/auth/session", { idToken });
     }
     return userDoc;
   } catch (error) {
