@@ -81,10 +81,11 @@ export const LOGIN_EXISTING_USER = createAsyncThunk<
 
     const idToken = await user.getIdToken();
     if (idToken) {
-      const results = await axios.post(
-        CREATE_SESSION_COOKIE_CLOUD_FUNCTION_URL,
-        { idToken }
-      );
+      const results = await axios.post("/api/auth/session", { idToken });
+      // const results = await axios.post(
+      //   CREATE_SESSION_COOKIE_CLOUD_FUNCTION_URL,
+      //   { idToken }
+      // );
       console.log(results);
     }
     return { ...user, ...userDetails };
