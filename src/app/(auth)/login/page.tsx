@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/reduxhooks";
 import { LOGIN_EXISTING_USER } from "@/redux/functions/authFunctions";
 import { addToast } from "@/redux/features/toastSlice";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 // export const metadata: Metadata = {
 //   title: "Login Page",
@@ -21,6 +23,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,12 +32,12 @@ const LoginPage = () => {
       router.push("/dashboard");
     } catch (error) {
       console.log("Login error on login page", error);
-      dispatch(
-        addToast({
-          message: (error as string) || "Registration failed",
-          type: "error",
-        })
-      );
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: error as string,
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
     }
   };
   return (

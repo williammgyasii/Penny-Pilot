@@ -18,6 +18,7 @@ import {
   getClientFirestore,
 } from "@/firebase/getFirebaseConfig";
 import { setUser } from "../features/authSlice";
+import { Console } from "console";
 
 // AsyncThunk: Listen for Auth Changes
 export const listenToAuthChanges = createAsyncThunk(
@@ -110,6 +111,7 @@ export const LOGIN_EXISTING_USER = createAsyncThunk<
     return { ...user, ...userDetails };
   } catch (error) {
     if (error instanceof FirebaseError) {
+      console.log(error.code);
       return rejectWithValue(getFirebaseErrorMessage(error.code));
     }
     return rejectWithValue("Registration failed");
