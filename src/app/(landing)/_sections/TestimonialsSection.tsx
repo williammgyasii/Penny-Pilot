@@ -3,7 +3,6 @@ import SectionLayout from "../_components/SectionLayout";
 import { CurrentUsers } from "@/lib/constants";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import MarqueeContent from "@/animated/MarqueeContent";
 import Marquee from "@/animated/Marquee";
 
 const reviews = [
@@ -45,7 +44,7 @@ const reviews = [
   },
 ];
 
-const firstRow = reviews.slice(0, reviews.length / 2);
+// const firstRow = reviews.slice(0, reviews.length / 2);
 const secondRow = reviews.slice(reviews.length / 2);
 
 const ReviewCard = ({

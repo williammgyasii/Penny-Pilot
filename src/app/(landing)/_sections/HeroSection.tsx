@@ -4,11 +4,8 @@ import heroSection from "@public/Fintap.png";
 import Image from "next/image";
 import TitleBubble from "../_components/TitleBubble";
 import GradientBorder from "@/animated/GradientBorder";
-import { Button } from "@/components/ui/button";
-import { ArrowRightCircle, ArrowUpRight, CircleArrowRight } from "lucide-react";
+import { ArrowRightCircle } from "lucide-react";
 import { ScrollFadeInEffect } from "@/animated/ScrollFadeInEffect";
-import BrandsMarquee from "../_components/BrandsMarquee";
-import Link from "next/link";
 import LinkButton from "@/components/LinkButton";
 
 const HeroSection = () => {

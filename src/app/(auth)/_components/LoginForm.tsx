@@ -12,14 +12,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { useAppDispatch } from "@/redux/reduxhooks";
 import { RootState } from "@/redux/store";
-import { REGISTER_SCHEMA, TYPE_REGISTER_SCHEMA } from "@/schema/registerSchema";
+import { TYPE_REGISTER_SCHEMA } from "@/schema/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import PasswordRequirements from "./PasswordRequirements";
-import PasswordStrengthIndicator from "./PasswordStrengthIndicator";
 import { useRouter } from "next/navigation";
-import { addToast } from "@/redux/features/toastSlice";
 import { LOGIN_EXISTING_USER } from "@/redux/functions/authFunctions";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";

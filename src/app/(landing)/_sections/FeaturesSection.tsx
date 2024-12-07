@@ -4,7 +4,7 @@ import FeaturesCard from "../_components/FeaturesCard";
 import { ScrollFadeInEffect } from "@/animated/ScrollFadeInEffect";
 import TitleBubble from "../_components/TitleBubble";
 import SectionTitle from "../_components/SectionTitle";
-import { Coins, Lock } from "lucide-react";
+import { Coins } from "lucide-react";
 
 const FeaturesSection = () => {
   return (

@@ -17,7 +17,6 @@ import { useForm } from "react-hook-form";
 import PasswordRequirements from "./PasswordRequirements";
 import PasswordStrengthIndicator from "./PasswordStrengthIndicator";
 import { useRouter } from "next/navigation";
-import { addToast } from "@/redux/features/toastSlice";
 import { REGISTER_NEW_USER } from "@/redux/functions/authFunctions";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";

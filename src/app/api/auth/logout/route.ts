@@ -10,6 +10,7 @@ export async function POST() {
       const decodedClaims = await adminAuth.verifySessionCookie(sessionCookie);
       await adminAuth.revokeRefreshTokens(decodedClaims.sub);
     } catch (error) {
+      console.log(error);
       // Ignore token verification errors on logout
     }
   }

@@ -7,7 +7,7 @@ import Image from "next/image";
 import fintapImage from "@public/Fintap.png";
 import GradientBorder from "@/animated/GradientBorder";
 import { Button } from "@/components/ui/button";
-import { ArrowBigDownDashIcon, ArrowBigLeft, ArrowUpRight } from "lucide-react";
+import { ArrowBigLeft } from "lucide-react";
 
 const ExceptionalSection = () => {
   return (

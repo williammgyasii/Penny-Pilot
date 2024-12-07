@@ -1,5 +1,6 @@
 import Marquee from "@/animated/Marquee";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const reviews = [
   {
@@ -65,7 +66,13 @@ const ReviewCard = ({
       )}
     >
       <div className="flex flex-row items-center gap-2">
-        <img className="rounded-full" width="32" height="32" alt="" src={img} />
+        <Image
+          className="rounded-full"
+          width="32"
+          height="32"
+          alt=""
+          src={img}
+        />
         <div className="flex flex-col">
           <figcaption className="text-sm font-medium dark:text-white">
             {name}
@@ -91,7 +98,6 @@ const BrandsMarquee = () => {
           <ReviewCard key={review.username} {...review} />
         ))}
       </Marquee> */}
-      
     </div>
   );
 };

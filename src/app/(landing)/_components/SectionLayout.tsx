@@ -14,7 +14,6 @@ const SectionLayout = ({
   className,
   withPadding,
   ref,
-  paddingTop,
 }: Props) => {
   const sectionStyling = cn(`relative px-2 pt-[8rem] pb-2 `, className, {
     "md:px-[4rem] lg:px-[6rem] ": withPadding,

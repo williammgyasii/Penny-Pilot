@@ -10,7 +10,7 @@ type Props = {
   size?: Size;
 };
 
-const TitleBubble = ({ title, variant = "dark", size }: Props) => {
+const TitleBubble = ({ title, variant = "dark" }: Props) => {
   const bubbleStyle = cn(
     `px-7 py-2 rounded-xl font-normal text-xs font-poppins`,
     {

@@ -1,5 +1,4 @@
 "use client";
-import { cn } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
@@ -7,8 +6,6 @@ export const ScrollFadeInEffect = ({
   children,
   animationNum,
   className,
-  flexCenter,
-  width,
   fullWidth,
 }: {
   children: React.ReactNode;

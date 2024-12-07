@@ -6,15 +6,6 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -25,28 +16,12 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSkeleton,
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarRail,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
-import {
-  BadgeCheck,
-  Bell,
-  CheckCheckIcon,
-  CheckCircle,
-  ChevronDown,
-  ChevronRight,
-  ChevronsUpDown,
-  ChevronUp,
-  CreditCard,
-  GalleryVerticalEnd,
-  LogOut,
-  LogOutIcon,
-  User2,
-} from "lucide-react";
+import { ChevronRight, LogOutIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import * as React from "react";

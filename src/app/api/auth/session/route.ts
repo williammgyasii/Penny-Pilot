@@ -1,6 +1,5 @@
 import { adminAuth } from "@/firebase/getFirebaseAdmin";
-import { cookies, headers } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 // export async function GET(request: NextRequest) {
 //   const session = cookies().get("session")?.value || "";
@@ -27,7 +26,7 @@ export async function POST(request: Request) {
     const sessionCookie = await adminAuth.createSessionCookie(idToken, {
       expiresIn,
     });
-    
+
     const response = NextResponse.json({ success: true }, { status: 200 });
     response.cookies.set("session", sessionCookie, {
       maxAge: expiresIn,

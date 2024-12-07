@@ -1,9 +1,7 @@
 import * as React from "react";
-
 import { cva, type VariantProps } from "class-variance-authority";
 import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import Spinner from "../Spinner";
 
 const buttonVariants = cva(
@@ -56,13 +54,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       variant,
       size,
-      asChild = false,
+
       icon: Icon,
       iconSize = 24,
       children,
-      href,
+
       isAninmated = true,
-      isLink = false,
+
       isLoading = false,
       ...props
     },

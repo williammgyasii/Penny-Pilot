@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export async function middleware(request: NextRequest, response: NextResponse) {
+export async function middleware(request: NextRequest) {
   const session = request.cookies.get("session")?.value;
- 
+
   //Return to /login if don't have a session
   if (!session) {
     return NextResponse.redirect(new URL("/login", request.url));
@@ -19,7 +19,6 @@ export async function middleware(request: NextRequest, response: NextResponse) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
   } catch (error) {
-
     const response = NextResponse.redirect(new URL("/login", request.url));
     response.cookies.delete("session");
     return response;

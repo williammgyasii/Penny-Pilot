@@ -1,4 +1,4 @@
-import { Loader2, LoaderCircle } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import React from "react";
 
 interface SpinnerProps {

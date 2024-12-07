@@ -1,5 +1,3 @@
-// https://cruip-tutorials.vercel.app/cards-hover-effect/
-import Image from "next/image";
 import React from "react";
 
 function GradientBorder({ children }: { children: React.ReactNode }) {

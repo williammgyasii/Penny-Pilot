@@ -23,7 +23,6 @@ const FeaturesCard: React.FC<FeaturesCardProps> = ({
   iconSize = 20,
   title,
   theme = "light",
-  isReversed = false,
   animation = "none",
 }) => {
   const iconClasses = cn(

@@ -1,15 +1,6 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-interface MarqueeProps {
-  className?: string;
-  reverse?: boolean;
-  pauseOnHover?: boolean;
-  children?: React.ReactNode;
-  vertical?: boolean;
-  repeat?: number;
-}
-
 const reviews = [
   {
     name: "Jack",
