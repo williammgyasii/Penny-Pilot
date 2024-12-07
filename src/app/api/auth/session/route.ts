@@ -21,10 +21,9 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const { idToken } = await request.json();
-  const auth = await adminAuth;
   try {
     const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
-    const sessionCookie = await auth.createSessionCookie(idToken, {
+    const sessionCookie = await adminAuth.createSessionCookie(idToken, {
       expiresIn,
     });
 
@@ -36,6 +35,7 @@ export async function POST(request: Request) {
     });
     return response;
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { error: "Failed to create session", errorMessage: error },
       { status: 401 }
