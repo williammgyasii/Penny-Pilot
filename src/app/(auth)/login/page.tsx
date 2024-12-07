@@ -22,7 +22,7 @@ const LoginPage = () => {
         {/* Text Content */}
         <div className="absolute z-30  bottom-3 md:bottom-12 xl:bottom-40  md:left-5 w-full md:w-[80%]">
           <h1 className="text-center text-4xl md:text-left md:text-7xl lg:text-8xl font-poppins  font-medium md:leading-[3.7rem] lg:leading-[5rem] tracking-normal lg:tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-cyan-200 via-cyan-400 to-cyan-800">
-            Chart a course to financial freedom
+            Manage your finances with A.I
             <span className="inline-block text-base md:text-2xl tracking-normal text-white">
               —starting with a penny!
             </span>
