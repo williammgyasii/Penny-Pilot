@@ -1,25 +1,29 @@
+import axios from "axios";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { adminAuth } from "./firebase/getFirebaseAdmin";
 
 export async function middleware(request: NextRequest, response: NextResponse) {
-  const session = request.cookies.get("session");
-  console.log(session);
+  const session = request.cookies.get("session")?.value;
 
   //Return to /login if don't have a session
   if (!session) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
+  // Validate the session
+  try {
+    const decodedToken = await adminAuth.verifySessionCookie(session, true);
+    const { pathname } = request.nextUrl;
 
-  //Call the authentication endpoint
-  const responseAPI = await fetch("/api/auth/session", {
-    headers: {
-      Cookie: `session=${session?.value}`,
-    },
-  });
-
-  //Return to /login if token is not authorized
-  if (responseAPI.status !== 200) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    // If the user is authenticated and trying to access the login page, redirect to dashboard
+    if (pathname === "/login") {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
+  } catch (error) {
+    // If there's an error, clear the session cookie and redirect to login
+    const response = NextResponse.redirect(new URL("/login", request.url));
+    response.cookies.delete("session");
+    return response;
   }
 
   return NextResponse.next();

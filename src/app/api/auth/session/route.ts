@@ -22,22 +22,19 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: Request) {
   const { idToken } = await request.json();
-
   try {
     const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
     const sessionCookie = await adminAuth.createSessionCookie(idToken, {
       expiresIn,
     });
-    //   const response = NextResponse.json({ success: true }, { status: 200 });
-    //   response.cookies.set("session", sessionCookie, {
-    //     maxAge: expiresIn,
-    //     httpOnly: true,
-    //     secure: process.env.NODE_ENV === "production",
-    //   });
-    //   return response;
-    return NextResponse.json({ happ: "No" });
+    const response = NextResponse.json({ success: true }, { status: 200 });
+    response.cookies.set("session", sessionCookie, {
+      maxAge: expiresIn,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    });
+    return response;
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       { error: "Failed to create session", errorMessage: error },
       { status: 401 }
