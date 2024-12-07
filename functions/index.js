@@ -46,21 +46,22 @@ export const createSessionCookie = functions.https.onRequest((req, res) => {
   });
 });
 
-// export const verifyToken = functions.https.onRequest(async (req, res) => {
-//   corsHandler(req, res, async () => {
-//     try {
-//       const { token } = req.body;
+export const verifyToken = functions.https.onRequest(async (req, res) => {
+  corsHandler(req, res, async () => {
+    try {
+      const { token } = req.body;
 
-//       if (!token) {
-//         return res.status(401).json({ error: "No token provided" });
-//       }
+      if (!token) {
+        return res.status(401).json({ error: "No token provided" });
+      }
 
-//       // Verify token
-//       const decodedToken = await admin.auth().verifyIdToken(token);
-//       return res.status(200).json({ success: true, user: decodedToken });
-//     } catch (error) {
-//       console.error("Token verification failed:", error);
-//       return res.status(401).json({ error: "Invalid token" });
-//     }
-//   });
-// });
+      // Verify token with Firebase Admin
+      const decodedToken = await admin.auth().verifyIdToken(token);
+
+      return res.status(200).json({ success: true, user: decodedToken });
+    } catch (error) {
+      console.error("Token verification failed:", error);
+      return res.status(401).json({ error: "Invalid token" });
+    }
+  });
+});

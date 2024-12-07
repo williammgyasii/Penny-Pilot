@@ -1,45 +1,38 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 
-// Replace this with your deployed Cloud Function URL
-const firebaseTokenVerificationURL =
-  "https://<your-region>-<your-project-id>.cloudfunctions.net/verifyToken";
+// URL of the deployed Cloud Function endpoint
 
-// Middleware to check authentication
 export async function middleware(req: NextRequest) {
-  const { cookies, nextUrl } = req;
+  const token = req.cookies.get("token")?.value; // Extract token from cookies
 
-  const token = cookies.get("token")?.value;
-  console.log(token) // Get token from cookies
-
-  // Only protect /dashboard routes
-  if (!nextUrl.pathname.startsWith("/dashboard")) {
+  // Only intercept requests for the dashboard
+  if (!req.nextUrl.pathname.startsWith("/dashboard")) {
     return NextResponse.next();
   }
 
-  try {
-    if (!token) {
-      // Redirect to login if token doesn't exist
-      return NextResponse.redirect(new URL("/login", nextUrl));
-    }
+  if (!token) {
+    // No token found, redirect unauthenticated users
+    return NextResponse.redirect(new URL("/login", req.nextUrl));
+  }
 
-    // Token verification via Cloud Function
+  try {
     const response = await axios.post(firebaseTokenVerificationURL, { token });
 
-    if (response.status === 200) {
-      // Token is valid
+    if (response.data.success) {
+      // Token is valid, allow access
       return NextResponse.next();
     }
 
-    // Invalid token? Redirect back to login
-    return NextResponse.redirect(new URL("/login", nextUrl));
+    // Token invalid, redirect to login
+    return NextResponse.redirect(new URL("/login", req.nextUrl));
   } catch (error) {
-    console.error("Token validation failed", error);
-    return NextResponse.redirect(new URL("/login", nextUrl));
+    console.error("Token verification failed:", error);
+    return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 }
 
-// Configure the matcher to secure the routes under `/dashboard`
+// Configure to only apply middleware logic to /dashboard routes
 export const config = {
-  matcher: ["/dashboard/:path*"], // Only protect the /dashboard routes and subpaths
+  matcher: ["/dashboard/:path*"],
 };
