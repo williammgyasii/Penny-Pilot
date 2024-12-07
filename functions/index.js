@@ -11,7 +11,7 @@ const corsHandler = cors({ origin: true });
 export const verfiyandCreateCookies = functions.https.onRequest((req, res) => {
   corsHandler(req, res, async () => {
     try {
-      const { token } = req.body;
+      const { token } = req.body
 
       if (!token) {
         return res.status(401).json({ error: "No token provided" });
