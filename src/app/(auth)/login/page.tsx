@@ -27,7 +27,7 @@ const LoginPage = () => {
       await dispatch(LOGIN_EXISTING_USER({ email, password })).unwrap();
       // router.push("/dashboard");
     } catch (err) {
-      console.error("Failed to log in:", err);
+      console.error("Failed to log in login page:", err);
     }
   };
   return (

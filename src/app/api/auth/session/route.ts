@@ -28,18 +28,18 @@ export async function POST(request: Request) {
     const sessionCookie = await adminAuth.createSessionCookie(idToken, {
       expiresIn,
     });
-
-    const response = NextResponse.json({ success: true }, { status: 200 });
-    response.cookies.set("session", sessionCookie, {
-      maxAge: expiresIn,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-    });
-
-    return response;
+    //   const response = NextResponse.json({ success: true }, { status: 200 });
+    //   response.cookies.set("session", sessionCookie, {
+    //     maxAge: expiresIn,
+    //     httpOnly: true,
+    //     secure: process.env.NODE_ENV === "production",
+    //   });
+    //   return response;
+    return NextResponse.json({ happ: "No" });
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
-      { error: "Failed to create session" },
+      { error: "Failed to create session", errorMessage: error },
       { status: 401 }
     );
   }

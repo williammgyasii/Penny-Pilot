@@ -107,7 +107,6 @@ export const LOGIN_EXISTING_USER = createAsyncThunk<
     if (idToken) {
       await axios.post("/api/auth/session", { idToken });
     }
-
     return { ...user, ...userDetails };
   } catch (error) {
     if (error instanceof FirebaseError) {
