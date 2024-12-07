@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
+import { VERIFY_SESSION_COOKIE_CLOUD_FUNCTION_URL } from "./lib/constants";
 
 // URL of the deployed Cloud Function endpoint
 
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value; // Extract token from cookies
+  console.log(token);
 
   // Only intercept requests for the dashboard
   if (!req.nextUrl.pathname.startsWith("/dashboard")) {
@@ -17,7 +19,10 @@ export async function middleware(req: NextRequest) {
   }
 
   try {
-    const response = await axios.post(firebaseTokenVerificationURL, { token });
+    const response = await axios.post(
+      VERIFY_SESSION_COOKIE_CLOUD_FUNCTION_URL,
+      { token }
+    );
 
     if (response.data.success) {
       // Token is valid, allow access
