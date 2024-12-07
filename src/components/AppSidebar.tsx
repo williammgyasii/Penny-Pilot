@@ -48,7 +48,7 @@ import {
   User2,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -64,6 +64,7 @@ export default function AppSidebar() {
   const { currentUser } = useSelector((state: RootState) => state.auth);
   const pathname = usePathname();
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const defaultProfession = "Web Developer";
   const professionCategory = ProfessionsByCategory.find((item) =>
     item.professions.includes(defaultProfession)
@@ -73,6 +74,7 @@ export default function AppSidebar() {
       await dispatch(LOG_OUT_USER()).unwrap();
       const result = await axios.post("/api/auth/logout");
       if (result) {
+        router.push("/login");
         dispatch(
           addToast({
             message: "Signed Out created successfully!",

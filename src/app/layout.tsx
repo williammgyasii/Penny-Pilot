@@ -27,7 +27,6 @@ export default function RootLayout({
         <ReduxProvider>
           <NextTopLoader showSpinner={false} />
           {children}
-          {/* <ToastProvider /> */}
         </ReduxProvider>
       </body>
     </html>

@@ -26,8 +26,9 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       await dispatch(LOGIN_EXISTING_USER({ email, password })).unwrap();
-      router.push("/dashboard",);
+      router.push("/dashboard");
     } catch (error) {
+      console.log("Login error on login page", error);
       dispatch(
         addToast({
           message: (error as string) || "Registration failed",
