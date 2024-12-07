@@ -87,6 +87,6 @@ export const LOGIN_EXISTING_USER = createAsyncThunk<
       console.log(error.code);
       return rejectWithValue(getFirebaseErrorMessage(error.code));
     }
-    return rejectWithValue("Registration failed");
+    return rejectWithValue("Login failed");
   }
 });

@@ -11,7 +11,7 @@ export async function initializeFirebaseAdmin(): Promise<admin.app.App> {
     // Fetch the service account JSON from Google Cloud Secret Manager
     const secretClient = new SecretManagerServiceClient();
     const [accessResponse] = await secretClient.accessSecretVersion({
-      name: "projects/akron-server/secrets/admin-config/versions/latest",
+      name: "projects/782696710059/secrets/admin-config/versions/latest",
     });
 
     const serviceAccount = JSON.parse(
