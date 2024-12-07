@@ -46,8 +46,8 @@ export const REGISTER_NEW_USER = createAsyncThunk<
     };
 
     // await setDoc(doc(getFirebaseFirestore, "users", user.uid), userDoc);
-    const idToken = await user.getIdToken();
-    await axios.post("/api/auth/session", { idToken });
+    // const idToken = await user.getIdToken();
+    // await axios.post("/api/auth/session", { idToken });
 
     return userDoc;
   } catch (error) {
@@ -73,13 +73,15 @@ export const LOGIN_EXISTING_USER = createAsyncThunk<
       password
     );
     const user = userCredential.user;
-    console.log(user);
+
     // Fetch additional user details from Firestore
     const userDoc = await getDoc(doc(getFirebaseFirestore, "users", user.uid));
     const userDetails = userDoc.data() as UserData;
 
-    // const idToken = await user.getIdToken();
-    // await axios.post("/api/auth/session", { idToken });
+    const idToken = await user.getIdToken();
+    if (idToken) {
+      await axios.post("/api/auth/session", { idToken });
+    }
 
     return { ...user, ...userDetails };
   } catch (error) {

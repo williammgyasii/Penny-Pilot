@@ -38,16 +38,16 @@ export default function RegisterForm() {
   const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {
     try {
       const result = await dispatch(REGISTER_NEW_USER(data)).unwrap();
-      if (result) {
-        router.push("/dashboard");
-        form.reset();
-        dispatch(
-          addToast({
-            message: "Account created successfully!",
-            type: "success",
-          })
-        );
-      }
+      // if (result) {
+      //   router.push("/dashboard");
+      //   form.reset();
+      //   dispatch(
+      //     addToast({
+      //       message: "Account created successfully!",
+      //       type: "success",
+      //     })
+      //   );
+      // }
       form.reset();
     } catch (error: unknown) {
       dispatch(

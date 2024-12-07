@@ -56,6 +56,8 @@ import { navItems } from "@/lib/data";
 import { Button } from "./ui/button";
 import { Icons } from "./ui/icons";
 import { ProfessionsByCategory } from "@/types/professionTypes";
+import { useAppDispatch } from "@/redux/reduxhooks";
+import { LOG_OUT_USER } from "@/redux/functions/authFunctions";
 
 export const company = {
   name: "Acme Inc",
@@ -66,11 +68,12 @@ export const company = {
 export default function AppSidebar() {
   const { currentUser } = useSelector((state: RootState) => state.auth);
   const pathname = usePathname();
+  const dispatch = useAppDispatch();
   const defaultProfession = "Web Developer";
   const professionCategory = ProfessionsByCategory.find((item) =>
     item.professions.includes(defaultProfession)
   );
-  console.log(professionCategory);
+  console.log(currentUser);
 
   return (
     <Sidebar className="text-white">
@@ -92,7 +95,6 @@ export default function AppSidebar() {
               )}
             </span>
           </div>
-          
         </div>
       </SidebarHeader>
 
@@ -176,6 +178,7 @@ export default function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
+              onClick={() => dispatch(LOG_OUT_USER())}
               size={"lg"}
               className="hover:!bg-purple-400 cursor-pointer hover:text-white"
               asChild
