@@ -1,43 +1,44 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
-import { VERIFY_SESSION_COOKIE_CLOUD_FUNCTION_URL } from "./lib/constants";
+import { parse } from "cookie";
+import { CREATE_SESSION_COOKIE_CLOUD_FUNCTION_URL } from "./lib/constants";
 
-// URL of the deployed Cloud Function endpoint
+axios.defaults.withCredentials = true;
 
 export async function middleware(req: NextRequest) {
-  const token = req.cookies.get("token")?.value; // Extract token from cookies
+  // Extract cookies from the request headers
+  const cookies = req.headers.get("cookie");
+  let token = null;
+
+  if (cookies) {
+    const parsedCookies = parse(cookies);
+    token = parsedCookies.session; // Get token from the session cookie
+  }
+
   console.log(token);
 
-  // Only intercept requests for the dashboard
-  if (!req.nextUrl.pathname.startsWith("/dashboard")) {
-    return NextResponse.next();
-  }
-
-  if (!token) {
-    // No token found, redirect unauthenticated users
-    return NextResponse.redirect(new URL("/login", req.nextUrl));
-  }
-
-  try {
-    const response = await axios.post(
-      VERIFY_SESSION_COOKIE_CLOUD_FUNCTION_URL,
-      { token }
-    );
-
-    if (response.data.success) {
-      // Token is valid, allow access
-      return NextResponse.next();
+  // Redirect to login if the token isn't valid or doesn't exist
+  if (req.nextUrl.pathname.startsWith("/dashboard")) {
+    if (!token) {
+      return NextResponse.redirect(new URL("/login", req.nextUrl));
     }
 
-    // Token invalid, redirect to login
-    return NextResponse.redirect(new URL("/login", req.nextUrl));
-  } catch (error) {
-    console.error("Token verification failed:", error);
-    return NextResponse.redirect(new URL("/login", req.nextUrl));
-  }
-}
+    try {
+      const response = await axios.post(
+        CREATE_SESSION_COOKIE_CLOUD_FUNCTION_URL,
+        { token }
+      );
 
-// Configure to only apply middleware logic to /dashboard routes
-export const config = {
-  matcher: ["/dashboard/:path*"],
-};
+      if (!response.data.success) {
+        return NextResponse.redirect(new URL("/login", req.nextUrl));
+      }
+
+      return NextResponse.next();
+    } catch (error) {
+      console.error("Error verifying token with Cloud Function", error);
+      return NextResponse.redirect(new URL("/login", req.nextUrl));
+    }
+  }
+
+  return NextResponse.next();
+}
