@@ -53,17 +53,12 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { navItems } from "@/lib/data";
-import { Button } from "./ui/button";
 import { Icons } from "./ui/icons";
 import { ProfessionsByCategory } from "@/types/professionTypes";
 import { useAppDispatch } from "@/redux/reduxhooks";
 import { LOG_OUT_USER } from "@/redux/functions/authFunctions";
-
-export const company = {
-  name: "Acme Inc",
-  logo: GalleryVerticalEnd,
-  plan: "Enterprise",
-};
+import axios from "axios";
+import { addToast } from "@/redux/features/toastSlice";
 
 export default function AppSidebar() {
   const { currentUser } = useSelector((state: RootState) => state.auth);
@@ -73,7 +68,22 @@ export default function AppSidebar() {
   const professionCategory = ProfessionsByCategory.find((item) =>
     item.professions.includes(defaultProfession)
   );
-  console.log(currentUser);
+  const handleSignout = async () => {
+    try {
+      await dispatch(LOG_OUT_USER()).unwrap();
+      const result = await axios.post("/api/auth/logout");
+      if (result) {
+        dispatch(
+          addToast({
+            message: "Signed Out created successfully!",
+            type: "success",
+          })
+        );
+      }
+    } catch (error) {
+      console.log("Error Signing out...", error);
+    }
+  };
 
   return (
     <Sidebar className="text-white">
@@ -178,7 +188,7 @@ export default function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              onClick={() => dispatch(LOG_OUT_USER())}
+              onClick={handleSignout}
               size={"lg"}
               className="hover:!bg-purple-400 cursor-pointer hover:text-white"
               asChild

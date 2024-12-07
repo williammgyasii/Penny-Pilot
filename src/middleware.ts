@@ -1,15 +1,14 @@
-import axios from "axios";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { Buffer } from "buffer";
 
 export async function middleware(request: NextRequest, response: NextResponse) {
   const session = request.cookies.get("session")?.value;
-
+ 
   //Return to /login if don't have a session
   if (!session) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
+
   try {
     // research on ways to validate
     // const result = await axios.get("api/auth/session");
@@ -20,8 +19,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
   } catch (error) {
-    // If there's an error, clear the session cookie and redirect to login
-    console.log(error);
+
     const response = NextResponse.redirect(new URL("/login", request.url));
     response.cookies.delete("session");
     return response;

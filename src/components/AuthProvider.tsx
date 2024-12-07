@@ -4,8 +4,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/reduxhooks";
 import { onAuthStateChanged } from "firebase/auth";
-import { getClientAuth } from "@/firebase/getFirebaseConfig";
+import {
+  getClientAuth,
+  getClientFirestore,
+} from "@/firebase/getFirebaseConfig";
 import { setUser } from "@/redux/features/authSlice";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function AuthLayout({
   children,
@@ -17,11 +21,24 @@ export default function AuthLayout({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(getClientAuth, (user) => {
-      dispatch(setUser(user));
-      setLoading(false);
-      if (!user) {
-        router.push("/login");
+    const unsubscribe = onAuthStateChanged(getClientAuth, async (user) => {
+      if (user) {
+        const userDoc = await getDoc(
+          doc(getClientFirestore, "users", user.uid)
+        );
+        dispatch(
+          setUser({
+            uid: user.uid,
+            email: user.email,
+            ...userDoc.data(),
+          })
+        );
+        setLoading(false);
+      } else {
+        dispatch(setUser(null));
+        console.log("Client Router Triggered...");
+        setLoading(false);
+        // router.push("/login");
       }
     });
 
