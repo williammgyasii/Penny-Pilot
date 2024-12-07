@@ -8,6 +8,7 @@ import LoginForm from "../_components/LoginForm";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/reduxhooks";
 import { LOGIN_EXISTING_USER } from "@/redux/functions/authFunctions";
+import { addToast } from "@/redux/features/toastSlice";
 
 // export const metadata: Metadata = {
 //   title: "Login Page",
@@ -25,9 +26,14 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       await dispatch(LOGIN_EXISTING_USER({ email, password })).unwrap();
-      // router.push("/dashboard");
-    } catch (err) {
-      // console.error("Failed to log in login page:", err);
+      router.push("/dashboard",);
+    } catch (error) {
+      dispatch(
+        addToast({
+          message: (error as string) || "Registration failed",
+          type: "error",
+        })
+      );
     }
   };
   return (
