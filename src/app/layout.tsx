@@ -30,7 +30,6 @@ export default function RootLayout({
           <AuthProvider>
             <Toaster />
             <NextTopLoader showSpinner={false} />
-
             {children}
           </AuthProvider>
         </ReduxProvider>

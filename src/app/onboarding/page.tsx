@@ -8,7 +8,7 @@ const OnboardingPage = () => {
   console.log(currentUser);
 
   return (
-    <div>
+    <div className="max-w-[120rem] h-[90%] bg-red-400">
       <h1>acr{currentUser?.firstName}</h1>
       Welcome to onboaacrding
     </div>
