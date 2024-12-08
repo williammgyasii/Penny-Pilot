@@ -47,7 +47,7 @@ export const REGISTER_NEW_USER = createAsyncThunk<
     await setDoc(doc(getClientFirestore, "users", user.uid), userDoc);
     const idToken = await user.getIdToken();
     if (idToken) {
-      await axios.post(CREATE_SESSION_COOKIE_CLOUD_FUNCTION_URL, { idToken });
+      // await axios.post(CREATE_SESSION_COOKIE_CLOUD_FUNCTION_URL, { idToken });
       // await axios.post("/api/auth/session", { idToken });
     }
     return userDoc;
@@ -81,12 +81,12 @@ export const LOGIN_EXISTING_USER = createAsyncThunk<
 
     const idToken = await user.getIdToken();
     if (idToken) {
-      const results = await axios.post("/api/auth/session", { idToken });
+      // const results = await axios.post("/api/auth/session", { idToken });
       // const results = await axios.post(
       //   CREATE_SESSION_COOKIE_CLOUD_FUNCTION_URL,
       //   { idToken }
       // );
-      console.log(results);
+      // console.log(results);
     }
     return { ...user, ...userDetails };
   } catch (error) {
