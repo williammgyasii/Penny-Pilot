@@ -7,7 +7,6 @@ import { RootState } from "@/redux/store";
 export default function Dashboard() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state: RootState) => state.auth.currentUser);
-  console.log(user);
 
   const handleSignOut = () => {
     dispatch(LOG_OUT_USER());

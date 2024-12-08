@@ -21,16 +21,16 @@ export function UserNav() {
   if (currentUser) {
     return (
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-            <Avatar className="h-8 w-8">
-              <AvatarImage
-                src={currentUser?.image ?? ""}
-                alt={currentUser?.fullName ?? ""}
-              />
-              <AvatarFallback>{currentUser?.firstName?.[0]}</AvatarFallback>
-            </Avatar>
-          </Button>
+        <DropdownMenuTrigger className="cursor-pointer" asChild>
+          <Avatar className="h-10 w-10">
+            <AvatarImage
+              src={currentUser?.image ?? ""}
+              alt={currentUser?.fullName ?? ""}
+            />
+            <AvatarFallback className="bg-blue-900 text-white">
+              {currentUser?.firstName?.[0]}
+            </AvatarFallback>
+          </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
