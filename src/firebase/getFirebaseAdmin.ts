@@ -1,36 +1,28 @@
-import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
 import admin from "firebase-admin";
-export async function getSecretValue(secretName: string): Promise<string> {
-  const client = new SecretManagerServiceClient();
 
-  try {
-    const [version] = await client.accessSecretVersion({
-      name: `projects/penny-pilot-backend/secrets/firebase-admin-service-account/versions/latest`,
-    });
-
-    if (!version.payload?.data) {
-      throw new Error("No secret data found");
-    }
-
-    return version.payload.data.toString();
-  } catch (error) {
-    console.error("Error accessing secret:", error);
-    throw error;
+export function initializeFirebaseAdmin() {
+  // Check if already initialized
+  if (admin.apps.length) {
+    return admin.app();
   }
+
+  // Production environment
+  if (
+    process.env.NEXT_PUBLIC_VERCEL_ENV === "production" ||
+    process.env.NODE_ENV === "production"
+  ) {
+    return admin.initializeApp({
+      credential: admin.credential.applicationDefault(),
+    });
+  }
+
+  return admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+    }),
+  });
 }
 
-if (!admin.apps.length) {
-  try {
-    const firebaseCredentials = JSON.parse(
-      await getSecretValue("FIREBASE_ADMIN_CREDENTIALS")
-    );
-
-    admin.initializeApp({
-      credential: admin.credential.cert(firebaseCredentials),
-    });
-  } catch (error) {
-    console.error("Firebase Admin initialization error:", error);
-  }
-}
-
-export const adminAuth = admin.auth();
+export const adminAuth = initializeFirebaseAdmin().auth();
