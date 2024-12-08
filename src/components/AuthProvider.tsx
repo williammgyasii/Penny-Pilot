@@ -11,7 +11,7 @@ import {
 import { setUser } from "@/redux/features/authSlice";
 import { doc, getDoc } from "firebase/firestore";
 
-export default function AuthLayout({
+export default function AuthProvider({
   children,
 }: {
   children: React.ReactNode;

@@ -20,16 +20,14 @@ export default function DashboardLayout({
   const cookieStore = cookies();
   const defaultOpen = cookieStore.get("sidebar:state")?.value === "true";
   return (
-    <AuthProvider>
-      <SidebarProvider defaultOpen={defaultOpen}>
-        <AppSidebar />
-        <SidebarInset>
-          <DashboardHeader />
-          {/* page main content */}
-          <Suspense fallback={<div>Loading....</div>}>{children}</Suspense>
-          {/* page main content ends */}
-        </SidebarInset>
-      </SidebarProvider>
-    </AuthProvider>
+    <SidebarProvider defaultOpen={defaultOpen}>
+      <AppSidebar />
+      <SidebarInset>
+        <DashboardHeader />
+        {/* page main content */}
+        <Suspense fallback={<div>Loading....</div>}>{children}</Suspense>
+        {/* page main content ends */}
+      </SidebarInset>
+    </SidebarProvider>
   );
 }

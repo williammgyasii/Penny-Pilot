@@ -4,6 +4,7 @@ import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
 import { ReduxProvider } from "@/redux/provider";
 import { Toaster } from "@/components/ui/toaster";
+import AuthProvider from "@/components/AuthProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,10 +27,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable}`}>
         <ReduxProvider>
-          <Toaster  />
-          <NextTopLoader showSpinner={false} />
+          <AuthProvider>
+            <Toaster />
+            <NextTopLoader showSpinner={false} />
 
-          {children}
+            {children}
+          </AuthProvider>
         </ReduxProvider>
       </body>
     </html>
