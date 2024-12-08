@@ -3,7 +3,7 @@ env:
   - variable: NEXT_PUBLIC_FIREBASE_API_KEY
     secret: apiKey
   - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
-    value: authDomain
+    secret: authDomain
   - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
     secret: projectId
   - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
