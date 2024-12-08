@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
   const session = request.cookies.get("session")?.value;
+  console.log("Middleware session", session);
 
   //Return to /login if don't have a session
   if (!session) {
