@@ -48,7 +48,7 @@ export const REGISTER_NEW_USER = createAsyncThunk<
     const idToken = await user.getIdToken();
     if (idToken) {
       // await axios.post(CREATE_SESSION_COOKIE_CLOUD_FUNCTION_URL, { idToken });
-      // await axios.post("/api/auth/session", { idToken });
+      await axios.post("/api/auth/session", { idToken });
     }
     return userDoc;
   } catch (error) {

@@ -1,4 +1,4 @@
-import { adminAuth } from "@/firebase/firebaseSra";
+import { adminAuth } from "@/firebase/getFirebaseAdmin";
 import { NextResponse } from "next/server";
 
 // export async function GET(request: NextRequest) {
@@ -21,6 +21,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const { idToken } = await request.json();
+  
   try {
     const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
     const sessionCookie = await adminAuth.createSessionCookie(idToken, {
