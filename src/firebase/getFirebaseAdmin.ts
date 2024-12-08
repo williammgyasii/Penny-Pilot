@@ -1,33 +1,36 @@
-import { initializeApp, applicationDefault, getApps } from "firebase-admin/app";
-import auth, { getAuth } from "firebase-admin/auth";
 import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
-
-export const initializeFirebaseAdmin = async () => {
-  const secretManagerClient = new SecretManagerServiceClient();
-  const secretName =
-    "projects/penny-pilot-backend/secrets/firebase-admin-service-account/versions/latest";
+import admin from "firebase-admin";
+export async function getSecretValue(secretName: string): Promise<string> {
+  const client = new SecretManagerServiceClient();
 
   try {
-    const [version] = await secretManagerClient.accessSecretVersion({
-      name: secretName,
+    const [version] = await client.accessSecretVersion({
+      name: `projects/penny-pilot-backend/secrets/firebase-admin-service-account/versions/latest`,
     });
 
-    if (!version?.payload?.data) {
-      throw new Error("Secret payload is invalid or not set");
+    if (!version.payload?.data) {
+      throw new Error("No secret data found");
     }
 
-    const serviceAccountKey = JSON.parse(version.payload.data.toString());
-
-    if (!getApps().length) {
-      initializeApp({
-        credential: applicationDefault(),
-      });
-      console.log("Firebase Admin initialized successfully");
-    }
+    return version.payload.data.toString();
   } catch (error) {
-    console.error("Error accessing secret from Secret Manager:", error);
+    console.error("Error accessing secret:", error);
     throw error;
   }
-};
+}
 
-export const adminAuth = getAuth();
+if (!admin.apps.length) {
+  try {
+    const firebaseCredentials = JSON.parse(
+      await getSecretValue("FIREBASE_ADMIN_CREDENTIALS")
+    );
+
+    admin.initializeApp({
+      credential: admin.credential.cert(firebaseCredentials),
+    });
+  } catch (error) {
+    console.error("Firebase Admin initialization error:", error);
+  }
+}
+
+export const adminAuth = admin.auth();
