@@ -14,6 +14,7 @@ const LoginPage = () => {
           className="w-full h-full object-cover z-10"
           alt="Register Background"
           sizes={"auto"}
+          
           priority={true}
         />
         {/* Gradient */}
