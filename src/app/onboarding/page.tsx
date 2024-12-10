@@ -9,7 +9,7 @@ const OnboardingPage = () => {
 
   return (
     <div className="">
-      <h1>acr{currentUser?.firstName}</h1>
+      
       Welcome to onboaacrding
     </div>
   );
