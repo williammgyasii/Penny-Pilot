@@ -2,6 +2,7 @@
 import { useAppSelector } from "@/redux/reduxhooks";
 import { RootState } from "@/redux/store";
 import React from "react";
+import OnboardingFormControl from "./_components/OnboardingForm";
 
 const OnboardingPage = () => {
   const { currentUser } = useAppSelector((state: RootState) => state.auth);
@@ -21,7 +22,7 @@ const OnboardingPage = () => {
       </div>
 
       <div className="bg-ui-ui_dark_200 w-full pt-10">
-        
+        <OnboardingFormControl />
       </div>
     </div>
   );

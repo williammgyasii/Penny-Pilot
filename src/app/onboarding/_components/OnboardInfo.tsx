@@ -8,6 +8,10 @@ const OnboardInfo = () => {
         <Logo />
         <div className="border-t border-dotted border-gray-400 h-2 w-full"></div>
       </div>
+
+      <div className="">
+        
+      </div>
     </div>
   );
 };
