@@ -24,6 +24,10 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import {
+  OnboardingSchema,
+  TYPE_ONBOARD_SCHEMA,
+} from "@/schema/onBoardingSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertTriangleIcon, Trash, Trash2Icon } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
@@ -41,22 +45,16 @@ const OnboardingFormControl = () => {
   const [data, setData] = useState({});
   const delta = currentStep - previousStep;
 
-  const defaultValues = {
-    jobs: [
-      {
-        jobtitle: "",
-        employer: "",
-        startdate: "",
-        enddate: "",
-        jobcountry: "",
-        jobcity: "",
-      },
-    ],
-  };
 
-  const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileSchema),
-    defaultValues,
+
+  const form = useForm<TYPE_ONBOARD_SCHEMA>({
+    resolver: zodResolver(OnboardingSchema),
+    defaultValues:{
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+    }
     mode: "onChange",
   });
 
