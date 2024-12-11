@@ -20,7 +20,7 @@ const OnboardingPage = () => {
         </span>
       </div>
 
-      <div className="bg-ui-ui_dark_200 w-full">
+      <div className="bg-ui-ui_dark_200 w-full pt-10">
         
       </div>
     </div>
