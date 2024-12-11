@@ -9,7 +9,6 @@ const OnboardingPage = () => {
 
   return (
     <div className="">
-      
       Welcome to onboaacrding
     </div>
   );
