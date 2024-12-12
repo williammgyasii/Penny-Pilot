@@ -65,13 +65,7 @@ export default function PersonalInfo() {
                 <div className="relative">
                   <Avatar className="w-30 h-30">
                     <AvatarImage src={field.value} alt="Profile" />
-                    <AvatarFallback>
-                      <Image
-                        src="https://www.tapback.co/api/avatar.webp"
-                        fill
-                        alt="Memoji"
-                      />
-                    </AvatarFallback>
+                    <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
                   <Button
                     type="button"
