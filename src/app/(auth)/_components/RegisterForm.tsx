@@ -22,6 +22,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
+import Spinner from "@/components/Spinner";
 
 export default function RegisterForm() {
   const form = useForm<TYPE_REGISTER_SCHEMA>({
@@ -152,6 +153,7 @@ export default function RegisterForm() {
               type="submit"
             >
               Register
+              {AUTH_SLICE_LOADING ? <Spinner /> : null}
             </Button>
           </form>
           <GoogleSignInButton />
