@@ -10,6 +10,7 @@ export const ONBOARDING_SCHEMA = z.object({
   email: z.string().email("Invalid email address"),
   dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format"),
   countryCode: z.string().min(1, "Country code is required"),
+  country: z.string().min(1, "Country is required"),
   phoneNumber: z.string().min(5, "Phone number must be at least 5 digits"),
   profileImage: z.string().optional(),
 

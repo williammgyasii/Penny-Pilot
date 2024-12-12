@@ -90,13 +90,15 @@ export default function OnboardingFormControl() {
 
   return (
     <Form {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 px-4">
         <FormProgressIndicator
           currentStep={currentStep}
           totalSteps={steps.length}
         />
-        <CurrentStepComponent />
-        <div className="flex justify-between">
+        <div className="h-[57vh]">
+          <CurrentStepComponent />
+        </div>
+        <div className="flex justify-between ">
           <Button
             type="button"
             onClick={prevStep}

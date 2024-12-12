@@ -1,3 +1,4 @@
+"use client";
 import { useFormContext } from "react-hook-form";
 import {
   FormField,
@@ -17,10 +18,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Camera, CameraIcon } from "lucide-react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { TYPE_ONBOARDING_SCHEMA } from "@/schema/onBoardingSchema";
 import Image from "next/image";
 import { revalidatePath } from "next/cache";
+import { Supported_Countries } from "@/lib/countries";
 
 const countryCodes = [
   { value: "+1", label: "United States (+1)" },
@@ -35,7 +37,9 @@ export const revalidate = 2;
 export default function PersonalInfo() {
   const { control, setValue, watch } = useFormContext<TYPE_ONBOARDING_SCHEMA>();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  // const [countries,setCountries]=useState{Supported_Countries[0]}
   const profileImage = watch("profileImage");
+  const selectedCountry = watch("country");
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -49,7 +53,7 @@ export default function PersonalInfo() {
   };
 
   return (
-    <div className="flex flex-col w-full items-center bg-red-600 justify-center ">
+    <div className="flex flex-col w-full items-center  justify-center  ">
       <div className="flex flex-col self-start">
         <h1 className="text-3xl">Basic Details</h1>
         <span className="text-ui-ui_light_600 inline-block w-full text-xs">
@@ -64,7 +68,7 @@ export default function PersonalInfo() {
           <FormItem>
             <FormControl>
               <div className="relative">
-                <Avatar className="w-[10rem] h-[10rem]">
+                <Avatar className="w-[8rem] h-[8rem]">
                   <AvatarImage
                     className="object-cover"
                     src={field.value}
@@ -100,15 +104,20 @@ export default function PersonalInfo() {
         )}
       />
 
-      <div className="grid grid-cols-6 w-full">
+      <div className="grid md:grid-cols-6 grid-cols-3 w-full space-x-2 mt-2">
         <FormField
           control={control}
-          name="fullName"
+          name="firstName"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Full Name</FormLabel>
+            <FormItem className="col-span-3">
+              <FormLabel>First Name</FormLabel>
               <FormControl>
-                <Input placeholder="John Doe" {...field} />
+                <Input
+                  type="name"
+                  className="focus:border-cyan-700"
+                  // placeholder="Email"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -116,12 +125,46 @@ export default function PersonalInfo() {
         />
         <FormField
           control={control}
+          name="lastName"
+          render={({ field }) => (
+            <FormItem className="col-span-3">
+              <FormLabel>Last Name</FormLabel>
+              <FormControl>
+                <Input
+                  type="name"
+                  className="focus:border-cyan-700"
+                  // placeholder="Email"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
+      <div className="grid md:grid-cols-6 grid-cols-3 w-full space-x-2 mt-2">
+        <FormField
+          control={control}
           name="email"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="col-span-3">
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input type="email" placeholder="john@example.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="dateOfBirth"
+          render={({ field }) => (
+            <FormItem className="col-span-3">
+              <FormLabel>Date of Birth</FormLabel>
+              <FormControl>
+                <Input type="date" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -131,56 +174,41 @@ export default function PersonalInfo() {
 
       <FormField
         control={control}
-        name="dateOfBirth"
+        name="country"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Date of Birth</FormLabel>
+            <FormLabel>Country</FormLabel>
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select your country" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {Supported_Countries.map((country) => (
+                  <SelectItem key={country.code} value={country.code}>
+                    {country.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={control}
+        name="phoneNumber"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Phone Number</FormLabel>
             <FormControl>
-              <Input type="date" {...field} />
+              <Input type="tel" placeholder="123456789" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-      <div className="flex space-x-4">
-        <FormField
-          control={control}
-          name="countryCode"
-          render={({ field }) => (
-            <FormItem className="flex-1">
-              <FormLabel>Country Code</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select country code" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {countryCodes.map((code) => (
-                    <SelectItem key={code.value} value={code.value}>
-                      {code.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={control}
-          name="phoneNumber"
-          render={({ field }) => (
-            <FormItem className="flex-[2]">
-              <FormLabel>Phone Number</FormLabel>
-              <FormControl>
-                <Input type="tel" placeholder="123456789" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </div>
     </div>
   );
 }
