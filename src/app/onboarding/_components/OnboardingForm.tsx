@@ -45,27 +45,14 @@ const OnboardingFormControl = () => {
   const [data, setData] = useState({});
   const delta = currentStep - previousStep;
 
-
-
   const form = useForm<TYPE_ONBOARD_SCHEMA>({
     resolver: zodResolver(OnboardingSchema),
-    defaultValues:{
+    defaultValues: {
       firstName: "",
       lastName: "",
       email: "",
       phone: "",
-    }
-    mode: "onChange",
-  });
-
-  const {
-    control,
-    formState: { errors },
-  } = form;
-
-  const { append, remove, fields } = useFieldArray({
-    control,
-    name: "jobs",
+    },
   });
 
   const onSubmit = async (data: ProfileFormValues) => {
@@ -78,23 +65,10 @@ const OnboardingFormControl = () => {
         // console.log("product", res);
       }
       router.refresh();
-      router.push(`/dashboard/products`);
-    } catch (error: any) {
+      // router.push(`/dashboard/products`);
+    } catch (error: unknown) {
     } finally {
       setLoading(false);
-    }
-  };
-
-  const onDelete = async () => {
-    try {
-      setLoading(true);
-      //   await axios.delete(`/api/${params.storeId}/products/${params.productId}`);
-      router.refresh();
-      router.push(`/${params.storeId}/products`);
-    } catch (error: any) {
-    } finally {
-      setLoading(false);
-      setOpen(false);
     }
   };
 
