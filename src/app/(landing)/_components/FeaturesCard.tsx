@@ -64,8 +64,9 @@ const FeaturesCard: React.FC<FeaturesCardProps> = ({
             {title}
           </h2>
           <p className="text-md w-[80%] text-ui-ui_dark_200 ">{subtitle}</p>
-          <Button variant={"outline"} icon={ArrowRightFromLine}>
+          <Button variant={"outline"}>
             Learn More
+            <ArrowRightFromLine />
           </Button>
         </div>
         <div

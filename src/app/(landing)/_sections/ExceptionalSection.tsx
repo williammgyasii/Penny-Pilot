@@ -83,8 +83,9 @@ const ExceptionalSection = () => {
                 </p>
               </GradientBorder>
               <div className="w-full flex justify-center md:justify-start ">
-                <Button size={"lg"} variant={"ghost"} icon={ArrowBigLeft}>
+                <Button size={"lg"}>
                   Read More
+                  <ArrowBigLeft />
                 </Button>
               </div>
             </div>

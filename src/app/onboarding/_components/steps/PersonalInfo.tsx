@@ -55,41 +55,49 @@ export default function PersonalInfo() {
         </span>
       </div>
 
-      <div className="flex justify-center mb-4">
-        <FormField
-          control={control}
-          name="profileImage"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <div className="relative">
-                  <Avatar className="w-30 h-30">
-                    <AvatarImage src={field.value} alt="Profile" />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                  <Button
-                    type="button"
-                    // variant="secondary"
-                    size="icon"
-                    className="absolute bottom-0 right-0"
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    <CameraIcon className="bg-white" />
-                  </Button>
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    className="hidden"
-                    accept="image/*"
-                    onChange={handleImageUpload}
+      <FormField
+        control={control}
+        name="profileImage"
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <div className="relative">
+                <Avatar className="w-[10rem] h-[10rem]">
+                  <AvatarImage
+                    className="object-cover"
+                    src={field.value}
+                    alt="Profile"
                   />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </div>
+                  <AvatarFallback>
+                    <Image
+                      src="https://www.tapback.co/api/avatar.webp"
+                      fill
+                      alt="Memoji"
+                    />
+                  </AvatarFallback>
+                </Avatar>
+
+                <Button
+                  type="button"
+                  className="absolute bottom-0 -right-0 text-xs"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <CameraIcon size={10} />
+                </Button>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  className="hidden"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                />
+              </div>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
       <FormField
         control={control}
         name="fullName"
