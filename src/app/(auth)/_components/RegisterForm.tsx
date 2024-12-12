@@ -146,7 +146,7 @@ export default function RegisterForm() {
             />
 
             <Button
-              className="w-full "
+              className="w-full"
               isLoading={AUTH_SLICE_LOADING}
               disabled={form.formState.isSubmitting}
               type="submit"

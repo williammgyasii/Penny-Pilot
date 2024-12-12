@@ -20,6 +20,7 @@ import { Camera, CameraIcon } from "lucide-react";
 import { useRef } from "react";
 import { TYPE_ONBOARDING_SCHEMA } from "@/schema/onBoardingSchema";
 import Image from "next/image";
+import { revalidatePath } from "next/cache";
 
 const countryCodes = [
   { value: "+1", label: "United States (+1)" },
@@ -30,6 +31,7 @@ const countryCodes = [
   // Add more country codes as needed
 ];
 
+export const revalidate = 2;
 export default function PersonalInfo() {
   const { control, setValue, watch } = useFormContext<TYPE_ONBOARDING_SCHEMA>();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -47,7 +49,7 @@ export default function PersonalInfo() {
   };
 
   return (
-    <div className="flex flex-col w-full items-center justify-center ">
+    <div className="flex flex-col w-full items-center bg-red-600 justify-center ">
       <div className="flex flex-col self-start">
         <h1 className="text-3xl">Basic Details</h1>
         <span className="text-ui-ui_light_600 inline-block w-full text-xs">
@@ -98,32 +100,35 @@ export default function PersonalInfo() {
         )}
       />
 
-      <FormField
-        control={control}
-        name="fullName"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Full Name</FormLabel>
-            <FormControl>
-              <Input placeholder="John Doe" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={control}
-        name="email"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Email</FormLabel>
-            <FormControl>
-              <Input type="email" placeholder="john@example.com" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+      <div className="grid grid-cols-6 w-full">
+        <FormField
+          control={control}
+          name="fullName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Full Name</FormLabel>
+              <FormControl>
+                <Input placeholder="John Doe" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input type="email" placeholder="john@example.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
       <FormField
         control={control}
         name="dateOfBirth"
