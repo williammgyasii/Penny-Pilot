@@ -16,9 +16,10 @@ import {
 } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { FormData } from "@/types/form";
-import { Camera } from "lucide-react";
+import { Camera, CameraIcon } from "lucide-react";
 import { useRef } from "react";
+import { TYPE_ONBOARDING_SCHEMA } from "@/schema/onBoardingSchema";
+import Image from "next/image";
 
 const countryCodes = [
   { value: "+1", label: "United States (+1)" },
@@ -30,7 +31,7 @@ const countryCodes = [
 ];
 
 export default function PersonalInfo() {
-  const { control, setValue, watch } = useFormContext<FormData>();
+  const { control, setValue, watch } = useFormContext<TYPE_ONBOARDING_SCHEMA>();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const profileImage = watch("profileImage");
 
@@ -46,8 +47,14 @@ export default function PersonalInfo() {
   };
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-bold">Personal Information</h2>
+    <div className="flex flex-col w-full items-center justify-center ">
+      <div className="flex flex-col self-start">
+        <h1 className="text-3xl">Basic Details</h1>
+        <span className="text-ui-ui_light_600 inline-block w-full text-xs">
+          Please fill the fields below with your contact details.
+        </span>
+      </div>
+
       <div className="flex justify-center mb-4">
         <FormField
           control={control}
@@ -56,23 +63,24 @@ export default function PersonalInfo() {
             <FormItem>
               <FormControl>
                 <div className="relative">
-                  <Avatar className="w-24 h-24">
+                  <Avatar className="w-30 h-30">
                     <AvatarImage src={field.value} alt="Profile" />
                     <AvatarFallback>
-                      <img
-                        src="/placeholder.svg?height=96&width=96"
+                      <Image
+                        src="https://www.tapback.co/api/avatar.webp"
+                        fill
                         alt="Memoji"
                       />
                     </AvatarFallback>
                   </Avatar>
                   <Button
                     type="button"
-                    variant="secondary"
+                    // variant="secondary"
                     size="icon"
                     className="absolute bottom-0 right-0"
                     onClick={() => fileInputRef.current?.click()}
                   >
-                    <Camera className="h-4 w-4" />
+                    <CameraIcon className="bg-white" />
                   </Button>
                   <input
                     type="file"

@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-export const onBoardingSchema = z.object({
+export const ONBOARDING_SCHEMA = z.object({
   // Step 1: Personal Information
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
   firstName: z.string().min(2, "First name must be at least 2 characters"),
@@ -43,4 +43,4 @@ export const onBoardingSchema = z.object({
   otherExpenses: z.number().min(0, "Other expenses cannot be negative"),
 });
 
-export type FormData = z.infer<typeof onBoardingSchema>;
+export type TYPE_ONBOARDING_SCHEMA = z.infer<typeof ONBOARDING_SCHEMA>;

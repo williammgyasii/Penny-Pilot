@@ -5,7 +5,7 @@ interface ProgressIndicatorProps {
   totalSteps: number;
 }
 
-export default function ProgressIndicator({
+export default function FormProgressIndicator({
   currentStep,
   totalSteps,
 }: ProgressIndicatorProps) {
