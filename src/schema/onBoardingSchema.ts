@@ -1,8 +1,5 @@
 import * as z from "zod";
 
-const today = new Date();
-const minAge = 16;
-
 const calculateMinDate = () => {
   const today = new Date();
   return new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());

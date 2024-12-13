@@ -14,8 +14,11 @@ import axios from "axios";
 import {
   getClientAuth,
   getClientFirestore,
+  getClientStorage,
 } from "@/firebase/getFirebaseConfig";
 import { TYPE_ONBOARDING_SCHEMA } from "@/schema/onBoardingSchema";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { RootState } from "../store";
 
 export const LOG_OUT_USER = createAsyncThunk("auth/signOut", async () => {
   await signOut(getClientAuth);
@@ -100,10 +103,41 @@ export const LOGIN_EXISTING_USER = createAsyncThunk<
 
 export const ONBOARD_USER_DETAILS = createAsyncThunk<
   UserData,
-  TYPE_ONBOARDING_SCHEMA,
-  { rejectValue: string }
->("auth/onboard", async (onboardData, { rejectWithValue }) => {
+  Partial<TYPE_ONBOARDING_SCHEMA>,
+  { state: RootState; rejectWithValue: string }
+>("auth/onboard", async (onboardData, { rejectWithValue, getState }) => {
+  const state = getState() as RootState;
+  const userUid = state.auth.currentUser?.uid;
+
+  // Check if user is authenticated
+  if (!userUid) {
+    return rejectWithValue("User is not authenticated");
+  }
   try {
+    let profileImageUrl = onboardData.profileImage;
+    if (
+      onboardData.profileImage &&
+      onboardData.profileImage.startsWith("data:")
+    ) {
+      const storageRef = ref(
+        getClientStorage,
+        `images/${userUid}/${onboardData.profileImage}`
+      );
+      const response = await fetch(onboardData.profileImage);
+      const blob = await response.blob();
+      await uploadBytes(storageRef, blob);
+      profileImageUrl = await getDownloadURL(storageRef);
+    }
+    // Prepare user data
+    const userData = {
+      ...onboardData,
+      profileImage: profileImageUrl,
+      createdAt: new Date(),
+    };
+
+    await setDoc(doc(getClientFirestore, "users", userUid), userData);
+
+    return userData;
   } catch (error) {
     if (error instanceof FirebaseError) {
       return getFirebaseErrorMessage(error.code);

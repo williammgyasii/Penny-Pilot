@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   LOG_OUT_USER,
   LOGIN_EXISTING_USER,
+  ONBOARD_USER_DETAILS,
   REGISTER_NEW_USER,
 } from "../functions/authFunctions";
 import { useSelector } from "react-redux";
@@ -47,6 +48,20 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      //ONBOARDING USE CASES
+      .addCase(ONBOARD_USER_DETAILS.pending, (state) => {
+        state.AUTH_SLICE_LOADING = true;
+        state.error = null;
+      })
+      .addCase(ONBOARD_USER_DETAILS.fulfilled, (state, action) => {
+        state.AUTH_SLICE_LOADING = false;
+        state.currentUser = action.payload;
+        state.error = null;
+      })
+      .addCase(ONBOARD_USER_DETAILS.rejected, (state, action) => {
+        state.AUTH_SLICE_LOADING = false;
+        state.error = action.payload as string;
+      })
       //LOGOUT CASES
       .addCase(LOGIN_EXISTING_USER.pending, (state) => {
         state.AUTH_SLICE_STATE = "loading";

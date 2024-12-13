@@ -17,6 +17,7 @@ import FormProgressIndicator from "./FormProgressIndicator";
 import { Form } from "@/components/ui/form";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import Spinner from "@/components/Spinner";
 
 const steps = [
   {
@@ -55,7 +56,9 @@ const steps = [
 export default function OnboardingFormControl() {
   const [currentStep, setCurrentStep] = useState(0);
   const { toast } = useToast();
-  const { currentUser } = useSelector((state: RootState) => state.auth);
+  const { currentUser, AUTH_SLICE_LOADING } = useSelector(
+    (state: RootState) => state.auth
+  );
   const methods = useForm<TYPE_ONBOARDING_SCHEMA>({
     resolver: zodResolver(ONBOARDING_SCHEMA),
     mode: "onChange",
@@ -169,7 +172,14 @@ export default function OnboardingFormControl() {
             <ArrowLeft className="mr-2 h-4 w-4" /> Previous
           </Button>
           {currentStep === steps.length - 1 ? (
-            <Button type="submit">Submit</Button>
+            <Button type="submit">
+              Submit
+              {AUTH_SLICE_LOADING ? (
+                <Spinner />
+              ) : (
+                <ArrowRight className="ml-2 h-4 w-4" />
+              )}
+            </Button>
           ) : (
             <Button type="button" onClick={nextStep}>
               Next <ArrowRight className="ml-2 h-4 w-4" />
