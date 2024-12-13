@@ -22,9 +22,16 @@ export const ONBOARDING_SCHEMA = z.object({
   }, `You must be at least ${minAge} years old`),
   countryCode: z.string().min(1, "Country code is required"),
   country: z.string().min(1, "Country is required"),
-  phoneNumber: z.string().min(5, "Phone number must be at least 5 digits"),
   profileImage: z.string().optional(),
   address: z.string().optional(),
+  phoneNumber: z
+    .string()
+    .regex(/^\+?[0-9]+$/, {
+      message:
+        "Phone number must contain only numbers and may optionally start with '+'.",
+    })
+    .min(5, "Phone number must be at least 5 digits long.")
+    .max(15, "Phone number cannot exceed 15 digits."),
 
   // Step 2: Financial Goals
   primaryGoal: z.enum([

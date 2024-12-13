@@ -37,7 +37,7 @@ const countryCodes = [
 
 export const revalidate = 2;
 export default function PersonalInfo() {
-  const { control, setValue, watch } = useFormContext<TYPE_ONBOARDING_SCHEMA>();
+  const { control, setValue, watch,formState } = useFormContext<TYPE_ONBOARDING_SCHEMA>();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const profileImage = watch("profileImage");
   const selectedCountry = watch("country");
@@ -47,8 +47,8 @@ export default function PersonalInfo() {
       (country) => country.code === selectedCountry
     );
     setValue("countryCode", countryCode?.dialCode || "");
-    return countryCode?.dialCode;
-  }, [selectedCountry]);
+    return countryCode?.dialCode as string;
+  }, [selectedCountry,setValue]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -62,7 +62,7 @@ export default function PersonalInfo() {
   };
 
   return (
-    <div className="flex flex-col w-full items-center  justify-center space-y-3  ">
+    <div className="flex flex-col w-full items-center  justify-center space-y-3">
       <div className="flex flex-col self-start">
         <h1 className="text-3xl">Basic Details</h1>
         <span className="text-ui-ui_light_600 inline-block w-full text-xs">
@@ -88,6 +88,8 @@ export default function PersonalInfo() {
                       src="https://www.tapback.co/api/avatar.webp"
                       fill
                       alt="Memoji"
+                      priority
+                      sizes="50vh"
                     />
                   </AvatarFallback>
                 </Avatar>
@@ -113,7 +115,7 @@ export default function PersonalInfo() {
         )}
       />
 
-      <div className="grid md:grid-cols-6 grid-cols-3 w-full space-x-2 mt-5">
+      <div className="grid md:grid-cols-6 grid-cols-3 w-full space-x-3 mt-5">
         <FormField
           control={control}
           name="firstName"
@@ -154,7 +156,7 @@ export default function PersonalInfo() {
         />
       </div>
 
-      <div className="grid md:grid-cols-6 grid-cols-3 w-full space-x-2 ">
+      <div className="grid md:grid-cols-6 grid-cols-3 w-full space-x-3 ">
         <FormField
           control={control}
           name="email"
@@ -183,7 +185,7 @@ export default function PersonalInfo() {
         />
       </div>
 
-      <div className="grid md:grid-cols-6 grid-cols-3 w-full space-x-2 ">
+      <div className="grid md:grid-cols-6 grid-cols-3 w-full space-x-3 ">
         <FormField
           control={control}
           name="gender"
@@ -220,12 +222,12 @@ export default function PersonalInfo() {
         />
       </div>
 
-      <div className="grid md:grid-cols-10 grid-cols-3 w-full space-x-2 ">
+      <div className="grid md:grid-cols-10 grid-cols-3 w-full space-x-3 ">
         <FormField
           control={control}
           name="country"
           render={({ field }) => (
-            <FormItem className="col-span-3">
+            <FormItem className="col-span-5">
               <FormLabel>Country</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -247,20 +249,7 @@ export default function PersonalInfo() {
             </FormItem>
           )}
         />
-        <FormField
-          control={control}
-          name="countryCode"
-          render={({ field }) => (
-            <FormItem className="col-span-2">
-              <FormLabel>Country Code</FormLabel>
-              <FormControl>
-                <Input type="tel" disabled placeholder="123456789" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {/* <div className="col-span-1">{countryCode}</div> */}
+
         <FormField
           control={control}
           name="phoneNumber"
@@ -268,7 +257,21 @@ export default function PersonalInfo() {
             <FormItem className="col-span-5">
               <FormLabel>Phone Number</FormLabel>
               <FormControl>
-                <Input type="tel" placeholder="123456789" {...field} />
+                <div className="flex">
+                  <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 w-[3.5rem] sm:text-sm">
+                    {countryCode}
+                  </span>
+                  <Input
+                    type="tel"
+                    placeholder="123456789"
+                    className="rounded-l-none"
+                    // value={field.value.replace(countryCode, "")}
+                    onChange={(e) => {
+                      const phoneNumber = e.target.value.replace(/\D/g, "");
+                      field.onChange(`${countryCode}${phoneNumber}`);
+                    }}
+                  />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
