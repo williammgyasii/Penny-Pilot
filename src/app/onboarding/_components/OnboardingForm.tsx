@@ -18,8 +18,40 @@ import { Form } from "@/components/ui/form";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 
-const steps = [PersonalInfo, FinancialGoals, IncomeDetails, ExpenseBreakdown];
-
+const steps = [
+  {
+    component: PersonalInfo,
+    fields: [
+      "firstName",
+      "lastName",
+      "gender",
+      "email",
+      "dateOfBirth",
+      "country",
+      "countryCode",
+      "phoneNumber",
+      "profileImage",
+    ],
+  },
+  {
+    component: FinancialGoals,
+    fields: ["primaryGoal", "targetAmount", "timeframe"],
+  },
+  {
+    component: IncomeDetails,
+    fields: ["employmentStatus", "monthlyIncome", "additionalIncome"],
+  },
+  {
+    component: ExpenseBreakdown,
+    fields: [
+      "housingExpense",
+      "transportationExpense",
+      "foodExpense",
+      "utilitiesExpense",
+      "otherExpenses",
+    ],
+  },
+];
 export default function OnboardingFormControl() {
   const [currentStep, setCurrentStep] = useState(0);
   const { toast } = useToast();
@@ -71,9 +103,11 @@ export default function OnboardingFormControl() {
   };
 
   const nextStep = async () => {
-    const isValid = await trigger();
-    console.log(methods.formState.errors);
-    if (isValid) {
+    const fieldsToValidate = steps[currentStep]
+      .fields as (keyof TYPE_ONBOARDING_SCHEMA)[];
+    const isStepValid = await trigger(fieldsToValidate);
+
+    if (isStepValid) {
       setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
     } else {
       toast({
@@ -89,7 +123,7 @@ export default function OnboardingFormControl() {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
-  const CurrentStepComponent = steps[currentStep];
+  const CurrentStepComponent = steps[currentStep].component;
 
   return (
     <Form {...methods}>

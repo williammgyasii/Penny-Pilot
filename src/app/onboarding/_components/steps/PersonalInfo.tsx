@@ -275,11 +275,7 @@ export default function PersonalInfo() {
                     type="tel"
                     placeholder="123456789"
                     className="rounded-l-none"
-                    // value={field.value.replace(countryCode, "")}
-                    onChange={(e) => {
-                      const phoneNumber = e.target.value.replace(/\D/g, "");
-                      field.onChange(`${countryCode}${phoneNumber}`);
-                    }}
+                    {...field}
                   />
                 </div>
               </FormControl>

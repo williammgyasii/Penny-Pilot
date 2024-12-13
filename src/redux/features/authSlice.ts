@@ -7,9 +7,10 @@ import {
 } from "../functions/authFunctions";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import { TYPE_ONBOARDING_SCHEMA } from "@/schema/onBoardingSchema";
 
 interface AuthState {
-  currentUser: UserData | null;
+  currentUser: (UserData & Partial<TYPE_ONBOARDING_SCHEMA>) | null;
   AUTH_SLICE_LOADING: boolean;
   error: string | null;
   AUTH_SLICE_STATE: "idle" | "loading" | "completed" | "failed";

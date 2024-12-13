@@ -1,26 +1,24 @@
-// app/lib/store.ts
 "use client";
 
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authReducer from "./features/authSlice";
 import toastReducer from "./features/toastSlice";
+import systemReducer from "./features/systemSlice";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { persistStore, persistReducer } from "redux-persist";
-import systemReducer from "./features/systemSlice";
 
-const createNoopStorage = () => {
-  return {
-    getItem(_key: string) {
-      return Promise.resolve(null);
-    },
-    setItem(_key: string, value: unknown) {
-      return Promise.resolve(value);
-    },
-    removeItem(_key: string) {
-      return Promise.resolve();
-    },
-  };
-};
+// Fallback storage for server-side rendering
+const createNoopStorage = () => ({
+  getItem(_key: string) {
+    return Promise.resolve(null);
+  },
+  setItem(_key: string, value: unknown) {
+    return Promise.resolve(value);
+  },
+  removeItem(_key: string) {
+    return Promise.resolve();
+  },
+});
 
 const storage =
   typeof window !== "undefined"
@@ -30,17 +28,20 @@ const storage =
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "system"],
+  whitelist: ["auth", "system"], // Reducers to persist
 };
 
-const persistedReducer = persistReducer(persistConfig, authReducer);
+// Combine reducers
+const rootReducer = combineReducers({
+  auth: authReducer,
+  toast: toastReducer,
+  system: systemReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const makeStore = configureStore({
-  reducer: {
-    auth: persistedReducer,
-    toast: toastReducer,
-    system: systemReducer,
-  },
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
