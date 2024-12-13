@@ -27,3 +27,10 @@ export function formatBytes(
     sizeType === "accurate" ? accurateSizes[i] ?? "Bytest" : sizes[i] ?? "Bytes"
   }`;
 }
+
+export const calculateMinDate = () => {
+  const today = new Date();
+  return new Date(today.getFullYear() - 16, today.getMonth(), today.getDate())
+    .toISOString()
+    .split("T")[0];
+};

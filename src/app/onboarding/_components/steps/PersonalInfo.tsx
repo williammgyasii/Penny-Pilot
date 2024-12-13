@@ -17,27 +17,17 @@ import {
 } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Camera, CameraIcon } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { CameraIcon } from "lucide-react";
+import { useMemo, useRef } from "react";
 import { TYPE_ONBOARDING_SCHEMA } from "@/schema/onBoardingSchema";
 import Image from "next/image";
-import { revalidatePath } from "next/cache";
 import { Supported_Countries } from "@/lib/countries";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-
-const countryCodes = [
-  { value: "+1", label: "United States (+1)" },
-  { value: "+44", label: "United Kingdom (+44)" },
-  { value: "+91", label: "India (+91)" },
-  { value: "+86", label: "China (+86)" },
-  { value: "+81", label: "Japan (+81)" },
-  // Add more country codes as needed
-];
+import { calculateMinDate } from "@/lib/utils";
 
 export const revalidate = 2;
 export default function PersonalInfo() {
-  const { control, setValue, watch,formState } = useFormContext<TYPE_ONBOARDING_SCHEMA>();
+  const { control, setValue, watch, formState } =
+    useFormContext<TYPE_ONBOARDING_SCHEMA>();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const profileImage = watch("profileImage");
   const selectedCountry = watch("country");
@@ -48,7 +38,7 @@ export default function PersonalInfo() {
     );
     setValue("countryCode", countryCode?.dialCode || "");
     return countryCode?.dialCode as string;
-  }, [selectedCountry,setValue]);
+  }, [selectedCountry, setValue]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -61,7 +51,7 @@ export default function PersonalInfo() {
     }
   };
 
-  console.log(formState.errors)
+  console.log(formState.errors);
 
   return (
     <div className="flex flex-col w-full items-center  justify-center space-y-3">
@@ -175,15 +165,33 @@ export default function PersonalInfo() {
         <FormField
           control={control}
           name="dateOfBirth"
-          render={({ field }) => (
-            <FormItem className="col-span-3">
-              <FormLabel>Date of Birth</FormLabel>
-              <FormControl>
-                <Input type="date" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            const minDate = calculateMinDate();
+            return (
+              <FormItem className="col-span-3">
+                <FormLabel>Date of Birth</FormLabel>
+                <FormControl>
+                  <Input
+                    type="date"
+                    max={calculateMinDate()}
+                    {...field}
+                    onChange={(e) => {
+                      const selectedDate = new Date(e.target.value);
+                      const minAllowedDate = new Date(calculateMinDate());
+                      if (selectedDate <= minAllowedDate) {
+                        field.onChange(e);
+                      } else {
+                        // If an invalid date is selected, clear the input
+                        e.target.value = "";
+                        field.onChange(e);
+                      }
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
       </div>
 

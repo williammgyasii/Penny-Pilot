@@ -2,12 +2,11 @@ import * as z from "zod";
 
 const today = new Date();
 const minAge = 16;
-const minDate = new Date(
-  today.getFullYear() - minAge,
-  today.getMonth(),
-  today.getDate()
-);
 
+const calculateMinDate = () => {
+  const today = new Date();
+  return new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
+};
 export const ONBOARDING_SCHEMA = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
@@ -16,8 +15,8 @@ export const ONBOARDING_SCHEMA = z.object({
   email: z.string().email("Invalid email address"),
   dateOfBirth: z.string().refine((dob) => {
     const date = new Date(dob);
-    return date <= minDate;
-  }, `You must be at least ${minAge} years old`),
+    return date <= calculateMinDate();
+  }, "You must be at least 16 years old to use this app"),
   countryCode: z.string().min(1, "Country code is required"),
   country: z.string().min(1, "Country is required"),
   profileImage: z.string().optional(),
