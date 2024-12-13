@@ -18,6 +18,9 @@ import { Form } from "@/components/ui/form";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import Spinner from "@/components/Spinner";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/redux/reduxhooks";
+import { ONBOARD_USER_DETAILS } from "@/redux/functions/authFunctions";
 
 const steps = [
   {
@@ -56,6 +59,8 @@ const steps = [
 export default function OnboardingFormControl() {
   const [currentStep, setCurrentStep] = useState(0);
   const { toast } = useToast();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const { currentUser, AUTH_SLICE_LOADING } = useSelector(
     (state: RootState) => state.auth
   );
@@ -86,38 +91,16 @@ export default function OnboardingFormControl() {
 
   const { handleSubmit, trigger } = methods;
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: TYPE_ONBOARDING_SCHEMA) => {
     try {
-      const userId = uuidv4();
-
-      // Handle profile image upload
-      let profileImageUrl = data.profileImage;
-      if (data.profileImage && data.profileImage.startsWith("data:")) {
-        const imageId = uuidv4();
-        const storageRef = ref(storage, `profile_images/${imageId}`);
-        const response = await fetch(data.profileImage);
-        const blob = await response.blob();
-        await uploadBytes(storageRef, blob);
-        profileImageUrl = await getDownloadURL(storageRef);
-      }
-
-      // Prepare user data
-      const userData = {
-        ...data,
-        profileImage: profileImageUrl,
-        createdAt: new Date(),
-      };
-
-      // Add user data to Firestore
-      await setDoc(doc(db, "users", userId), userData);
-
+      const response = await dispatch(ONBOARD_USER_DETAILS(data)).unwrap();
       toast({
         title: "Success",
         description: "Your financial profile has been saved.",
       });
 
       // Redirect to profile
-      router.push(`/profile/${userId}`);
+      router.push(`/dashboard`);
     } catch (error) {
       console.error("Error submitting form: ", error);
       toast({

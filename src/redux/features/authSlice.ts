@@ -6,12 +6,12 @@ import {
   ONBOARD_USER_DETAILS,
   REGISTER_NEW_USER,
 } from "../functions/authFunctions";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
 import { TYPE_ONBOARDING_SCHEMA } from "@/schema/onBoardingSchema";
 
+type FullUserType = Partial<TYPE_ONBOARDING_SCHEMA> & Partial<UserData>;
+
 interface AuthState {
-  currentUser: (UserData & Partial<TYPE_ONBOARDING_SCHEMA>) | null;
+  currentUser: FullUserType | null;
   AUTH_SLICE_LOADING: boolean;
   error: string | null;
   AUTH_SLICE_STATE: "idle" | "loading" | "completed" | "failed";

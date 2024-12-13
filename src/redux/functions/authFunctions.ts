@@ -16,7 +16,10 @@ import {
   getClientFirestore,
   getClientStorage,
 } from "@/firebase/getFirebaseConfig";
-import { TYPE_ONBOARDING_SCHEMA } from "@/schema/onBoardingSchema";
+import {
+  ONBOARDING_SCHEMA,
+  TYPE_ONBOARDING_SCHEMA,
+} from "@/schema/onBoardingSchema";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { RootState } from "../store";
 
@@ -102,46 +105,49 @@ export const LOGIN_EXISTING_USER = createAsyncThunk<
 });
 
 export const ONBOARD_USER_DETAILS = createAsyncThunk<
-  UserData,
-  Partial<TYPE_ONBOARDING_SCHEMA>,
-  { state: RootState; rejectWithValue: string }
+  TYPE_ONBOARDING_SCHEMA, // **Expected Return Type**
+  TYPE_ONBOARDING_SCHEMA, // **Input Type**
+  { rejectValue: string }
 >("auth/onboard", async (onboardData, { rejectWithValue, getState }) => {
+  const validatedData = ONBOARDING_SCHEMA.parse(onboardData);
   const state = getState() as RootState;
   const userUid = state.auth.currentUser?.uid;
+  console.log(userUid);
 
-  // Check if user is authenticated
   if (!userUid) {
     return rejectWithValue("User is not authenticated");
   }
+
   try {
-    let profileImageUrl = onboardData.profileImage;
+    let profileImageUrl = validatedData.profileImage; // Use validatedData instead of direct `onboardData`
     if (
-      onboardData.profileImage &&
-      onboardData.profileImage.startsWith("data:")
+      validatedData.profileImage &&
+      validatedData.profileImage.startsWith("data:")
     ) {
       const storageRef = ref(
         getClientStorage,
-        `images/${userUid}/${onboardData.profileImage}`
+        `images/${userUid}/${Date.now()}_profile.jpg`
       );
-      const response = await fetch(onboardData.profileImage);
+      const response = await fetch(validatedData.profileImage);
       const blob = await response.blob();
       await uploadBytes(storageRef, blob);
       profileImageUrl = await getDownloadURL(storageRef);
     }
-    // Prepare user data
+
     const userData = {
-      ...onboardData,
+      ...validatedData,
+      uid: userUid,
       profileImage: profileImageUrl,
       createdAt: new Date(),
     };
 
-    await setDoc(doc(getClientFirestore, "users", userUid), userData);
+    // await setDoc(doc(getClientFirestore, "users", userUid), userData);
 
     return userData;
   } catch (error) {
     if (error instanceof FirebaseError) {
-      return getFirebaseErrorMessage(error.code);
+      return rejectWithValue(getFirebaseErrorMessage(error.code));
     }
-    return rejectWithValue("Something went wrong With Onboarding");
+    return rejectWithValue("Something went wrong with onboarding.");
   }
 });
