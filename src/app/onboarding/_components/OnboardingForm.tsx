@@ -98,7 +98,7 @@ export default function OnboardingFormControl() {
           currentStep={currentStep}
           totalSteps={steps.length}
         />
-        <div className="h-[57vh]">
+        <div className="h-[65vh]">
           <CurrentStepComponent />
         </div>
         <div className="flex justify-between ">

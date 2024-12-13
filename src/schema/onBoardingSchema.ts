@@ -1,5 +1,13 @@
 import * as z from "zod";
 
+const today = new Date();
+const minAge = 16;
+const minDate = new Date(
+  today.getFullYear() - minAge,
+  today.getMonth(),
+  today.getDate()
+);
+
 export const ONBOARDING_SCHEMA = z.object({
   // Step 1: Personal Information
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
@@ -8,12 +16,15 @@ export const ONBOARDING_SCHEMA = z.object({
   gender: z.enum(["male", "female", "other"]),
   // zipCode: z.string().min(5, "Zip code must be at least 5 digits"),
   email: z.string().email("Invalid email address"),
-  dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format"),
+  dateOfBirth: z.string().refine((dob) => {
+    const date = new Date(dob);
+    return date <= minDate;
+  }, `You must be at least ${minAge} years old`),
   countryCode: z.string().min(1, "Country code is required"),
   country: z.string().min(1, "Country is required"),
   phoneNumber: z.string().min(5, "Phone number must be at least 5 digits"),
   profileImage: z.string().optional(),
-  
+  address: z.string().optional(),
 
   // Step 2: Financial Goals
   primaryGoal: z.enum([
