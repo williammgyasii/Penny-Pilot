@@ -1,4 +1,3 @@
-"use client";
 import { UserData } from "@/types/userTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
@@ -6,6 +5,8 @@ import {
   LOGIN_EXISTING_USER,
   REGISTER_NEW_USER,
 } from "../functions/authFunctions";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 interface AuthState {
   currentUser: UserData | null;

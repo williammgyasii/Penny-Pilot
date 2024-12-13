@@ -23,6 +23,8 @@ import { TYPE_ONBOARDING_SCHEMA } from "@/schema/onBoardingSchema";
 import Image from "next/image";
 import { revalidatePath } from "next/cache";
 import { Supported_Countries } from "@/lib/countries";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const countryCodes = [
   { value: "+1", label: "United States (+1)" },
@@ -116,6 +118,7 @@ export default function PersonalInfo() {
                   type="name"
                   className="focus:border-cyan-700"
                   // placeholder="Email"
+                  disabled={true}
                   {...field}
                 />
               </FormControl>
@@ -134,6 +137,7 @@ export default function PersonalInfo() {
                   type="name"
                   className="focus:border-cyan-700"
                   // placeholder="Email"
+                  disabled={true}
                   {...field}
                 />
               </FormControl>
@@ -151,7 +155,7 @@ export default function PersonalInfo() {
             <FormItem className="col-span-3">
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="john@example.com" {...field} />
+                <Input type="email" disabled={true} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -172,43 +176,58 @@ export default function PersonalInfo() {
         />
       </div>
 
-      <FormField
-        control={control}
-        name="country"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Country</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
+      <div className="grid md:grid-cols-6 grid-cols-3 w-full space-x-2 mt-2">
+        <FormField
+          control={control}
+          name="country"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Country</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your country" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {Supported_Countries.map((country) => (
+                    <SelectItem key={country.code} value={country.code}>
+                      {country.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="phoneNumber"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone Number</FormLabel>
               <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your country" />
-                </SelectTrigger>
+                <Input type="tel" placeholder="123456789" {...field} />
               </FormControl>
-              <SelectContent>
-                {Supported_Countries.map((country) => (
-                  <SelectItem key={country.code} value={country.code}>
-                    {country.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={control}
-        name="phoneNumber"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Phone Number</FormLabel>
-            <FormControl>
-              <Input type="tel" placeholder="123456789" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="email"
+          render={({ field }) => (
+            <FormItem className="col-span-3">
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input type="email" disabled={true} {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
     </div>
   );
 }

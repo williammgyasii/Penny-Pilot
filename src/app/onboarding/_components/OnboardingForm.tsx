@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,19 +15,23 @@ import {
 } from "@/schema/onBoardingSchema";
 import FormProgressIndicator from "./FormProgressIndicator";
 import { Form } from "@/components/ui/form";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const steps = [PersonalInfo, FinancialGoals, IncomeDetails, ExpenseBreakdown];
 
 export default function OnboardingFormControl() {
   const [currentStep, setCurrentStep] = useState(0);
   const { toast } = useToast();
+  const { currentUser } = useSelector((state: RootState) => state.auth);
+  console.log(currentUser);
   const methods = useForm<TYPE_ONBOARDING_SCHEMA>({
     resolver: zodResolver(ONBOARDING_SCHEMA),
     mode: "onChange",
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
+      firstName: currentUser?.firstName,
+      lastName: currentUser?.lastName,
+      email: currentUser?.email,
       dateOfBirth: "",
       countryCode: "+1",
       phoneNumber: "",

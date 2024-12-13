@@ -6,13 +6,14 @@ export const ONBOARDING_SCHEMA = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
   gender: z.enum(["male", "female", "other"]),
-  zipCode: z.string().min(5, "Zip code must be at least 5 digits"),
+  // zipCode: z.string().min(5, "Zip code must be at least 5 digits"),
   email: z.string().email("Invalid email address"),
   dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format"),
   countryCode: z.string().min(1, "Country code is required"),
   country: z.string().min(1, "Country is required"),
   phoneNumber: z.string().min(5, "Phone number must be at least 5 digits"),
   profileImage: z.string().optional(),
+  
 
   // Step 2: Financial Goals
   primaryGoal: z.enum([
