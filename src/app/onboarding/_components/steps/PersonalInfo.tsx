@@ -39,7 +39,6 @@ export const revalidate = 2;
 export default function PersonalInfo() {
   const { control, setValue, watch } = useFormContext<TYPE_ONBOARDING_SCHEMA>();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  // const [countries,setCountries]=useState{Supported_Countries[0]}
   const profileImage = watch("profileImage");
   const selectedCountry = watch("country");
 
@@ -47,6 +46,7 @@ export default function PersonalInfo() {
     const countryCode = Supported_Countries.find(
       (country) => country.code === selectedCountry
     );
+    setValue("countryCode", countryCode?.dialCode || "");
     return countryCode?.dialCode;
   }, [selectedCountry]);
 
@@ -225,7 +225,7 @@ export default function PersonalInfo() {
           control={control}
           name="country"
           render={({ field }) => (
-            <FormItem className="col-span-4">
+            <FormItem className="col-span-3">
               <FormLabel>Country</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -247,7 +247,20 @@ export default function PersonalInfo() {
             </FormItem>
           )}
         />
-        <div className="col-span-1">{countryCode}</div>
+        <FormField
+          control={control}
+          name="countryCode"
+          render={({ field }) => (
+            <FormItem className="col-span-2">
+              <FormLabel>Country Code</FormLabel>
+              <FormControl>
+                <Input type="tel" disabled placeholder="123456789" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* <div className="col-span-1">{countryCode}</div> */}
         <FormField
           control={control}
           name="phoneNumber"
