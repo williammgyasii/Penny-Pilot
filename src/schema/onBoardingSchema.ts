@@ -9,8 +9,6 @@ const minDate = new Date(
 );
 
 export const ONBOARDING_SCHEMA = z.object({
-  // Step 1: Personal Information
-  fullName: z.string().min(2, "Full name must be at least 2 characters"),
   firstName: z.string().min(2, "First name must be at least 2 characters"),
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
   gender: z.enum(["male", "female", "other"]),
@@ -23,7 +21,7 @@ export const ONBOARDING_SCHEMA = z.object({
   countryCode: z.string().min(1, "Country code is required"),
   country: z.string().min(1, "Country is required"),
   profileImage: z.string().optional(),
-  address: z.string().optional(),
+  address: z.string().min(2, "Address is required"),
   phoneNumber: z
     .string()
     .regex(/^\+?[0-9]+$/, {
