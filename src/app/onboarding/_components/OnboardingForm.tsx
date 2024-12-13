@@ -56,7 +56,6 @@ export default function OnboardingFormControl() {
   const [currentStep, setCurrentStep] = useState(0);
   const { toast } = useToast();
   const { currentUser } = useSelector((state: RootState) => state.auth);
-  console.log(currentUser);
   const methods = useForm<TYPE_ONBOARDING_SCHEMA>({
     resolver: zodResolver(ONBOARDING_SCHEMA),
     mode: "onChange",
@@ -82,23 +81,48 @@ export default function OnboardingFormControl() {
     },
   });
 
-  const { handleSubmit, trigger, getValues } = methods;
+  const { handleSubmit, trigger } = methods;
 
-  const onSubmit = async (data: TYPE_ONBOARDING_SCHEMA) => {
+  const onSubmit = async (data: FormData) => {
     try {
-      // await addDoc(collection(db, "financialProfiles"), data);
-      // toast({
-      //   title: "Success",
-      //   description: "Your financial profile has been saved.",
-      // });
+      const userId = uuidv4();
+
+      // Handle profile image upload
+      let profileImageUrl = data.profileImage;
+      if (data.profileImage && data.profileImage.startsWith("data:")) {
+        const imageId = uuidv4();
+        const storageRef = ref(storage, `profile_images/${imageId}`);
+        const response = await fetch(data.profileImage);
+        const blob = await response.blob();
+        await uploadBytes(storageRef, blob);
+        profileImageUrl = await getDownloadURL(storageRef);
+      }
+
+      // Prepare user data
+      const userData = {
+        ...data,
+        profileImage: profileImageUrl,
+        createdAt: new Date(),
+      };
+
+      // Add user data to Firestore
+      await setDoc(doc(db, "users", userId), userData);
+
+      toast({
+        title: "Success",
+        description: "Your financial profile has been saved.",
+      });
+
+      // Redirect to profile
+      router.push(`/profile/${userId}`);
     } catch (error) {
-      // console.error("Error adding document: ", error);
-      // toast({
-      //   title: "Error",
-      //   description:
-      //     "There was an error saving your profile. Please try again.",
-      //   variant: "destructive",
-      // });
+      console.error("Error submitting form: ", error);
+      toast({
+        title: "Error",
+        description:
+          "There was an error saving your profile. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 

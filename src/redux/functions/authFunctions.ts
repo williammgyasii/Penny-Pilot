@@ -15,7 +15,7 @@ import {
   getClientAuth,
   getClientFirestore,
 } from "@/firebase/getFirebaseConfig";
-import { CREATE_SESSION_COOKIE_CLOUD_FUNCTION_URL } from "@/lib/constants";
+import { TYPE_ONBOARDING_SCHEMA } from "@/schema/onBoardingSchema";
 
 export const LOG_OUT_USER = createAsyncThunk("auth/signOut", async () => {
   await signOut(getClientAuth);
@@ -95,5 +95,19 @@ export const LOGIN_EXISTING_USER = createAsyncThunk<
       return rejectWithValue(getFirebaseErrorMessage(error.code));
     }
     return rejectWithValue("Login failed");
+  }
+});
+
+export const ONBOARD_USER_DETAILS = createAsyncThunk<
+  UserData,
+  TYPE_ONBOARDING_SCHEMA,
+  { rejectValue: string }
+>("auth/onboard", async (onboardData, { rejectWithValue }) => {
+  try {
+  } catch (error) {
+    if (error instanceof FirebaseError) {
+      return getFirebaseErrorMessage(error.code);
+    }
+    return rejectWithValue("Something went wrong With Onboarding");
   }
 });
