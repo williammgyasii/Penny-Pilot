@@ -72,6 +72,7 @@ export default function OnboardingFormControl() {
       lastName: currentUser?.lastName,
       email: currentUser?.email,
       dateOfBirth: "",
+      address: "",
       countryCode: "+1",
       phoneNumber: "",
       profileImage: "",
@@ -90,17 +91,18 @@ export default function OnboardingFormControl() {
   });
 
   const { handleSubmit, trigger } = methods;
+  console.log(currentStep, steps.length);
 
   const onSubmit = async (data: TYPE_ONBOARDING_SCHEMA) => {
     try {
-      const response = await dispatch(ONBOARD_USER_DETAILS(data)).unwrap();
+      // const response = await dispatch(ONBOARD_USER_DETAILS(data)).unwrap();
       toast({
         title: "Success",
         description: "Your financial profile has been saved.",
       });
 
       // Redirect to profile
-      router.push(`/dashboard`);
+      // router.push(`/dashboard`);
     } catch (error) {
       console.error("Error submitting form: ", error);
       toast({
@@ -116,9 +118,8 @@ export default function OnboardingFormControl() {
     const fieldsToValidate = steps[currentStep]
       .fields as (keyof TYPE_ONBOARDING_SCHEMA)[];
     const isStepValid = await trigger(fieldsToValidate);
-
-    if (isStepValid) {
-      setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+    if (isStepValid && currentStep < steps.length - 1) {
+      setCurrentStep((prevStep) => prevStep + 1);
     } else {
       toast({
         title: "Validation Error",
@@ -130,14 +131,25 @@ export default function OnboardingFormControl() {
   };
 
   const prevStep = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 0));
+    // setCurrentStep((prev) => Math.max(prev - 1, 0));
+    setCurrentStep((prevStep) => prevStep - 1);
   };
 
   const CurrentStepComponent = steps[currentStep].component;
 
   return (
     <Form {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 px-4">
+      <form
+        onSubmit={(e) => {
+          // Prevent unintended form submission
+          if (currentStep !== steps.length - 1) {
+            e.preventDefault();
+          } else {
+            handleSubmit(onSubmit)(e);
+          }
+        }}
+        className="space-y-8 px-4"
+      >
         <FormProgressIndicator
           currentStep={currentStep}
           totalSteps={steps.length}

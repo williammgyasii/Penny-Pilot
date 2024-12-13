@@ -119,25 +119,25 @@ export const ONBOARD_USER_DETAILS = createAsyncThunk<
   }
 
   try {
-    let profileImageUrl = validatedData.profileImage; // Use validatedData instead of direct `onboardData`
-    if (
-      validatedData.profileImage &&
-      validatedData.profileImage.startsWith("data:")
-    ) {
-      const storageRef = ref(
-        getClientStorage,
-        `images/${userUid}/${Date.now()}_profile.jpg`
-      );
-      const response = await fetch(validatedData.profileImage);
-      const blob = await response.blob();
-      await uploadBytes(storageRef, blob);
-      profileImageUrl = await getDownloadURL(storageRef);
-    }
+    // let profileImageUrl = validatedData.profileImage; // Use validatedData instead of direct `onboardData`
+    // if (
+    //   validatedData.profileImage &&
+    //   validatedData.profileImage.startsWith("data:")
+    // ) {
+    //   const storageRef = ref(
+    //     getClientStorage,
+    //     `images/${userUid}/${Date.now()}_profile.jpg`
+    //   );
+    //   const response = await fetch(validatedData.profileImage);
+    //   const blob = await response.blob();
+    //   await uploadBytes(storageRef, blob);
+    //   profileImageUrl = await getDownloadURL(storageRef);
+    // }
 
     const userData = {
       ...validatedData,
       uid: userUid,
-      profileImage: profileImageUrl,
+      // profileImage: profileImageUrl,
       createdAt: new Date(),
     };
 
