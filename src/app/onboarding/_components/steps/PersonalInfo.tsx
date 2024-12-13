@@ -17,20 +17,14 @@ import {
 } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Camera, CameraIcon, ChevronsUpDown } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { Camera, CameraIcon } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { TYPE_ONBOARDING_SCHEMA } from "@/schema/onBoardingSchema";
 import Image from "next/image";
 import { revalidatePath } from "next/cache";
 import { Supported_Countries } from "@/lib/countries";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
 
 const countryCodes = [
   { value: "+1", label: "United States (+1)" },
@@ -49,6 +43,13 @@ export default function PersonalInfo() {
   const profileImage = watch("profileImage");
   const selectedCountry = watch("country");
 
+  const countryCode = useMemo(() => {
+    const countryCode = Supported_Countries.find(
+      (country) => country.code === selectedCountry
+    );
+    return countryCode?.dialCode;
+  }, [selectedCountry]);
+
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -61,7 +62,7 @@ export default function PersonalInfo() {
   };
 
   return (
-    <div className="flex flex-col w-full items-center  justify-center  ">
+    <div className="flex flex-col w-full items-center  justify-center space-y-3  ">
       <div className="flex flex-col self-start">
         <h1 className="text-3xl">Basic Details</h1>
         <span className="text-ui-ui_light_600 inline-block w-full text-xs">
@@ -153,7 +154,7 @@ export default function PersonalInfo() {
         />
       </div>
 
-      <div className="grid md:grid-cols-6 grid-cols-3 w-full space-x-2 mt-2">
+      <div className="grid md:grid-cols-6 grid-cols-3 w-full space-x-2 ">
         <FormField
           control={control}
           name="email"
@@ -182,89 +183,7 @@ export default function PersonalInfo() {
         />
       </div>
 
-      <div className="grid md:grid-cols-6 grid-cols-3 w-full space-x-2 mt-2">
-        <FormField
-          control={control}
-          name="country"
-          render={({ field }) => (
-            <FormItem className="col-span-3">
-              <FormLabel>Country</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button variant="outline" role="combobox">
-                      {field.value
-                        ? Supported_Countries.find(
-                            (country) => country.name === field.value
-                          )?.name
-                        : "Select Country"}
-                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
-                  <Command>
-                    <CommandInput placeholder="Search language..." />
-                    <CommandList>
-                      <CommandEmpty>No language found.</CommandEmpty>
-                      <CommandGroup>
-                        {languages.map((language) => (
-                          <CommandItem
-                            value={language.label}
-                            key={language.value}
-                            onSelect={() => {
-                              form.setValue("language", language.value);
-                            }}
-                          >
-                            {language.label}
-                            <Check
-                              className={cn(
-                                "ml-auto",
-                                language.value === field.value
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={control}
-          name="phoneNumber"
-          render={({ field }) => (
-            <FormItem className="col-span-2">
-              <FormLabel>Phone Number</FormLabel>
-              <FormControl>
-                <Input type="tel" placeholder="123456789" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={control}
-          name="address"
-          render={({ field }) => (
-            <FormItem className="col-span-3">
-              <FormLabel>Address</FormLabel>
-              <FormControl>
-                <Input type="email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </div>
-
-      <div className="grid md:grid-cols-6 grid-cols-3 w-full space-x-2 mt-2">
+      <div className="grid md:grid-cols-6 grid-cols-3 w-full space-x-2 ">
         <FormField
           control={control}
           name="gender"
@@ -282,6 +201,63 @@ export default function PersonalInfo() {
                   <SelectItem value="female">Female</SelectItem>
                 </SelectContent>
               </Select>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={control}
+          name="address"
+          render={({ field }) => (
+            <FormItem className="col-span-3">
+              <FormLabel>Address</FormLabel>
+              <FormControl>
+                <Input type="email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
+      <div className="grid md:grid-cols-10 grid-cols-3 w-full space-x-2 ">
+        <FormField
+          control={control}
+          name="country"
+          render={({ field }) => (
+            <FormItem className="col-span-4">
+              <FormLabel>Country</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your country" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {Supported_Countries.sort((a, b) =>
+                    a.name.localeCompare(b.name)
+                  ).map((country) => (
+                    <SelectItem key={country.code} value={country.code}>
+                      {country.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="col-span-1">{countryCode}</div>
+        <FormField
+          control={control}
+          name="phoneNumber"
+          render={({ field }) => (
+            <FormItem className="col-span-5">
+              <FormLabel>Phone Number</FormLabel>
+              <FormControl>
+                <Input type="tel" placeholder="123456789" {...field} />
+              </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
