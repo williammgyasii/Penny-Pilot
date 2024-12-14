@@ -97,7 +97,6 @@ export default function OnboardingFormControl() {
 
   const onSubmit = async (data: TYPE_ONBOARDING_SCHEMA) => {
     try {
-      // Uncomment the following line when ready to dispatch the action
       // const response = await dispatch(ONBOARD_USER_DETAILS(data)).unwrap();
       toast({
         title: "Success",
@@ -142,44 +141,42 @@ export default function OnboardingFormControl() {
   const CurrentStepComponent = steps[currentStep].component;
 
   return (
-    <FormProvider {...methods}>
-      <Form {...methods}>
-        <form onSubmit={(e) => e.preventDefault()} className="space-y-8 px-4">
-          <FormProgressIndicator
-            currentStep={currentStep}
-            totalSteps={steps.length}
-          />
-          <div className="h-[65vh] overflow-y-auto">
-            <CurrentStepComponent />
-          </div>
-          <div className="flex justify-between">
-            <Button
-              type="button"
-              onClick={prevStep}
-              disabled={currentStep === 0}
-              variant="outline"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" /> Previous
-            </Button>
-            <Button
-              type="button"
-              onClick={nextStep}
-              disabled={AUTH_SLICE_LOADING}
-            >
-              {currentStep === steps.length - 1 ? (
-                <>
-                  Submit
-                  {AUTH_SLICE_LOADING && <Spinner className="ml-2" />}
-                </>
-              ) : (
-                <>
-                  Next <ArrowRight className="ml-2 h-4 w-4" />
-                </>
-              )}
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </FormProvider>
+    <Form {...methods}>
+      <form onSubmit={(e) => e.preventDefault()} className="space-y-8 px-4">
+        <FormProgressIndicator
+          currentStep={currentStep}
+          totalSteps={steps.length}
+        />
+        <div className="h-[65vh] overflow-y-auto">
+          <CurrentStepComponent />
+        </div>
+        <div className="flex justify-between">
+          <Button
+            type="button"
+            onClick={prevStep}
+            disabled={currentStep === 0}
+            variant="outline"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" /> Previous
+          </Button>
+          <Button
+            type="button"
+            onClick={nextStep}
+            disabled={AUTH_SLICE_LOADING}
+          >
+            {currentStep === steps.length - 1 ? (
+              <>
+                Submit
+                {AUTH_SLICE_LOADING && <Spinner />}
+              </>
+            ) : (
+              <>
+                Next <ArrowRight className="ml-2 h-4 w-4" />
+              </>
+            )}
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 }
