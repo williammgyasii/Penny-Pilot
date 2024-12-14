@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -56,21 +57,23 @@ const steps = [
     ],
   },
 ];
+
 export default function OnboardingFormControl() {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState<number>(0);
   const { toast } = useToast();
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { currentUser, AUTH_SLICE_LOADING } = useSelector(
     (state: RootState) => state.auth
   );
+
   const methods = useForm<TYPE_ONBOARDING_SCHEMA>({
     resolver: zodResolver(ONBOARDING_SCHEMA),
     mode: "onChange",
     defaultValues: {
-      firstName: currentUser?.firstName,
-      lastName: currentUser?.lastName,
-      email: currentUser?.email,
+      firstName: currentUser?.firstName || "",
+      lastName: currentUser?.lastName || "",
+      email: currentUser?.email || "",
       dateOfBirth: "",
       address: "",
       countryCode: "+1",
@@ -91,17 +94,17 @@ export default function OnboardingFormControl() {
   });
 
   const { handleSubmit, trigger } = methods;
-  console.log(currentStep, steps.length);
 
   const onSubmit = async (data: TYPE_ONBOARDING_SCHEMA) => {
     try {
+      // Uncomment the following line when ready to dispatch the action
       // const response = await dispatch(ONBOARD_USER_DETAILS(data)).unwrap();
       toast({
         title: "Success",
         description: "Your financial profile has been saved.",
       });
 
-      // Redirect to profile
+      // Uncomment the following line when ready to redirect
       // router.push(`/dashboard`);
     } catch (error) {
       console.error("Error submitting form: ", error);
@@ -120,6 +123,8 @@ export default function OnboardingFormControl() {
     const isStepValid = await trigger(fieldsToValidate);
     if (isStepValid && currentStep < steps.length - 1) {
       setCurrentStep((prevStep) => prevStep + 1);
+    } else if (isStepValid && currentStep === steps.length - 1) {
+      await handleSubmit(onSubmit)();
     } else {
       toast({
         title: "Validation Error",
@@ -131,57 +136,50 @@ export default function OnboardingFormControl() {
   };
 
   const prevStep = () => {
-    // setCurrentStep((prev) => Math.max(prev - 1, 0));
-    setCurrentStep((prevStep) => prevStep - 1);
+    setCurrentStep((prevStep) => Math.max(prevStep - 1, 0));
   };
 
   const CurrentStepComponent = steps[currentStep].component;
 
   return (
-    <Form {...methods}>
-      <form
-        onSubmit={(e) => {
-          // Prevent unintended form submission
-          if (currentStep !== steps.length - 1) {
-            e.preventDefault();
-          } else {
-            handleSubmit(onSubmit)(e);
-          }
-        }}
-        className="space-y-8 px-4"
-      >
-        <FormProgressIndicator
-          currentStep={currentStep}
-          totalSteps={steps.length}
-        />
-        <div className="h-[65vh]">
-          <CurrentStepComponent />
-        </div>
-        <div className="flex justify-between ">
-          <Button
-            type="button"
-            onClick={prevStep}
-            disabled={currentStep === 0}
-            variant="outline"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" /> Previous
-          </Button>
-          {currentStep === steps.length - 1 ? (
-            <Button type="submit">
-              Submit
-              {AUTH_SLICE_LOADING ? (
-                <Spinner />
+    <FormProvider {...methods}>
+      <Form {...methods}>
+        <form onSubmit={(e) => e.preventDefault()} className="space-y-8 px-4">
+          <FormProgressIndicator
+            currentStep={currentStep}
+            totalSteps={steps.length}
+          />
+          <div className="h-[65vh] overflow-y-auto">
+            <CurrentStepComponent />
+          </div>
+          <div className="flex justify-between">
+            <Button
+              type="button"
+              onClick={prevStep}
+              disabled={currentStep === 0}
+              variant="outline"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" /> Previous
+            </Button>
+            <Button
+              type="button"
+              onClick={nextStep}
+              disabled={AUTH_SLICE_LOADING}
+            >
+              {currentStep === steps.length - 1 ? (
+                <>
+                  Submit
+                  {AUTH_SLICE_LOADING && <Spinner className="ml-2" />}
+                </>
               ) : (
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <>
+                  Next <ArrowRight className="ml-2 h-4 w-4" />
+                </>
               )}
             </Button>
-          ) : (
-            <Button type="button" onClick={nextStep}>
-              Next <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          )}
-        </div>
-      </form>
-    </Form>
+          </div>
+        </form>
+      </Form>
+    </FormProvider>
   );
 }
