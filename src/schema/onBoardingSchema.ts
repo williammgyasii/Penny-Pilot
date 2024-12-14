@@ -5,8 +5,7 @@ const calculateMinDate = () => {
   return new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
 };
 
-const fileSizeLimit = 5 * 1024 * 1024; // 5MB
-
+const MAX_UPLOAD_SIZE = 1024 * 1024 * 5; // 3MB
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -26,12 +25,16 @@ export const ONBOARDING_SCHEMA = z.object({
   }, "You must be at least 16 years old to use this app"),
   countryCode: z.string().min(1, "Country code is required"),
   country: z.string().min(1, "Country is required"),
-  profileImage:
-    typeof window === "undefined"
-      ? z.any()
-      : z
-          .instanceof(FileList)
-          .refine((file) => file?.length == 1, "File is required."),
+  profileImage: z
+    .instanceof(File)
+    .refine(
+      (file) => !file || file.size <= MAX_UPLOAD_SIZE,
+      "File size must be less than 3MB"
+    )
+    .refine(
+      (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
+      "File must be a PNG"
+    ),
   address: z.string().min(2, "Address is required"),
   phoneNumber: z
     .string()

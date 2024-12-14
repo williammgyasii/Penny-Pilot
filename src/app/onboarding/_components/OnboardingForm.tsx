@@ -78,7 +78,7 @@ export default function OnboardingFormControl() {
       address: "",
       countryCode: "+1",
       phoneNumber: "",
-      profileImage: "",
+      // profileImage: "",
       primaryGoal: "savings",
       targetAmount: 0,
       timeframe: 0,

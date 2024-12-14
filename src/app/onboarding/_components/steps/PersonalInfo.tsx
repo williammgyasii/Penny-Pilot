@@ -18,11 +18,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { CameraIcon } from "lucide-react";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { TYPE_ONBOARDING_SCHEMA } from "@/schema/onBoardingSchema";
 import Image from "next/image";
 import { Supported_Countries } from "@/lib/countries";
-import { calculateMinDate } from "@/lib/utils";
+import { calculateMinDate, convertImageToReader } from "@/lib/utils";
 
 export const revalidate = 2;
 export default function PersonalInfo() {
@@ -31,6 +31,7 @@ export default function PersonalInfo() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const profileImage = watch("profileImage");
   const selectedCountry = watch("country");
+  const [image, setImage] = useState("");
 
   const countryCode = useMemo(() => {
     const countryCode = Supported_Countries.find(
@@ -42,15 +43,14 @@ export default function PersonalInfo() {
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    setValue("profileImage", file);
-    console.log(file);
-    // if (file) {
-    //   const reader = new FileReader();
-    //   reader.onloadend = () => {
-    //     setValue("profileImage", reader.result as string);
-    //   };
-    //   reader.readAsDataURL(file);
-    // }
+    setValue("profileImage", file!);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -66,15 +66,14 @@ export default function PersonalInfo() {
         control={control}
         name="profileImage"
         render={({ field }) => {
-          console.log(field);
           return (
-            <FormItem>
+            <FormItem className="relative">
               <FormControl>
-                <div className="relative">
+                <div>
                   <Avatar className="w-[8rem] h-[8rem]">
                     <AvatarImage
                       className="object-cover"
-                      src={field.value}
+                      src={image}
                       alt="Profile"
                     />
                     <AvatarFallback>
@@ -90,7 +89,7 @@ export default function PersonalInfo() {
 
                   <Button
                     type="button"
-                    className="absolute bottom-0 -right-0 text-xs"
+                    className="absolute bottom-10 -right-10 text-xs"
                     onClick={() => fileInputRef.current?.click()}
                   >
                     <CameraIcon size={10} />
@@ -104,7 +103,7 @@ export default function PersonalInfo() {
                   />
                 </div>
               </FormControl>
-              <FormMessage />
+              <FormMessage className="mt-2 bg-red-900" />
             </FormItem>
           );
         }}

@@ -34,3 +34,10 @@ export const calculateMinDate = () => {
     .toISOString()
     .split("T")[0];
 };
+
+export const convertImageToReader = (image: File) => {
+  if (image) {
+    const reader = new FileReader();
+    return reader;
+  }
+};
