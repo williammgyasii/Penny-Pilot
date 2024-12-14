@@ -110,28 +110,29 @@ export const ONBOARD_USER_DETAILS = createAsyncThunk<
   { rejectValue: string }
 >("auth/onboard", async (onboardData, { rejectWithValue, getState }) => {
   const validatedData = ONBOARDING_SCHEMA.parse(onboardData);
+  console.log(validatedData.profileImage);
+
   const state = getState() as RootState;
   const userUid = state.auth.currentUser?.uid;
-  console.log(userUid);
 
   if (!userUid) {
     return rejectWithValue("User is not authenticated");
   }
 
   try {
-    // let profileImageUrl = validatedData.profileImage; // Use validatedData instead of direct `onboardData`
     // if (
     //   validatedData.profileImage &&
-    //   validatedData.profileImage.startsWith("data:")
+    //   // validatedData.profileImage.startsWith("data:")
     // ) {
-    //   const storageRef = ref(
-    //     getClientStorage,
-    //     `images/${userUid}/${Date.now()}_profile.jpg`
-    //   );
-    //   const response = await fetch(validatedData.profileImage);
-    //   const blob = await response.blob();
-    //   await uploadBytes(storageRef, blob);
-    //   profileImageUrl = await getDownloadURL(storageRef);
+    //   console.log("truee....");
+    //   //   const storageRef = ref(
+      //     getClientStorage,
+      //     `images/${userUid}/${Date.now()}_profile.jpg`
+      //   );
+      //   const response = await fetch(validatedData.profileImage);
+      //   const blob = await response.blob();
+      //   await uploadBytes(storageRef, blob);
+      //   profileImageUrl = await getDownloadURL(storageRef);
     // }
 
     const userData = {

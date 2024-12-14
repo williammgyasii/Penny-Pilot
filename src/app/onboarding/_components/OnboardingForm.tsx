@@ -97,7 +97,8 @@ export default function OnboardingFormControl() {
 
   const onSubmit = async (data: TYPE_ONBOARDING_SCHEMA) => {
     try {
-      // const response = await dispatch(ONBOARD_USER_DETAILS(data)).unwrap();
+      // console.log(data.profileImage)
+      const response = await dispatch(ONBOARD_USER_DETAILS(data)).unwrap();
       toast({
         title: "Success",
         description: "Your financial profile has been saved.",

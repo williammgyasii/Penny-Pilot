@@ -42,16 +42,16 @@ export default function PersonalInfo() {
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setValue("profileImage", reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
+    setValue("profileImage", file);
+    console.log(file);
+    // if (file) {
+    //   const reader = new FileReader();
+    //   reader.onloadend = () => {
+    //     setValue("profileImage", reader.result as string);
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
   };
-
-  console.log(formState.errors);
 
   return (
     <div className="flex flex-col w-full items-center  justify-center space-y-3">
@@ -65,46 +65,49 @@ export default function PersonalInfo() {
       <FormField
         control={control}
         name="profileImage"
-        render={({ field }) => (
-          <FormItem>
-            <FormControl>
-              <div className="relative">
-                <Avatar className="w-[8rem] h-[8rem]">
-                  <AvatarImage
-                    className="object-cover"
-                    src={field.value}
-                    alt="Profile"
-                  />
-                  <AvatarFallback>
-                    <Image
-                      src="https://www.tapback.co/api/avatar.webp"
-                      fill
-                      alt="Memoji"
-                      priority
-                      sizes="50vh"
+        render={({ field }) => {
+          console.log(field);
+          return (
+            <FormItem>
+              <FormControl>
+                <div className="relative">
+                  <Avatar className="w-[8rem] h-[8rem]">
+                    <AvatarImage
+                      className="object-cover"
+                      src={field.value}
+                      alt="Profile"
                     />
-                  </AvatarFallback>
-                </Avatar>
+                    <AvatarFallback>
+                      <Image
+                        src="https://www.tapback.co/api/avatar.webp"
+                        fill
+                        alt="Memoji"
+                        priority
+                        sizes="50vh"
+                      />
+                    </AvatarFallback>
+                  </Avatar>
 
-                <Button
-                  type="button"
-                  className="absolute bottom-0 -right-0 text-xs"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  <CameraIcon size={10} />
-                </Button>
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  className="hidden"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                />
-              </div>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
+                  <Button
+                    type="button"
+                    className="absolute bottom-0 -right-0 text-xs"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <CameraIcon size={10} />
+                  </Button>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    className="hidden"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                  />
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          );
+        }}
       />
 
       <div className="grid md:grid-cols-6 grid-cols-3 w-full space-x-3 mt-5">
@@ -166,7 +169,6 @@ export default function PersonalInfo() {
           control={control}
           name="dateOfBirth"
           render={({ field }) => {
-            const minDate = calculateMinDate();
             return (
               <FormItem className="col-span-3">
                 <FormLabel>Date of Birth</FormLabel>
