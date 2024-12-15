@@ -3,6 +3,7 @@ import registerBackground from "@public/Fintap.png";
 import Image from "next/image";
 import TextGradient from "@/animated/TextGradient";
 import LoginForm from "../_components/LoginForm";
+import Link from "next/link";
 
 const LoginPage = () => {
   return (
@@ -14,7 +15,6 @@ const LoginPage = () => {
           className="w-full h-full object-cover z-10"
           alt="Register Background"
           sizes={"auto"}
-          
           priority={true}
         />
         {/* Gradient */}
@@ -45,6 +45,12 @@ const LoginPage = () => {
           />
           <LoginForm />
           {/* <RegisterForm /> */}
+          <span className="mt-2 text-ui-ui_light_600">
+            Create an account?{" "}
+            <Link className="text-blue-500 underline" href={"/register"}>
+              Register
+            </Link>
+          </span>
         </div>
       </div>
     </div>

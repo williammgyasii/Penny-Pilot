@@ -4,6 +4,7 @@ import registerBackground from "@public/Fintap.png";
 import Image from "next/image";
 import TextGradient from "@/animated/TextGradient";
 import RegisterForm from "../_components/RegisterForm";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Register Page",
@@ -51,6 +52,9 @@ const RegisterPage = () => {
           />
           <RegisterForm />
           {/* <RegisterForm /> */}
+          <span className="mt-2 text-ui-ui_light_600">
+            Already have an account? <Link className="text-blue-500 underline" href={"/login"}>Login</Link>
+          </span>
         </div>
       </div>
     </div>
