@@ -42,7 +42,7 @@ export default function RegisterForm() {
   const onSubmit = form.handleSubmit(async (data: TYPE_REGISTER_SCHEMA) => {
     try {
       await dispatch(REGISTER_NEW_USER(data)).unwrap();
-      router.push("/dashboard");
+      router.push("/onboarding");
       form.reset();
     } catch (error: unknown) {
       console.log("Register error on register page", error);
