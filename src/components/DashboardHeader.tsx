@@ -1,16 +1,22 @@
+"use client";
 import React from "react";
 import { Breadcrumbs } from "./ui/breadcrumbs";
-import { SidebarTrigger } from "./ui/sidebar";
+import { SidebarTrigger, useSidebar } from "./ui/sidebar";
 import { Separator } from "./ui/separator";
 import { UserNav } from "./UserNav";
-import { MenuSquare } from "lucide-react";
+import {
+  MenuSquare,
+  SquareChevronLeft,
+  SquareChevronRight,
+} from "lucide-react";
 
 export default function DashboardHeader() {
+  const { open } = useSidebar();
   return (
     <header className="flex h-16 shrink-0 items-center  justify-between gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
       <div className="flex items-center gap-2 px-4">
-        <SidebarTrigger className="-ml-1 bg-red-900">
-          <MenuSquare />
+        <SidebarTrigger className="-ml-1 ">
+          {open ? <SquareChevronLeft /> : <SquareChevronRight />}
         </SidebarTrigger>
         <Separator orientation="vertical" className="h-4" />
         <Breadcrumbs />

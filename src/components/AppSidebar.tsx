@@ -34,9 +34,12 @@ import { useAppDispatch } from "@/redux/reduxhooks";
 import { LOG_OUT_USER } from "@/redux/functions/authFunctions";
 import axios from "axios";
 import { addToast } from "@/redux/features/toastSlice";
+import Spinner from "./Spinner";
 
 export default function AppSidebar() {
-  const { currentUser } = useSelector((state: RootState) => state.auth);
+  const { currentUser, AUTH_SLICE_LOADING } = useSelector(
+    (state: RootState) => state.auth
+  );
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -68,10 +71,7 @@ export default function AppSidebar() {
         <div className="flex h-full text-white gap-4 text-sidebar-accent-foreground ">
           <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
             <Avatar>
-              <AvatarImage
-                src={currentUser?.profileImage}
-                alt="@shadcn"
-              />
+              <AvatarImage src={currentUser?.profileImage} alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </div>
@@ -177,7 +177,7 @@ export default function AppSidebar() {
                 <span className="group-data-[collapsible=icon]:hidden">
                   Logout
                 </span>
-                <LogOutIcon />
+                {AUTH_SLICE_LOADING ? <Spinner /> : <LogOutIcon />}
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
