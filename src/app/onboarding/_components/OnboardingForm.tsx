@@ -97,15 +97,14 @@ export default function OnboardingFormControl() {
 
   const onSubmit = async (data: TYPE_ONBOARDING_SCHEMA) => {
     try {
-      // console.log(data.profileImage)
       const response = await dispatch(ONBOARD_USER_DETAILS(data)).unwrap();
+      console.log(response);
       toast({
-        title: "Success",
+        variant: "success",
+        title: "Success Is Right",
         description: "Your financial profile has been saved.",
       });
-
-      // Uncomment the following line when ready to redirect
-      // router.push(`/dashboard`);
+      router.push(`/dashboard`);
     } catch (error) {
       console.error("Error submitting form: ", error);
       toast({
