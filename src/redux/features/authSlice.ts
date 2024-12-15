@@ -8,7 +8,10 @@ import {
 } from "../functions/authFunctions";
 import { TYPE_ONBOARDING_SCHEMA } from "@/schema/onBoardingSchema";
 
-type FullUserType = Partial<TYPE_ONBOARDING_SCHEMA> & Partial<UserData>;
+type FullUserType = Partial<
+  Omit<TYPE_ONBOARDING_SCHEMA, "profileImage"> & { profileImage: string }
+> &
+  Partial<UserData>;
 
 interface AuthState {
   currentUser: FullUserType | null;

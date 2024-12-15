@@ -23,6 +23,8 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/reduxhooks";
 import { ONBOARD_USER_DETAILS } from "@/redux/functions/authFunctions";
 
+
+
 const steps = [
   {
     component: PersonalInfo,
