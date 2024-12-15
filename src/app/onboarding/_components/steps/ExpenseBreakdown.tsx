@@ -1,10 +1,16 @@
-import { useFormContext } from "react-hook-form"
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { FormData } from "@/types/form"
+import { useFormContext } from "react-hook-form";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { TYPE_ONBOARDING_SCHEMA } from "@/schema/onBoardingSchema";
 
 export default function ExpenseBreakdown() {
-  const { control } = useFormContext<FormData>()
+  const { control } = useFormContext<TYPE_ONBOARDING_SCHEMA>();
 
   return (
     <div className="space-y-4">
@@ -16,7 +22,12 @@ export default function ExpenseBreakdown() {
           <FormItem>
             <FormLabel>Housing Expense</FormLabel>
             <FormControl>
-              <Input type="number" placeholder="1500" {...field} onChange={(e) => field.onChange(+e.target.value)} />
+              <Input
+                type="number"
+                placeholder="1500"
+                {...field}
+                onChange={(e) => field.onChange(+e.target.value)}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -29,7 +40,12 @@ export default function ExpenseBreakdown() {
           <FormItem>
             <FormLabel>Transportation Expense</FormLabel>
             <FormControl>
-              <Input type="number" placeholder="300" {...field} onChange={(e) => field.onChange(+e.target.value)} />
+              <Input
+                type="number"
+                placeholder="300"
+                {...field}
+                onChange={(e) => field.onChange(+e.target.value)}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -42,7 +58,12 @@ export default function ExpenseBreakdown() {
           <FormItem>
             <FormLabel>Food Expense</FormLabel>
             <FormControl>
-              <Input type="number" placeholder="500" {...field} onChange={(e) => field.onChange(+e.target.value)} />
+              <Input
+                type="number"
+                placeholder="500"
+                {...field}
+                onChange={(e) => field.onChange(+e.target.value)}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -55,7 +76,12 @@ export default function ExpenseBreakdown() {
           <FormItem>
             <FormLabel>Utilities Expense</FormLabel>
             <FormControl>
-              <Input type="number" placeholder="200" {...field} onChange={(e) => field.onChange(+e.target.value)} />
+              <Input
+                type="number"
+                placeholder="200"
+                {...field}
+                onChange={(e) => field.onChange(+e.target.value)}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -68,13 +94,17 @@ export default function ExpenseBreakdown() {
           <FormItem>
             <FormLabel>Other Expenses</FormLabel>
             <FormControl>
-              <Input type="number" placeholder="300" {...field} onChange={(e) => field.onChange(+e.target.value)} />
+              <Input
+                type="number"
+                placeholder="300"
+                {...field}
+                onChange={(e) => field.onChange(+e.target.value)}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
     </div>
-  )
+  );
 }
-

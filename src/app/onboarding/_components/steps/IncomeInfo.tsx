@@ -2,10 +2,10 @@ import { useFormContext } from "react-hook-form"
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { FormData } from "@/types/form"
+import { TYPE_ONBOARDING_SCHEMA } from "@/schema/onBoardingSchema"
 
 export default function IncomeDetails() {
-  const { control } = useFormContext<FormData>()
+  const { control } = useFormContext<TYPE_ONBOARDING_SCHEMA>()
 
   return (
     <div className="space-y-4">
