@@ -21,6 +21,7 @@ import { LOGIN_EXISTING_USER } from "@/redux/functions/authFunctions";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { LOGIN_SCHEMA, TYPE_LOGIN_SCHEMA } from "@/schema/loginSchema";
+import Spinner from "@/components/Spinner";
 
 export default function LoginForm() {
   const form = useForm<TYPE_REGISTER_SCHEMA>({
@@ -100,6 +101,7 @@ export default function LoginForm() {
               type="submit"
             >
               Login
+              {AUTH_SLICE_LOADING ? <Spinner /> : null}
             </Button>
           </form>
           <GoogleSignInButton />
