@@ -6,10 +6,12 @@ export const runtime = "edge";
 
 const app = new Hono().basePath("api/db/");
 
-app.route("/accounts", account);
+const routes = app.route("/accounts", account);
 
 export const GET = handle(app);
 export const POST = handle(app);
+
+export type AppType = typeof routes;
 
 // export async function GET(req: NextRequest, response: NextResponse) {
 //   return NextResponse.json(
