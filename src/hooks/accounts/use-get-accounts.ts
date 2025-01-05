@@ -2,8 +2,7 @@
 import { client } from "@/lib/hono";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-export const UseGetAccount = () => {
-  const queryClient = useQueryClient();
+export const UseGetAccounts = () => {
   const query = useQuery({
     queryKey: ["accountquerykey"],
     queryFn: async () => {

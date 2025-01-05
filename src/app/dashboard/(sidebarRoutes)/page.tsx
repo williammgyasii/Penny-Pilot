@@ -1,17 +1,23 @@
 "use client";
 
+import { UseGetAccounts } from "@/hooks/accounts/use-get-accounts";
 import { LOG_OUT_USER } from "@/redux/functions/authFunctions";
 import { useAppDispatch, useAppSelector } from "@/redux/reduxhooks";
 import { RootState } from "@/redux/store";
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
+  const { data, isLoading } = UseGetAccounts();
   const user = useAppSelector((state: RootState) => state.auth.currentUser);
   console.log(user);
 
   const handleSignOut = () => {
     dispatch(LOG_OUT_USER());
   };
+
+  if (isLoading) {
+    return <div>Query is Loading....</div>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -36,18 +42,14 @@ export default function Dashboard() {
         </div>
       </nav>
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          <div className="border-4 border-dashed border-gray-200 rounded-lg h-96">
-            {/* Add your dashboard content here */}
-            <h2 className="text-2xl font-bold text-center mt-8">
-              Welcome to your Dashboard
-            </h2>
-            <p className="text-center mt-4">
-              This is a protected page. Only authenticated users can see this
-              content.
-            </p>
-          </div>
-        </div>
+        {data?.map((item, index) => {
+          return (
+            <div key={item.id} className="border-b border-gray-200 p-4">
+              <h2 className="text-xl font-bold">{item.name}</h2>
+              <p>{item.id}</p>
+            </div>
+          );
+        })}
       </main>
     </div>
   );
