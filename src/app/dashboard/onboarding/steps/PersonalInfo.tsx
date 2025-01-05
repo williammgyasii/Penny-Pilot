@@ -203,7 +203,7 @@ export default function PersonalInfo() {
           render={({ field }) => (
             <FormItem className="col-span-3">
               <FormLabel>Gender</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select  onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue />

@@ -5,10 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import PersonalInfo from "./steps/PersonalInfo";
-import FinancialGoals from "./steps/FinancialGoals";
-import IncomeDetails from "./steps/IncomeInfo";
-import ExpenseBreakdown from "./steps/ExpenseBreakdown";
 import { useToast } from "@/hooks/use-toast";
 import {
   ONBOARDING_SCHEMA,
@@ -22,8 +18,10 @@ import Spinner from "@/components/Spinner";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/reduxhooks";
 import { ONBOARD_USER_DETAILS } from "@/redux/functions/authFunctions";
-
-
+import PersonalInfo from "../steps/PersonalInfo";
+import FinancialGoals from "../steps/FinancialGoals";
+import IncomeDetails from "../steps/IncomeInfo";
+import ExpenseBreakdown from "../steps/ExpenseBreakdown";
 
 const steps = [
   {
