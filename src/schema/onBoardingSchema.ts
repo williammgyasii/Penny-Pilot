@@ -51,6 +51,7 @@ export const ONBOARDING_SCHEMA = z.object({
     "investment",
     "debt_repayment",
     "retirement",
+    "other"
   ]),
   targetAmount: z.number().min(1000, "Target amount must be at least 1000"),
   timeframe: z.number().min(1, "Timeframe must be at least 1 year"),
