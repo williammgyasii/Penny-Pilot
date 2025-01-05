@@ -4,8 +4,9 @@ import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
 import { ReduxProvider } from "@/redux/provider";
 import { Toaster } from "@/components/ui/toaster";
-import AuthProvider from "@/components/AuthProvider";
+import AuthProvider from "@/providers/AuthProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import QueryProvider from "@/providers/QueryProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,9 +33,7 @@ export default function RootLayout({
           <AuthProvider>
             <Toaster />
             <NextTopLoader showSpinner={false} />
-            <QueryClientProvider client={queryClient}>
-              {children}
-            </QueryClientProvider>
+            <QueryProvider>{children}</QueryProvider>
           </AuthProvider>
         </ReduxProvider>
       </body>

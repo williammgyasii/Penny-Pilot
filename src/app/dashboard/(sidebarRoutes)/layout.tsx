@@ -1,5 +1,4 @@
 import AppSidebar from "@/components/AppSidebar";
-import AuthProvider from "@/components/AuthProvider";
 import DashboardHeader from "@/components/DashboardHeader";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Metadata } from "next";
