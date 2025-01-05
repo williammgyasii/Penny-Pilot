@@ -14,12 +14,12 @@ export default function FormProgressIndicator({
       {Array.from({ length: totalSteps }, (_, i) => (
         <div key={i} className="flex items-center ">
           <div
-            className={`rounded-full h-7 w-7 flex items-center justify-center ${
+            className={`rounded-full h-4 w-4 flex items-center justify-center ${
               i <= currentStep ? "bg-primary" : "bg-muted"
             }`}
           >
             {i < currentStep && (
-              <Check className="h-5 w-5 text-primary-foreground" />
+              <Check className="h-3 w-3 text-primary-foreground" />
             )}
           </div>
           {i < totalSteps - 1 && (
