@@ -25,6 +25,10 @@ import ExpenseBreakdown from "../steps/ExpenseBreakdown";
 
 const steps = [
   {
+    component: FinancialGoals,
+    fields: ["primaryGoal", "targetAmount", "timeframe"],
+  },
+  {
     component: PersonalInfo,
     fields: [
       "firstName",
@@ -37,10 +41,6 @@ const steps = [
       "phoneNumber",
       "profileImage",
     ],
-  },
-  {
-    component: FinancialGoals,
-    fields: ["primaryGoal", "targetAmount", "timeframe"],
   },
 
   {

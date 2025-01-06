@@ -29,7 +29,7 @@ export default function PersonalInfo() {
   const { control, setValue, watch, formState } =
     useFormContext<TYPE_ONBOARDING_SCHEMA>();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const profileImage = watch("profileImage");
+  // const profileImage = watch("profileImage");
   const selectedCountry = watch("country");
   const [image, setImage] = useState("");
 
@@ -38,6 +38,10 @@ export default function PersonalInfo() {
       (country) => country.code === selectedCountry
     );
     setValue("countryCode", countryCode?.dialCode || "");
+    setValue(
+      "currency",
+      `${countryCode?.currencyCode} (${countryCode?.currencySymbol})`
+    );
     return countryCode?.dialCode as string;
   }, [selectedCountry, setValue]);
 
@@ -203,7 +207,7 @@ export default function PersonalInfo() {
           render={({ field }) => (
             <FormItem className="col-span-3">
               <FormLabel>Gender</FormLabel>
-              <Select  onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue />

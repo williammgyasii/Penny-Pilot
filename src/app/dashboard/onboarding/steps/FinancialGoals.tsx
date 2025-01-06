@@ -35,6 +35,7 @@ export default function FinancialGoals() {
   const { control, watch } = useFormContext<TYPE_ONBOARDING_SCHEMA>();
   const [open, setOpen] = useState(false);
   const watchPrimaryGoal = watch("primaryGoal");
+  const selectedCurrency = watch("currency");
   // console.log(watch("primaryGoal"));
 
   const radioOptions: { value: string; label: string; description: string }[] =
@@ -113,7 +114,7 @@ export default function FinancialGoals() {
             name="targetAmount"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Target Amount</FormLabel>
+                <FormLabel>Target Amount {selectedCurrency}</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -131,15 +132,15 @@ export default function FinancialGoals() {
             control={control}
             name="savingsTargetDate"
             render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>Date of birth</FormLabel>
+              <FormItem className="flex flex-col space-y-1">
+                <FormLabel>End Target Date</FormLabel>
                 <Popover open={open} onOpenChange={setOpen}>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "text-left font-normal",
+                          "text-left font-normal py-3 mt-10",
                           !field.value && "text-muted-foreground"
                         )}
                       >

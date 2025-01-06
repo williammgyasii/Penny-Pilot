@@ -36,7 +36,7 @@ export default function FormProgressIndicator({
         ))}
       </div>
 
-      <div className="flex items-center space-x-2 bg-gray-100 text-gray-800 border border-gray-300 rounded-lg p-2 shadow-md cursor-not-allowed">
+      <div className="flex items-center space-x-2 bg-gray-100 text-gray-800 border border-gray-300 rounded-lg p-2 shadow-sm">
         <span className="text-md font-semibold">{currency}</span>
         <span className="text-sm text-gray-500">Currency</span>
       </div>
