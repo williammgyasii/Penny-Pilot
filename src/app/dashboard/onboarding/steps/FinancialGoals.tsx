@@ -29,6 +29,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
+import { Supported_Countries } from "@/lib/countries";
 
 export default function FinancialGoals() {
   const { control, watch } = useFormContext<TYPE_ONBOARDING_SCHEMA>();
@@ -106,7 +107,7 @@ export default function FinancialGoals() {
       />
 
       {watchPrimaryGoal === "savings" && (
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-4 justify-center items-center ">
           <FormField
             control={control}
             name="targetAmount"
@@ -138,7 +139,7 @@ export default function FinancialGoals() {
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-[240px] pl-3 text-left font-normal",
+                          "text-left font-normal",
                           !field.value && "text-muted-foreground"
                         )}
                       >
@@ -166,6 +167,36 @@ export default function FinancialGoals() {
                     />
                   </PopoverContent>
                 </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={control}
+            name="country"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Country</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your country" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {Supported_Countries.sort((a, b) =>
+                      a.name.localeCompare(b.name)
+                    ).map((country) => (
+                      <SelectItem key={country.code} value={country.code}>
+                        {country.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}

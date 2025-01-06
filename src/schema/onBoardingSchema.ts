@@ -44,6 +44,7 @@ export const ONBOARDING_SCHEMA = z.object({
     })
     .min(5, { message: "Phone number must be at least 5 digits long." })
     .max(15, { message: "Phone number cannot exceed 15 digits." }),
+  currency: z.string().min(1, "Currency must be selected"),
 
   // Step 2: Financial Goals
   primaryGoal: z.enum([

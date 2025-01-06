@@ -25,10 +25,6 @@ import ExpenseBreakdown from "../steps/ExpenseBreakdown";
 
 const steps = [
   {
-    component: FinancialGoals,
-    fields: ["primaryGoal", "targetAmount", "timeframe"],
-  },
-  {
     component: PersonalInfo,
     fields: [
       "firstName",
@@ -41,6 +37,10 @@ const steps = [
       "phoneNumber",
       "profileImage",
     ],
+  },
+  {
+    component: FinancialGoals,
+    fields: ["primaryGoal", "targetAmount", "timeframe"],
   },
 
   {
@@ -94,8 +94,8 @@ export default function OnboardingFormControl() {
     },
   });
 
-  const { handleSubmit, trigger } = methods;
-
+  const { handleSubmit, trigger, watch, setValue } = methods;
+  const currentCurrency = watch("currency");
   const onSubmit = async (data: TYPE_ONBOARDING_SCHEMA) => {
     try {
       const response = await dispatch(ONBOARD_USER_DETAILS(data)).unwrap();
@@ -147,6 +147,7 @@ export default function OnboardingFormControl() {
         <FormProgressIndicator
           currentStep={currentStep}
           totalSteps={steps.length}
+          currency={currentCurrency}
         />
         <div className="h-[65vh] overflow-y-auto">
           <CurrentStepComponent />
