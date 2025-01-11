@@ -29,13 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable}`}>
-        <ReduxProvider>
-          <AuthProvider>
-            <Toaster />
-            <NextTopLoader showSpinner={false} />
-            <QueryProvider>{children}</QueryProvider>
-          </AuthProvider>
-        </ReduxProvider>
+        <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
   );
