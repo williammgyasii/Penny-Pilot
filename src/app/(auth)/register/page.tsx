@@ -44,8 +44,8 @@ const RegisterPage = () => {
         </div>
       </div>
 
-      <div className="col-span-8 md:col-span-4 h-full lg:-ml-2 py-5 md:py-[4rem]">
-        <div className="flex flex-col items-center justify-center w-full lg:px-[3rem] xl:px-[5rem]">
+      <div className="col-span-8 md:col-span-4 h-full lg:-ml-2 py-5 md:py-[4rem] ">
+        <div className="flex flex-col items-center justify-center w-full lg:px-[3rem] space-y-2 xl:px-[5rem]">
           <TextGradient
             text="Create Account"
             subtitle="Getting started on your path to freedom"
@@ -53,7 +53,10 @@ const RegisterPage = () => {
           <RegisterForm />
           {/* <RegisterForm /> */}
           <span className="mt-2 text-ui-ui_light_600">
-            Already have an account? <Link className="text-blue-500 underline" href={"/login"}>Login</Link>
+            Already have an account?{" "}
+            <Link className="text-blue-500 underline" href={"/login"}>
+              Login
+            </Link>
           </span>
         </div>
       </div>
