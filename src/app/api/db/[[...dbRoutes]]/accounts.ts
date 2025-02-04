@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { db } from "@/database/drizzle";
 import { accountsTable } from "@/database/schema";
 
-const accounts = new Hono().get("/", async (ctx) => {
+const accounts = new Hono().get("/getAllAccounts", async (ctx) => {
   const data = await db
     .select({
       id: accountsTable.id,

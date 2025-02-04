@@ -1,5 +1,4 @@
 "use client";
-import { getAllAccounts } from "@/database/entities/accountsTable";
 import { UseGetAllAccounts } from "@/hooks/accounts/use-get-accounts";
 import { LOG_OUT_USER } from "@/redux/functions/authFunctions";
 import { useAppDispatch, useAppSelector } from "@/redux/reduxhooks";
@@ -18,9 +17,9 @@ export default function Dashboard() {
     dispatch(LOG_OUT_USER());
   };
 
-  // if (isLoading) {
-  //   return <div>Query is Loading....</div>;
-  // }
+  if (isLoading) {
+    return <div>Query is Loading....</div>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">

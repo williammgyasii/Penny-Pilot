@@ -2,17 +2,12 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
-import accounts from "../../db/[[...dbRoutes]]/accounts";
 
 export const runtime = "edge";
 
-const app = new Hono().basePath("/api/test/");
-
-
-app.route("/accounts", accounts);
-
+const app = new Hono().basePath("api/test");
 app
-  .get("/testing", (c) => {
+  .get("/", (c) => {
     return c.json({
       message: "Hello Next.js! Test",
       firstName: "Wulliam",
