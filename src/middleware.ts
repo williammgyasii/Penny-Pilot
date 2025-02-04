@@ -1,5 +1,7 @@
+import axios from "axios";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { adminAuth } from "./firebase/getFirebaseAdmin";
 
 export async function middleware(request: NextRequest) {
   const session = request.cookies.get("session")?.value;
@@ -9,9 +11,9 @@ export async function middleware(request: NextRequest) {
   }
 
   try {
-    // research on ways to validate
+    // // research on ways to validate
     // const result = await axios.get("api/auth/session");
-    // // const decodedToken = await adminAuth.verifySessionCookie(session, true);
+    // const decodedToken = await adminAuth.verifySessionCookie(session, true);
     const { pathname } = request.nextUrl;
 
     if (pathname === "/login") {
