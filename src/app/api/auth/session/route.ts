@@ -1,5 +1,5 @@
 import { adminAuth } from "@/firebase/getFirebaseAdmin";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 // export async function GET(request: NextRequest) {
 //   const session = cookies().get("session")?.value || "";
@@ -19,10 +19,18 @@ import { NextResponse } from "next/server";
 //   return NextResponse.json({ isLogged: true }, { status: 200 });
 // }
 
-export async function POST(request: Request) {
-  const { idToken } = await request.json();
-
+export async function POST(request: NextRequest) {
   try {
+    const body = await request.json(); // Read the request body once
+
+    const { idToken } = body;
+    if (!idToken) {
+      return NextResponse.json(
+        { error: "No idToken provided" },
+        { status: 400 }
+      );
+    }
+
     const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
     const sessionCookie = await adminAuth.createSessionCookie(idToken, {
       expiresIn,
@@ -34,11 +42,12 @@ export async function POST(request: Request) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
     });
+
     return response;
   } catch (error) {
-    console.log(error);
+    console.error("Session creation error:", error);
     return NextResponse.json(
-      { error: "Failed to create session", errorMessage: error },
+      { error: "Failed to create session Token", errorMessage: error },
       { status: 401 }
     );
   }
