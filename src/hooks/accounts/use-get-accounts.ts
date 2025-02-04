@@ -1,10 +1,10 @@
 "use client";
-import { client } from "@/lib/hono";
+
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-export const UseGetAccounts = () => {
+export const UseGetAllAccounts = () => {
   return useQuery({
-    queryKey: ["accountquerykey"],
+    queryKey: ["getAllAaccountsQueryKey"],
     refetchOnWindowFocus: true, // Sync data when window is focused
     staleTime: 30000, // Data is fresh for 30 seconds
     queryFn: async () => {

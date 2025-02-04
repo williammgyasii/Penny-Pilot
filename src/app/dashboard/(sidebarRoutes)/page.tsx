@@ -1,13 +1,16 @@
 "use client";
-
-import { UseGetAccounts } from "@/hooks/accounts/use-get-accounts";
+import { getAllAccounts } from "@/database/entities/accountsTable";
+import { UseGetAllAccounts } from "@/hooks/accounts/use-get-accounts";
 import { LOG_OUT_USER } from "@/redux/functions/authFunctions";
 import { useAppDispatch, useAppSelector } from "@/redux/reduxhooks";
 import { RootState } from "@/redux/store";
+import { useEffect } from "react";
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
-  const { data, isLoading,error } = UseGetAccounts();
+
+  const { data, isLoading, error } = UseGetAllAccounts();
+
   const user = useAppSelector((state: RootState) => state.auth.currentUser);
   console.log(user);
 
@@ -15,9 +18,9 @@ export default function Dashboard() {
     dispatch(LOG_OUT_USER());
   };
 
-  if (isLoading) {
-    return <div>Query is Loading....</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Query is Loading....</div>;
+  // }
 
   return (
     <div className="min-h-screen bg-gray-100">
