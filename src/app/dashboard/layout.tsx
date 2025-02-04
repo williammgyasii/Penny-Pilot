@@ -11,7 +11,6 @@ type Props = {
 const DashboardMainLayout = ({ children }: Props) => {
   return (
     <AuthProvider>
-      <Toaster />
       <NextTopLoader showSpinner={false} />
       <QueryProvider>{children}</QueryProvider>
     </AuthProvider>

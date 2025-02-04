@@ -68,12 +68,9 @@ export const REGISTER_NEW_USER = createAsyncThunk<
 export const LOGIN_EXISTING_USER = createAsyncThunk<
   UserData,
   TYPE_LOGIN_SCHEMA,
-  {
-    rejectValue: string;
-  }
+  { rejectValue: string }
 >("auth/loginUser", async ({ email, password }, { rejectWithValue }) => {
   try {
-    // console.log(email, password);
     const userCredential = await signInWithEmailAndPassword(
       getClientAuth,
       email,
@@ -81,21 +78,29 @@ export const LOGIN_EXISTING_USER = createAsyncThunk<
     );
     const user = userCredential.user;
 
-    // Fetch additional user details from Firestore
+    // Fetch user details from Firestore
     const userDoc = await getDoc(doc(getClientFirestore, "users", user.uid));
+    if (!userDoc.exists()) {
+      return rejectWithValue("User data not found");
+    }
     const userDetails = userDoc.data() as UserData;
 
     const idToken = await user.getIdToken();
-    if (idToken) {
-      const results = await axios.post("/api/auth/session", { idToken });
-      console.log(results);
+
+    // Send token to server for session creation
+    const response = await axios.post("/api/auth/session", { idToken });
+
+    if (response.status === 200) {
+      return { ...user, ...userDetails }; // Ensure `UserData` type supports this
+    } else {
+      return rejectWithValue("Failed to create session");
     }
-    return { ...user, ...userDetails };
   } catch (error) {
     if (error instanceof FirebaseError) {
-      console.log(error.code);
+      console.error("Firebase login error:", error.code);
       return rejectWithValue(getFirebaseErrorMessage(error.code));
     }
+
     return rejectWithValue("Login failed");
   }
 });

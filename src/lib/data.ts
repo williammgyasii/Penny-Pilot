@@ -10,6 +10,14 @@ export const navItems: NavItem[] = [
     items: [], // No child items
   },
   {
+    title: "Accounts",
+    url: "dashboard/accounts",
+    icon: "accounts",
+    isActive: true,
+    shortcut: ["d", "d"],
+    items: [], // No child items
+  },
+  {
     title: "Budgeting",
     url: "/dashboard/budgeting",
     icon: "budget",

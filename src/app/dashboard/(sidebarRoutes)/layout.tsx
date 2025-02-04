@@ -1,6 +1,7 @@
 import AppSidebar from "@/components/AppSidebar";
 import DashboardHeader from "@/components/DashboardHeader";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import SheetProvider from "@/providers/SheetProvider";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
@@ -24,7 +25,10 @@ export default function DashboardLayout({
       <SidebarInset>
         <DashboardHeader />
         {/* page main content */}
-        <Suspense fallback={<div>Loading....</div>}>{children}</Suspense>
+        <Suspense fallback={<div>Loading....</div>}>
+          {/* <SheetProvider /> */}
+          {children}
+        </Suspense>
         {/* page main content ends */}
       </SidebarInset>
     </SidebarProvider>

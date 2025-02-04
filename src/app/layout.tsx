@@ -29,7 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable}`}>
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <Toaster />
+          {children}
+        </ReduxProvider>
       </body>
     </html>
   );

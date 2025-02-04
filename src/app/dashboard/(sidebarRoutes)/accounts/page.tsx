@@ -1,7 +1,13 @@
 import React from "react";
+import AccountSheetComponent from "./_components/AccountSheet";
 
 const AccountsMainPage = () => {
-  return <div>Accounts pagace</div>;
+  return (
+    <div>
+      <AccountSheetComponent />
+      Accounts pagace
+    </div>
+  );
 };
 
 export default AccountsMainPage;
