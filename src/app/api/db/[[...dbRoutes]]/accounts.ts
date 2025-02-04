@@ -7,6 +7,8 @@ const accounts = new Hono().get("/getAllAccounts", async (ctx) => {
     .select({
       id: accountsTable.id,
       name: accountsTable.name,
+      plaid_id: accountsTable.plaid_id,
+      
     })
     .from(accountsTable);
 

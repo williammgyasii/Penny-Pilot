@@ -3,7 +3,6 @@ import { UseGetAllAccounts } from "@/hooks/accounts/use-get-accounts";
 import { LOG_OUT_USER } from "@/redux/functions/authFunctions";
 import { useAppDispatch, useAppSelector } from "@/redux/reduxhooks";
 import { RootState } from "@/redux/store";
-import { useEffect } from "react";
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
@@ -49,6 +48,7 @@ export default function Dashboard() {
             <div key={item.id} className="border-b border-gray-200 p-4">
               <h2 className="text-xl font-bold">{item.name}</h2>
               <p>{item.id}</p>
+              <p>{item.plaid_id}</p>
             </div>
           );
         })}
