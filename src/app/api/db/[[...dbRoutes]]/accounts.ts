@@ -23,18 +23,12 @@ const accounts = new Hono()
   })
   .post(
     "/postNewAccount",
-    zValidator(
-      "json",
-      insertAccountTable.pick({
-        name: true,
-      })
-    ),
+    zValidator("json", insertAccountTable),
     async (ctx) => {
       const values = ctx.req.valid("json");
       const [data] = await db
         .insert(accountsTable)
         .values({
-          id: uuid(),
           name: values.name,
           plaid_id: null,
           userId: values.userId,
