@@ -1,4 +1,5 @@
 import { pgTable, text, integer, varchar } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
 
 // export const accounts = pgTable("accounts", {
 //   id: text("id").primaryKey(),
@@ -22,3 +23,5 @@ export const transactionTabe = pgTable("transactions", {
   description: varchar({ length: 255 }),
   // classvar: varchar({ length: 255 }).nullable(),
 });
+
+export const insertAccountTable = createInsertSchema(accountsTable);
