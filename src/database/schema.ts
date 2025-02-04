@@ -11,4 +11,14 @@ export const accountsTable = pgTable("accounts", {
   plaid_id: varchar({ length: 255 }),
   name: varchar({ length: 255 }).notNull(),
   userId: varchar({ length: 255 }).notNull().unique(),
+  classvar: varchar({ length: 255 }),
+});
+
+export const transactionTabe = pgTable("transactions", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  amount: integer(),
+  date: text("date").notNull(),
+  category: varchar({ length: 255 }),
+  description: varchar({ length: 255 }),
+  // classvar: varchar({ length: 255 }).nullable(),
 });
