@@ -5,7 +5,6 @@ const AccountsMainPage = () => {
   return (
     <div>
       <AccountSheetComponent />
-      Accounts pagace
     </div>
   );
 };
