@@ -1,11 +1,13 @@
 import React from "react";
 import AccountSheetComponent from "./_components/AccountSheet";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@/components/ui/button";
+import { toggleAccountDrawer } from "@/redux/features/accountsPageSlice";
 
 const AccountsMainPage = () => {
   return (
     <div>
-      <AccountSheetComponent />
+      ARCA
     </div>
   );
 };

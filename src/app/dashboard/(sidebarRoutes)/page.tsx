@@ -1,17 +1,18 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { SheetTrigger } from "@/components/ui/sheet";
 import { UseGetAllAccounts } from "@/hooks/accounts/use-get-accounts";
+import { toggleAccountDrawer } from "@/redux/features/accountsPageSlice";
+import { toggleDrawer } from "@/redux/features/systemSlice";
 import { LOG_OUT_USER } from "@/redux/functions/authFunctions";
 import { useAppDispatch, useAppSelector } from "@/redux/reduxhooks";
 import { RootState } from "@/redux/store";
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
-
   const { data, isLoading, error } = UseGetAllAccounts();
 
   const user = useAppSelector((state: RootState) => state.auth.currentUser);
-  console.log(user);
 
   const handleSignOut = () => {
     dispatch(LOG_OUT_USER());
@@ -44,7 +45,9 @@ export default function Dashboard() {
         </div>
       </nav>
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-      
+        <Button onClick={() => dispatch(toggleAccountDrawer())}>
+          Click to toggle me accounts
+        </Button>
         {data?.map((item, index) => {
           return (
             <div key={item.id} className="border-b border-gray-200 p-4">
