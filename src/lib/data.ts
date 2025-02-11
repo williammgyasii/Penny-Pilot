@@ -11,7 +11,7 @@ export const navItems: NavItem[] = [
   },
   {
     title: "Accounts",
-    url: "dashboard/accounts",
+    url: "/dashboard/accounts",
     icon: "accounts",
     isActive: true,
     shortcut: ["d", "d"],
