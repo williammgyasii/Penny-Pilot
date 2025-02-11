@@ -9,8 +9,8 @@ import {
 
 export default function AccountSheetComponent() {
   return (
-    <Sheet>
-      <SheetTrigger >Open</SheetTrigger>
+    <Sheet open={false}>
+      <SheetTrigger >Trigger Account Sheet Module</SheetTrigger>
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Are you absolutely sure?</SheetTitle>
