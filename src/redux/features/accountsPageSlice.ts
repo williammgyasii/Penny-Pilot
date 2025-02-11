@@ -2,19 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 
 type AccountPageType = {
   isOpenAccountDrawer: boolean;
-  onOpenAccountDrawer: () => void;
-  onCloseAccountDrawer: () => void;
+  onOpenAccountDrawer?: () => void;
+  onCloseAccountDrawer?: () => void;
   openAddTransactionDrawer: boolean;
 };
 
 const initialState: AccountPageType = {
   isOpenAccountDrawer: false,
-  onOpenAccountDrawer: () => {},
-  onCloseAccountDrawer: () => {},
   openAddTransactionDrawer: false,
 };
 
-const AccountsPageSlice = createSlice({
+const accountsPageSlice = createSlice({
   name: "AccountPageSlice",
   initialState,
   reducers: {
@@ -23,3 +21,6 @@ const AccountsPageSlice = createSlice({
     },
   },
 });
+
+export const { toggleAccountDrawer } = accountsPageSlice.actions;
+export default accountsPageSlice.reducer;
