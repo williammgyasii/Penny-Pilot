@@ -1,3 +1,4 @@
+"use-client"
 import {
   Sheet,
   SheetContent,
@@ -6,8 +7,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useSelector } from "react-redux";
 
 export default function AccountSheetComponent() {
+  const {} =useSelector((state)=>state.)
   return (
     <Sheet open={false}>
       <SheetTrigger >Trigger Account Sheet Module</SheetTrigger>

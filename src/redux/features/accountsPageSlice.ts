@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 type AccountPageType = {
   isOpenAccountDrawer: boolean;
-
   openAddTransactionDrawer: boolean;
 };
 
