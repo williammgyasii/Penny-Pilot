@@ -30,4 +30,9 @@ env:
     availability:
     -   BUILD
     -   RUNTIME
+  - variable: NEXT_PUBLIC_DATABASE_URL
+    secret: databaseUrl
+    availability:
+    -   BUILD
+    -   RUNTIME
   
